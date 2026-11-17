@@ -208,21 +208,18 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 24px;
+        gap: 32px;
         padding: max(14px, env(safe-area-inset-top, 14px))
-          max(24px, env(safe-area-inset-right, 24px)) 14px
-          max(24px, env(safe-area-inset-left, 24px));
-        background: linear-gradient(180deg, rgba(7, 7, 10, 0.82) 0%, rgba(7, 7, 10, 0) 100%);
-        pointer-events: none;
-      }
-
-      .site-nav > * {
+          max(28px, env(safe-area-inset-right, 28px)) 14px
+          max(28px, env(safe-area-inset-left, 28px));
+        background: rgba(8, 8, 12, 0.86);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         pointer-events: auto;
       }
 
       .nav-brand {
         font-family: var(--font-display);
-        font-size: 1.5rem;
+        font-size: 1.55rem;
         font-weight: 800;
         font-style: italic;
         letter-spacing: 0.04em;
@@ -256,21 +253,6 @@
         border-bottom-color: var(--accent);
       }
 
-      .nav-active-flavour {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: #ffffff;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 180px;
-      }
-
-      .nav-sep {
-        color: rgba(255, 255, 255, 0.28);
-        user-select: none;
-      }
-
       .nav-cart-btn {
         display: inline-flex;
         align-items: center;
@@ -279,7 +261,7 @@
         padding: 8px 18px;
         border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.18);
-        background-color: rgba(15, 15, 20, 0.88);
+        background-color: var(--accent);
         color: #ffffff;
         font-family: var(--font-body);
         font-size: 0.875rem;
@@ -288,24 +270,25 @@
         white-space: nowrap;
         flex-shrink: 0;
         cursor: pointer;
-        transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        transition: filter 0.18s ease, transform 0.18s ease;
       }
 
       .nav-cart-btn:hover {
-        background-color: var(--accent);
-        border-color: var(--accent);
+        filter: brightness(1.1);
         transform: translateY(-1px);
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 760px) {
         .site-nav {
           gap: 12px;
           padding-left: max(16px, env(safe-area-inset-left, 16px));
           padding-right: max(16px, env(safe-area-inset-right, 16px));
         }
 
-        .nav-active-flavour,
-        .nav-sep,
+        .nav-center {
+          gap: 16px;
+        }
+
         .nav-link-hide-sm {
           display: none;
         }
@@ -432,8 +415,62 @@
         margin: 14px 0 0 0;
         font-size: 1rem;
         line-height: 1.55;
-        color: rgba(248, 250, 252, 0.84);
+        color: rgba(248, 250, 252, 0.86);
         text-shadow: 0 2px 16px rgba(0, 0, 0, 0.85);
+      }
+
+      .hero-cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        margin-top: 22px;
+        pointer-events: auto;
+      }
+
+      .hero-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 10px 22px;
+        border-radius: 8px;
+        background: var(--accent);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: filter 0.18s ease, transform 0.18s ease;
+      }
+
+      .hero-btn-primary:hover {
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+      }
+
+      .hero-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        background: rgba(12, 12, 17, 0.78);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: border-color 0.18s ease, background-color 0.18s ease;
+      }
+
+      .hero-btn-secondary:hover {
+        border-color: var(--accent);
+        background: var(--accent-soft);
       }
 
       /* Bottom scroll hint */
@@ -518,10 +555,8 @@
         gap: 8px;
         padding: 8px;
         border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        background: rgba(12, 12, 17, 0.72);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(12, 12, 17, 0.92);
         pointer-events: auto;
       }
 
@@ -608,10 +643,17 @@
           display: none;
         }
         .scroll-hint {
-          bottom: 76px;
+          bottom: 72px;
         }
         .hero-caption {
-          bottom: 132px;
+          bottom: max(116px, calc(env(safe-area-inset-bottom, 0px) + 108px));
+        }
+        .caption-headline {
+          font-size: clamp(2.1rem, 8.2vw, 3.1rem);
+        }
+        .hero-cta-row {
+          justify-content: center;
+          margin-top: 16px;
         }
       }
 
@@ -939,8 +981,69 @@
         transform: scale(0.97);
       }
 
-      .add-cart-btn:active {
-        transform: scale(0.97);
+      /* =========================================
+         4A. STORE VALUE PILLARS STRIP
+         ========================================= */
+      .pillars-band {
+        position: relative;
+        z-index: 20;
+        background-color: var(--bg-surface);
+        border-top: 1px solid var(--border-subtle);
+        padding: 28px max(24px, env(safe-area-inset-left, 24px)) 28px
+          max(24px, env(safe-area-inset-right, 24px));
+      }
+
+      .pillars-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      @media (max-width: 900px) {
+        .pillars-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 520px) {
+        .pillars-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .pillar-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding-right: 12px;
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .pillar-item:last-child {
+        border-right: none;
+      }
+
+      @media (max-width: 900px) {
+        .pillar-item {
+          border-right: none;
+        }
+      }
+
+      .pillar-val {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 800;
+        font-style: italic;
+        text-transform: uppercase;
+        color: #ffffff;
+        line-height: 1.05;
+      }
+
+      .pillar-lbl {
+        font-size: 0.8125rem;
+        color: var(--text-muted);
       }
 
       /* =========================================
@@ -1166,22 +1269,334 @@
       }
 
       /* =========================================
-         5. FOOTER
+         4C. VARIETY PACK BUNDLE BUILDER
          ========================================= */
-      .site-footer {
+      .bundle-section {
         position: relative;
         z-index: 20;
         background-color: var(--bg-page);
         border-top: 1px solid var(--border-subtle);
-        padding: 28px max(24px, env(safe-area-inset-left, 24px))
-          max(28px, env(safe-area-inset-bottom, 28px))
+        padding: 84px max(24px, env(safe-area-inset-left, 24px))
+          max(84px, calc(env(safe-area-inset-bottom, 24px) + 24px))
           max(24px, env(safe-area-inset-right, 24px));
         transition: background-color 0.75s var(--ease-out-expo);
+      }
+
+      .bundle-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+        gap: 32px;
+        align-items: start;
+      }
+
+      @media (max-width: 920px) {
+        .bundle-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .bundle-picker-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 28px;
+      }
+
+      @media (max-width: 600px) {
+        .bundle-picker-list {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .bundle-item-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-surface);
+      }
+
+      .bundle-item-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .bundle-thumb {
+        width: 52px;
+        height: 52px;
+        border-radius: 8px;
+        object-fit: cover;
+        flex-shrink: 0;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      .bundle-item-title {
+        margin: 0 0 2px 0;
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 700;
+        font-style: italic;
+        text-transform: uppercase;
+        color: #ffffff;
+      }
+
+      .bundle-item-sub {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .bundle-summary-card {
+        border-radius: 16px;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-surface);
+        padding: 28px;
+      }
+
+      .bundle-slots {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin: 20px 0 22px 0;
+      }
+
+      .bundle-slot {
+        height: 68px;
+        border-radius: 8px;
+        border: 1px dashed rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.03);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.42);
+      }
+
+      .bundle-slot.is-filled {
+        border-style: solid;
+        border-color: var(--accent);
+      }
+
+      .bundle-slot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .bundle-price-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        padding-top: 16px;
+        margin-bottom: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      /* =========================================
+         4D. COMMUNITY REVIEWS & FAQ SECTION
+         ========================================= */
+      .community-section {
+        position: relative;
+        z-index: 20;
+        background-color: var(--bg-page);
+        border-top: 1px solid var(--border-subtle);
+        padding: 84px max(24px, env(safe-area-inset-left, 24px)) 96px
+          max(24px, env(safe-area-inset-right, 24px));
+      }
+
+      .community-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 48px;
+        align-items: start;
+      }
+
+      @media (max-width: 920px) {
+        .community-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .reviews-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 24px;
+      }
+
+      .review-card {
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-surface);
+      }
+
+      .review-quote {
+        margin: 0 0 12px 0;
+        font-size: 0.9375rem;
+        line-height: 1.55;
+        color: rgba(248, 250, 252, 0.9);
+      }
+
+      .review-author {
+        font-size: 0.8125rem;
+        color: var(--text-muted);
+      }
+
+      .faq-list {
+        display: flex;
+        flex-direction: column;
+        margin-top: 24px;
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      .faq-item {
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .faq-trigger {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 0;
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .faq-trigger:hover {
+        color: var(--accent);
+      }
+
+      .faq-body {
+        display: none;
+        padding: 0 0 18px 0;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--text-muted);
+      }
+
+      .faq-item.is-open .faq-body {
+        display: block;
+      }
+
+      /* =========================================
+         5. COMMERCIAL WEBSITE FOOTER
+         ========================================= */
+      .site-footer {
+        position: relative;
+        z-index: 20;
+        background-color: var(--bg-surface);
+        border-top: 1px solid var(--border-subtle);
+        padding: 64px max(24px, env(safe-area-inset-left, 24px))
+          max(36px, env(safe-area-inset-bottom, 36px))
+          max(24px, env(safe-area-inset-right, 24px));
+        transition: background-color 0.75s var(--ease-out-expo);
+      }
+
+      .footer-grid {
+        max-width: 1200px;
+        margin: 0 auto 44px auto;
+        display: grid;
+        grid-template-columns: 1.4fr 0.8fr 0.8fr 1.2fr;
+        gap: 36px;
+      }
+
+      @media (max-width: 900px) {
+        .footer-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 540px) {
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .footer-col-title {
+        margin: 0 0 14px 0;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #ffffff;
+      }
+
+      .footer-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .footer-links a {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.18s ease;
+      }
+
+      .footer-links a:hover {
+        color: #ffffff;
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .newsletter-input {
+        flex: 1;
+        min-width: 0;
+        height: 40px;
+        padding: 0 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+      }
+
+      .newsletter-btn {
+        height: 40px;
+        padding: 0 16px;
+        border-radius: 8px;
+        border: none;
+        background: var(--accent);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
       }
 
       .footer-inner {
         max-width: 1200px;
         margin: 0 auto;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -1431,6 +1846,40 @@
         cursor: not-allowed;
       }
 
+      .cart-shipping-bar {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .cart-shipping-txt {
+        margin: 0 0 8px 0;
+        font-size: 0.8125rem;
+        color: var(--text-muted);
+      }
+
+      .checkout-panel {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .checkout-panel.is-open {
+        display: flex;
+      }
+
+      .checkout-field {
+        width: 100%;
+        height: 38px;
+        padding: 0 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.8125rem;
+      }
+
       /* =========================================
          7. REDUCED MOTION SUPPORT
          ========================================= */
@@ -1482,11 +1931,11 @@
     <header class="site-nav">
       <a href="#hero-top" class="nav-brand" id="nav-brand-link">NEXUS BOLT</a>
       <nav class="nav-center" aria-label="Primary navigation">
-        <span class="nav-active-flavour" id="nav-flavour-label">Cherry Cola</span>
-        <span class="nav-sep" aria-hidden="true">·</span>
-        <a href="#hero-top" class="nav-link nav-link-hide-sm">3D Showcase</a>
+        <a href="#hero-top" class="nav-link nav-link-hide-sm">Showcase</a>
         <a href="#flavours" class="nav-link">Flavours</a>
+        <a href="#bundles" class="nav-link">Bundle</a>
         <a href="#formula" class="nav-link nav-link-hide-sm">Formula</a>
+        <a href="#reviews" class="nav-link nav-link-hide-sm">Reviews</a>
       </nav>
       <button type="button" class="nav-cart-btn" id="nav-cart-btn" aria-label="Open cart">
         Cart (0)
@@ -1526,6 +1975,10 @@
             <p class="caption-sub" id="cap1-sub">
               Velvety dark orchard cherry fused with crisp spiced cola fizz.
             </p>
+            <div class="hero-cta-row">
+              <a href="#flavours" class="hero-btn-primary">Shop Flavours</a>
+              <a href="#bundles" class="hero-btn-secondary">Build 4-Pack</a>
+            </div>
           </div>
 
           <div class="hero-caption" id="caption-2" data-align="right">
@@ -1555,6 +2008,28 @@
             <button type="button" class="hero-quick-add" id="hero-quick-add-btn">
               Add Can · $3.49
             </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3B. BRAND PILLARS STRIP -->
+      <section class="pillars-band" aria-label="Key product highlights">
+        <div class="pillars-grid">
+          <div class="pillar-item">
+            <span class="pillar-val">0g Sugar</span>
+            <span class="pillar-lbl">Zero crash, clean crisp finish</span>
+          </div>
+          <div class="pillar-item">
+            <span class="pillar-val">160–250mg</span>
+            <span class="pillar-lbl">Natural caffeine per chilled can</span>
+          </div>
+          <div class="pillar-item">
+            <span class="pillar-val">1,000mg Taurine</span>
+            <span class="pillar-lbl">Paired with B3, B5, B6 &amp; B12</span>
+          </div>
+          <div class="pillar-item">
+            <span class="pillar-val">Cold-Pressed</span>
+            <span class="pillar-lbl">Express shipping free over $25</span>
           </div>
         </div>
       </section>
@@ -1651,13 +2126,165 @@
           </div>
         </div>
       </section>
+
+      <!-- 4C. CUSTOM VARIETY PACK BUILDER -->
+      <section class="bundle-section" id="bundles" aria-labelledby="bundles-heading">
+        <div class="bundle-container">
+          <div>
+            <p class="section-eyebrow">Custom Mix &amp; Match</p>
+            <h2 class="section-title" id="bundles-heading">Build Your 4-Can Pack</h2>
+            <p class="section-lead" style="margin-top: 12px;">
+              Pick any four cans across our lineup to unlock 15% off and test every flavour chilled.
+            </p>
+            <div class="bundle-picker-list" id="bundle-picker-list"></div>
+          </div>
+
+          <div class="bundle-summary-card">
+            <p class="section-eyebrow" style="margin-bottom: 4px;">Your Variety Box</p>
+            <h3 class="card-title" id="bundle-count-heading">0 of 4 Cans Selected</h3>
+            <div class="bundle-slots" id="bundle-slots"></div>
+            <div class="bundle-price-row">
+              <span style="color: var(--text-muted); font-size: 0.875rem;">Variety 4-Pack (15% Off)</span>
+              <span class="card-price" id="bundle-price-val">$0.00</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <button type="button" class="cart-checkout-btn" id="bundle-add-btn" disabled>
+                Select 4 Cans to Add Pack
+              </button>
+              <button type="button" class="btn-outline" id="bundle-starter-btn">
+                Quick-Add All 4 Flavours ($11.52)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4D. REVIEWS & FAQ SECTION -->
+      <section class="community-section" id="reviews" aria-labelledby="reviews-heading">
+        <div class="community-container">
+          <div>
+            <p class="section-eyebrow">Verified Drinkers</p>
+            <h2 class="section-title" id="reviews-heading">Tasting Notes &amp; Reviews</h2>
+            <div class="reviews-stack">
+              <article class="review-card">
+                <p class="review-quote">
+                  “Cherry Cola genuinely tastes like dark Bing cherries over ice—none of that chalky sweetener aftertaste you get in standard energy cans.”
+                </p>
+                <div class="review-author">Marcus Vance · Track Cyclist, Portland · Cherry Cola 12-Case</div>
+              </article>
+              <article class="review-card">
+                <p class="review-quote">
+                  “Watermelon Mint out of the fridge after a morning run is unbeatable. Crisp garden mint balances the melon cleanly with zero jitter.”
+                </p>
+                <div class="review-author">Elena Cho · Physical Therapist, Austin · Variety 4-Pack</div>
+              </article>
+              <article class="review-card">
+                <p class="review-quote">
+                  “Citrus Blue Razz gives five straight hours of locked-in studio focus without an afternoon drop-off.”
+                </p>
+                <div class="review-author">Devon Brooks · Audio Engineer, Chicago · Citrus Blue Razz</div>
+              </article>
+            </div>
+          </div>
+
+          <div>
+            <p class="section-eyebrow">Questions Answered</p>
+            <h2 class="section-title">Product &amp; Shipping FAQ</h2>
+            <div class="faq-list" id="faq-list">
+              <div class="faq-item is-open">
+                <button type="button" class="faq-trigger" aria-expanded="true">
+                  <span>How much caffeine is in each NEXUS BOLT can?</span>
+                  <span aria-hidden="true">−</span>
+                </button>
+                <div class="faq-body">
+                  Our 500mL flagship cans contain 250mg (Cherry Cola) or 200mg (Citrus Blue Razz) of natural caffeine paired with 1,000mg L-Taurine. Our 300mL slim cans deliver 160mg–200mg for lighter lifts.
+                </div>
+              </div>
+              <div class="faq-item">
+                <button type="button" class="faq-trigger" aria-expanded="false">
+                  <span>Does NEXUS BOLT contain sugar or artificial dyes?</span>
+                  <span aria-hidden="true">+</span>
+                </button>
+                <div class="faq-body">
+                  Zero added sugar and only 5–10 kcal per can. Every formula uses fruit-botanical aromatics, B-vitamins (B3, B5, B6, B12), and electrolytes with clean zero-calorie sweetness.
+                </div>
+              </div>
+              <div class="faq-item">
+                <button type="button" class="faq-trigger" aria-expanded="false">
+                  <span>How fast does shipping arrive and how do I get free delivery?</span>
+                  <span aria-hidden="true">+</span>
+                </button>
+                <div class="faq-body">
+                  Orders over $25 qualify automatically for free cold-chain express shipping (2–3 business days). Use code BOLT15 in your cart drawer for 15% off your first order.
+                </div>
+              </div>
+              <div class="faq-item">
+                <button type="button" class="faq-trigger" aria-expanded="false">
+                  <span>Are the aluminum cans 100% recyclable?</span>
+                  <span aria-hidden="true">+</span>
+                </button>
+                <div class="faq-body">
+                  Yes—every NEXUS BOLT can is spun from infinitely recyclable brushed aluminum with BPA-NI interior lining.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- FOOTER -->
     <footer class="site-footer">
+      <div class="footer-grid">
+        <div>
+          <a href="#hero-top" class="nav-brand" style="display: inline-block; margin-bottom: 12px;">NEXUS BOLT</a>
+          <p class="section-lead" style="font-size: 0.875rem;">
+            Zero-sugar sparkling performance energy brewed with crisp botanical fruit profiles, taurine, electrolytes, and clean natural caffeine.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-col-title">Shop</h3>
+          <ul class="footer-links">
+            <li><a href="#flavours">All Flavours</a></li>
+            <li><a href="#bundles">Build a 4-Pack</a></li>
+            <li><a href="#formula">Nutrition &amp; Formula</a></li>
+            <li><a href="#hero-top">Interactive 3D Can</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-col-title">Support</h3>
+          <ul class="footer-links">
+            <li><a href="#reviews">Shipping &amp; FAQ</a></li>
+            <li><a href="#reviews">Customer Reviews</a></li>
+            <li><a href="#bundles">Starter Bundles</a></li>
+            <li><a href="#hero-top">Back to Top</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-col-title">Get Drop Alerts &amp; BOLT15</h3>
+          <p style="margin: 0; font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5;">
+            Join for limited-batch flavour drops and 15% off your first 12-case.
+          </p>
+          <form class="newsletter-form" id="newsletter-form">
+            <input
+              type="email"
+              class="newsletter-input"
+              id="newsletter-email"
+              placeholder="you@domain.com"
+              aria-label="Email address"
+              required
+            />
+            <button type="submit" class="newsletter-btn">Join</button>
+          </form>
+        </div>
+      </div>
+
       <div class="footer-inner">
-        <span>NEXUS BOLT · Zero Sugar Sparkling Energy</span>
-        <a href="#hero-top" class="footer-top-link">Back to top</a>
+        <span>© 2026 NEXUS BOLT Beverage Co. · Zero Sugar Sparkling Energy</span>
+        <a href="#hero-top" class="footer-top-link">Back to top ↑</a>
       </div>
     </footer>
 
@@ -1673,6 +2300,12 @@
           ✕
         </button>
       </div>
+      <div class="cart-shipping-bar">
+        <p class="cart-shipping-txt" id="cart-shipping-txt">Add $25.00 more for Free Express Shipping</p>
+        <div class="meter-track">
+          <div class="meter-fill" id="cart-shipping-fill" style="width: 0%;"></div>
+        </div>
+      </div>
       <div class="cart-items" id="cart-items-list"></div>
       <div class="cart-foot">
         <div class="cart-promo-row">
@@ -1685,12 +2318,17 @@
           />
           <button type="button" class="cart-promo-btn" id="cart-promo-btn">Apply</button>
         </div>
+        <div class="checkout-panel" id="checkout-panel">
+          <input type="text" class="checkout-field" id="checkout-name" placeholder="Full Name" aria-label="Full Name" />
+          <input type="email" class="checkout-field" id="checkout-email" placeholder="Email for Receipt" aria-label="Email for Receipt" />
+          <input type="text" class="checkout-field" id="checkout-city" placeholder="Shipping City &amp; Postal Code" aria-label="Shipping City and Postal Code" />
+        </div>
         <div class="cart-subtotal">
           <span id="cart-subtotal-lbl">Subtotal</span>
           <span id="cart-subtotal-val">$0.00</span>
         </div>
         <button type="button" class="cart-checkout-btn" id="cart-checkout-btn" disabled>
-          Place Sample Order
+          Proceed to Checkout
         </button>
       </div>
     </aside>
@@ -2023,7 +2661,6 @@
         // ============================================================
         // 2. DOM REFERENCES
         // ============================================================
-        var navFlavourEl = document.getElementById("nav-flavour-label");
         var navCartBtnEl = document.getElementById("nav-cart-btn");
         var heroTrackEl = document.getElementById("hero-track");
         var heroDragLayerEl = document.getElementById("hero-drag-layer");
@@ -2044,6 +2681,12 @@
         var scrollHintEl = document.getElementById("scroll-hint");
         var packToggleEl = document.getElementById("pack-toggle");
         var flavoursGridEl = document.getElementById("flavours-grid");
+        var bundlePickerListEl = document.getElementById("bundle-picker-list");
+        var bundleSlotsEl = document.getElementById("bundle-slots");
+        var bundleCountHeadingEl = document.getElementById("bundle-count-heading");
+        var bundlePriceValEl = document.getElementById("bundle-price-val");
+        var bundleAddBtnEl = document.getElementById("bundle-add-btn");
+        var bundleStarterBtnEl = document.getElementById("bundle-starter-btn");
         var formulaPhotoEl = document.getElementById("formula-photo");
         var formulaHeadingEl = document.getElementById("formula-heading");
         var formulaLeadEl = document.getElementById("formula-lead");
@@ -2057,12 +2700,20 @@
         var cartBackdropEl = document.getElementById("cart-backdrop");
         var cartDrawerEl = document.getElementById("cart-drawer");
         var cartCloseBtnEl = document.getElementById("cart-close-btn");
+        var cartShippingTxtEl = document.getElementById("cart-shipping-txt");
+        var cartShippingFillEl = document.getElementById("cart-shipping-fill");
         var cartItemsListEl = document.getElementById("cart-items-list");
         var cartSubtotalLblEl = document.getElementById("cart-subtotal-lbl");
         var cartSubtotalEl = document.getElementById("cart-subtotal-val");
         var cartPromoInputEl = document.getElementById("cart-promo-input");
         var cartPromoBtnEl = document.getElementById("cart-promo-btn");
+        var checkoutPanelEl = document.getElementById("checkout-panel");
+        var checkoutNameEl = document.getElementById("checkout-name");
+        var checkoutEmailEl = document.getElementById("checkout-email");
+        var checkoutCityEl = document.getElementById("checkout-city");
         var cartCheckoutBtnEl = document.getElementById("cart-checkout-btn");
+        var newsletterFormEl = document.getElementById("newsletter-form");
+        var newsletterEmailEl = document.getElementById("newsletter-email");
         var fallbackEl = document.getElementById("webgl-fallback");
         var fallbackImgEl = document.getElementById("fallback-img");
         var fallbackKickerEl = document.getElementById("fallback-kicker");
@@ -2104,10 +2755,24 @@
           return { count: totalCans, rawSum: rawSum, sum: finalSum };
         }
 
+        var isCheckoutOpen = false;
+
         function renderCartUI() {
           var totals = getCartTotals();
           if (navCartBtnEl) {
             navCartBtnEl.textContent = "Cart (" + totals.count + ")";
+          }
+          if (cartShippingTxtEl && cartShippingFillEl) {
+            var freeThreshold = 25;
+            var pct = Math.min(100, Math.round((totals.sum / freeThreshold) * 100));
+            cartShippingFillEl.style.width = pct + "%";
+            if (totals.sum >= freeThreshold) {
+              cartShippingTxtEl.textContent = "Unlocked: Free Cold-Chain Express Shipping";
+            } else {
+              var remain = Math.max(0, freeThreshold - totals.sum);
+              cartShippingTxtEl.textContent =
+                "Add $" + remain.toFixed(2) + " more for Free Express Shipping";
+            }
           }
           if (cartSubtotalLblEl) {
             cartSubtotalLblEl.textContent =
@@ -2116,8 +2781,18 @@
           if (cartSubtotalEl) {
             cartSubtotalEl.textContent = "$" + totals.sum.toFixed(2);
           }
+          if (totals.count === 0) {
+            isCheckoutOpen = false;
+            if (checkoutPanelEl) checkoutPanelEl.classList.remove("is-open");
+          }
           if (cartCheckoutBtnEl) {
             cartCheckoutBtnEl.disabled = totals.count === 0;
+            cartCheckoutBtnEl.textContent =
+              totals.count === 0
+                ? "Proceed to Checkout"
+                : isCheckoutOpen
+                  ? "Complete Order ($" + totals.sum.toFixed(2) + ")"
+                  : "Proceed to Checkout";
           }
           if (!cartItemsListEl) return;
 
@@ -2270,14 +2945,41 @@
           cartCheckoutBtnEl.addEventListener("click", function () {
             var totals = getCartTotals();
             if (totals.count === 0) return;
+
+            if (!isCheckoutOpen) {
+              isCheckoutOpen = true;
+              if (checkoutPanelEl) checkoutPanelEl.classList.add("is-open");
+              cartCheckoutBtnEl.textContent = "Complete Order ($" + totals.sum.toFixed(2) + ")";
+              if (checkoutNameEl) checkoutNameEl.focus();
+              return;
+            }
+
+            var custName = checkoutNameEl ? (checkoutNameEl.value || "").trim() : "";
+            var custEmail = checkoutEmailEl ? (checkoutEmailEl.value || "").trim() : "";
+            var custCity = checkoutCityEl ? (checkoutCityEl.value || "").trim() : "";
+            if (!custName || !custEmail || !custCity) {
+              showToast("Please enter your full name, email, and shipping city.");
+              return;
+            }
+
+            var orderNum = "NB-" + String(1040 + Math.floor(Math.random() * 8900));
             cartItemsMap = {};
             appliedPromoRate = 0;
             appliedPromoCode = "";
+            isCheckoutOpen = false;
+            if (checkoutPanelEl) checkoutPanelEl.classList.remove("is-open");
             if (cartPromoInputEl) cartPromoInputEl.value = "";
+            if (checkoutNameEl) checkoutNameEl.value = "";
+            if (checkoutEmailEl) checkoutEmailEl.value = "";
+            if (checkoutCityEl) checkoutCityEl.value = "";
             renderCartUI();
             closeCartDrawer();
             showToast(
-              "Sample order confirmed (" +
+              "Order #" +
+                orderNum +
+                " confirmed for " +
+                custName +
+                " (" +
                 totals.count +
                 (totals.count === 1 ? " can" : " cans") +
                 " · $" +
@@ -2386,6 +3088,180 @@
         if (heroQuickAddBtnEl) {
           heroQuickAddBtnEl.addEventListener("click", function () {
             addFlavourToCart(FLAVOURS[activeFlavourIdx], "single");
+          });
+        }
+
+        // Custom 4-Can Variety Bundle Builder + FAQ + Newsletter
+        var bundleCounts = {
+          "cherry-cola": 1,
+          "watermelon-mint": 1,
+          "citrus-blue-razz": 1,
+          "green-apple": 1
+        };
+
+        function getBundleSelection() {
+          var chosen = [];
+          var rawTotal = 0;
+          for (var i = 0; i < FLAVOURS.length; i++) {
+            var fl = FLAVOURS[i];
+            var q = bundleCounts[fl.id] || 0;
+            for (var c = 0; c < q; c++) {
+              chosen.push(fl);
+              rawTotal += fl.price;
+            }
+          }
+          var discounted = Math.round(rawTotal * 0.85 * 100) / 100;
+          return { list: chosen, discounted: discounted };
+        }
+
+        function renderBundleBuilder() {
+          if (!bundlePickerListEl || !bundleSlotsEl) return;
+          var sel = getBundleSelection();
+          var totalSelected = sel.list.length;
+
+          bundlePickerListEl.innerHTML = "";
+          for (var i = 0; i < FLAVOURS.length; i++) {
+            (function (fl) {
+              var qty = bundleCounts[fl.id] || 0;
+              var card = document.createElement("div");
+              card.className = "bundle-item-card";
+
+              var left = document.createElement("div");
+              left.className = "bundle-item-left";
+              var th = document.createElement("img");
+              th.className = "bundle-thumb";
+              th.src = fl.imageSrc;
+              th.alt = fl.label;
+              var meta = document.createElement("div");
+              var h4 = document.createElement("h4");
+              h4.className = "bundle-item-title";
+              h4.textContent = fl.label;
+              var sub = document.createElement("span");
+              sub.className = "bundle-item-sub";
+              sub.textContent = fl.volume + " · $" + fl.price.toFixed(2);
+              meta.appendChild(h4);
+              meta.appendChild(sub);
+              left.appendChild(th);
+              left.appendChild(meta);
+
+              var grp = document.createElement("div");
+              grp.className = "qty-group";
+              var mBtn = document.createElement("button");
+              mBtn.type = "button";
+              mBtn.className = "qty-btn";
+              mBtn.textContent = "−";
+              mBtn.setAttribute("aria-label", "Remove " + fl.label + " from variety box");
+              mBtn.addEventListener("click", function () {
+                if ((bundleCounts[fl.id] || 0) > 0) {
+                  bundleCounts[fl.id] -= 1;
+                  renderBundleBuilder();
+                }
+              });
+              var qSpan = document.createElement("span");
+              qSpan.className = "qty-val";
+              qSpan.textContent = String(qty);
+              var pBtn = document.createElement("button");
+              pBtn.type = "button";
+              pBtn.className = "qty-btn";
+              pBtn.textContent = "+";
+              pBtn.setAttribute("aria-label", "Add " + fl.label + " to variety box");
+              pBtn.addEventListener("click", function () {
+                if (getBundleSelection().list.length < 4) {
+                  bundleCounts[fl.id] = (bundleCounts[fl.id] || 0) + 1;
+                  renderBundleBuilder();
+                } else {
+                  showToast("Variety box holds 4 cans — remove one to swap flavours.");
+                }
+              });
+
+              grp.appendChild(mBtn);
+              grp.appendChild(qSpan);
+              grp.appendChild(pBtn);
+              card.appendChild(left);
+              card.appendChild(grp);
+              bundlePickerListEl.appendChild(card);
+            })(FLAVOURS[i]);
+          }
+
+          bundleSlotsEl.innerHTML = "";
+          for (var s = 0; s < 4; s++) {
+            var slot = document.createElement("div");
+            if (s < sel.list.length) {
+              slot.className = "bundle-slot is-filled";
+              var sImg = document.createElement("img");
+              sImg.src = sel.list[s].imageSrc;
+              sImg.alt = sel.list[s].label;
+              slot.appendChild(sImg);
+            } else {
+              slot.className = "bundle-slot";
+              slot.textContent = "Slot " + (s + 1);
+            }
+            bundleSlotsEl.appendChild(slot);
+          }
+
+          if (bundleCountHeadingEl) {
+            bundleCountHeadingEl.textContent = totalSelected + " of 4 Cans Selected";
+          }
+          if (bundlePriceValEl) {
+            bundlePriceValEl.textContent = "$" + sel.discounted.toFixed(2);
+          }
+          if (bundleAddBtnEl) {
+            bundleAddBtnEl.disabled = totalSelected !== 4;
+            bundleAddBtnEl.textContent =
+              totalSelected === 4
+                ? "Add Custom 4-Pack ($" + sel.discounted.toFixed(2) + ")"
+                : "Select " + (4 - totalSelected) + " More Can" + (4 - totalSelected === 1 ? "" : "s");
+          }
+        }
+
+        function addVarietyListToCart(canList) {
+          for (var i = 0; i < canList.length; i++) {
+            var fl = canList[i];
+            var key = fl.id + ":single";
+            if (!cartItemsMap[key]) {
+              cartItemsMap[key] = { flav: fl, packId: "single", qty: 0 };
+            }
+            cartItemsMap[key].qty += 1;
+          }
+          renderCartUI();
+          openCartDrawer();
+          showToast("Added 4-Can Variety Box to your pack!");
+        }
+
+        if (bundleAddBtnEl) {
+          bundleAddBtnEl.addEventListener("click", function () {
+            var sel = getBundleSelection();
+            if (sel.list.length === 4) {
+              addVarietyListToCart(sel.list);
+            }
+          });
+        }
+        if (bundleStarterBtnEl) {
+          bundleStarterBtnEl.addEventListener("click", function () {
+            addVarietyListToCart(FLAVOURS);
+          });
+        }
+
+        var faqTriggers = document.querySelectorAll(".faq-trigger");
+        for (var fq = 0; fq < faqTriggers.length; fq++) {
+          (function (btn) {
+            btn.addEventListener("click", function () {
+              var item = btn.parentNode;
+              var openNow = item.classList.toggle("is-open");
+              btn.setAttribute("aria-expanded", openNow ? "true" : "false");
+              var iconSpan = btn.querySelectorAll("span")[1];
+              if (iconSpan) iconSpan.textContent = openNow ? "−" : "+";
+            });
+          })(faqTriggers[fq]);
+        }
+
+        if (newsletterFormEl && newsletterEmailEl) {
+          newsletterFormEl.addEventListener("submit", function (ev) {
+            ev.preventDefault();
+            var addr = (newsletterEmailEl.value || "").trim();
+            if (!addr) return;
+            newsletterEmailEl.value = "";
+            showToast("Subscribed " + addr + " — use code BOLT15 in your cart for 15% off.");
           });
         }
 
@@ -2769,17 +3645,17 @@
           orgTexCache.fruitBump.wrapS = THREE.RepeatWrapping;
           orgTexCache.fruitBump.wrapT = THREE.RepeatWrapping;
 
-          // 3. Bing Cherry Photographic Skin Texture (Deep Black-Mahogany -> Garnet -> Ruby)
+          // 3. Bing Cherry Photographic Skin Texture (Rich Ruby-Garnet -> Crimson -> Velvet Mahogany)
           var chC = document.createElement("canvas");
           chC.width = 512;
           chC.height = 512;
           var chCtx = chC.getContext("2d");
           var chGrad = chCtx.createLinearGradient(0, 0, 0, 512);
-          chGrad.addColorStop(0.0, "#1c0206");
-          chGrad.addColorStop(0.22, "#590615");
-          chGrad.addColorStop(0.52, "#9f1239");
-          chGrad.addColorStop(0.78, "#6f071a");
-          chGrad.addColorStop(1.0, "#240308");
+          chGrad.addColorStop(0.0, "#450512");
+          chGrad.addColorStop(0.24, "#880e28");
+          chGrad.addColorStop(0.52, "#dc2626");
+          chGrad.addColorStop(0.78, "#9f1239");
+          chGrad.addColorStop(1.0, "#3b030e");
           chCtx.fillStyle = chGrad;
           chCtx.fillRect(0, 0, 512, 512);
           for (var cm = 0; cm < 220; cm++) {
@@ -2787,7 +3663,7 @@
             var cmy = (cm * 139) % 512;
             var cmr = 16 + (cm % 32);
             var mG = chCtx.createRadialGradient(cmx, cmy, 2, cmx, cmy, cmr);
-            mG.addColorStop(0, cm % 2 === 0 ? "rgba(190, 18, 60, 0.22)" : "rgba(25, 2, 7, 0.24)");
+            mG.addColorStop(0, cm % 2 === 0 ? "rgba(244, 63, 94, 0.28)" : "rgba(48, 4, 14, 0.24)");
             mG.addColorStop(1, "rgba(0,0,0,0)");
             chCtx.fillStyle = mG;
             chCtx.beginPath();
@@ -2796,7 +3672,7 @@
           }
           // Tiny lenticel sugar specks on cherry skin
           for (var cs = 0; cs < 260; cs++) {
-            chCtx.fillStyle = "rgba(254, 205, 211, 0.22)";
+            chCtx.fillStyle = "rgba(255, 228, 230, 0.26)";
             chCtx.fillRect((cs * 73) % 512, (cs * 167) % 512, 2, 2);
           }
           orgTexCache.cherrySkinTex = new THREE.CanvasTexture(chC);
@@ -3338,20 +4214,18 @@
           alphaCanvas.height = 512;
           var aCtx = alphaCanvas.getContext("2d");
 
-          var rGrad = aCtx.createRadialGradient(256, 256, 18, 256, 256, 248);
-          rGrad.addColorStop(0.0, "#242424");
-          rGrad.addColorStop(0.22, "#757575");
-          rGrad.addColorStop(0.45, "#ffffff");
-          rGrad.addColorStop(0.72, "#a8a8a8");
-          rGrad.addColorStop(0.95, "#000000");
+          var rGrad = aCtx.createRadialGradient(256, 256, 8, 256, 256, 250);
+          rGrad.addColorStop(0.0, "#ffffff");
+          rGrad.addColorStop(0.32, "#888888");
+          rGrad.addColorStop(0.65, "#262626");
+          rGrad.addColorStop(1.0, "#000000");
           aCtx.fillStyle = rGrad;
           aCtx.fillRect(0, 0, 512, 512);
 
-          var aTex = new THREE.CanvasTexture(alphaCanvas);
-          return aTex;
+          return new THREE.CanvasTexture(alphaCanvas);
         }
 
-        function extractPhotoSplashSpriteTex(imgEl) {
+        function keyOutBlackBox(imgEl, rx, ry, rw, rh, lumFloor, gain) {
           try {
             var spC = document.createElement("canvas");
             spC.width = 256;
@@ -3359,8 +4233,7 @@
             var spCtx = spC.getContext("2d");
             var iw = imgEl.naturalWidth;
             var ih = imgEl.naturalHeight;
-            // Sample pure dark-backdrop splash droplets & arcs from right flank of the studio photo
-            spCtx.drawImage(imgEl, iw * 0.64, ih * 0.16, iw * 0.30, ih * 0.44, 0, 0, 256, 256);
+            spCtx.drawImage(imgEl, iw * rx, ih * ry, iw * rw, ih * rh, 0, 0, 256, 256);
             var imgData = spCtx.getImageData(0, 0, 256, 256);
             var pxData = imgData.data;
             for (var py = 0; py < 256; py++) {
@@ -3369,12 +4242,14 @@
                 var r = pxData[idx];
                 var g = pxData[idx + 1];
                 var b = pxData[idx + 2];
+                var maxCh = Math.max(r, g, b);
                 var lum = 0.299 * r + 0.587 * g + 0.114 * b;
+                var energy = Math.max(lum, maxCh * 0.72);
                 var dx = (px - 128) / 128;
                 var dy = (py - 128) / 128;
                 var radial = Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy));
-                var edgeFade = Math.min(1, radial * 2.1);
-                var alpha = Math.max(0, Math.min(255, (lum - 24) * 2.6)) * edgeFade;
+                var edgeFade = Math.min(1, radial * 2.3);
+                var alpha = Math.max(0, Math.min(255, (energy - lumFloor) * gain)) * edgeFade;
                 pxData[idx + 3] = alpha;
               }
             }
@@ -3387,19 +4262,39 @@
           }
         }
 
+        function extractPhotoSplashSpriteTex(flavId, imgEl) {
+          var cuts = {
+            fruitA: keyOutBlackBox(imgEl, 0.14, 0.65, 0.21, 0.29, 16, 4.2),
+            fruitB: keyOutBlackBox(imgEl, 0.65, 0.66, 0.22, 0.29, 16, 4.2),
+            ice: keyOutBlackBox(imgEl, 0.59, 0.74, 0.11, 0.18, 24, 4.0),
+            splash: keyOutBlackBox(imgEl, 0.64, 0.16, 0.30, 0.44, 24, 2.8)
+          };
+          if (flavId === "watermelon-mint") {
+            cuts.fruitA = keyOutBlackBox(imgEl, 0.14, 0.30, 0.22, 0.42, 20, 3.8);
+            cuts.fruitB = keyOutBlackBox(imgEl, 0.58, 0.72, 0.32, 0.26, 20, 3.8);
+          } else if (flavId === "citrus-blue-razz") {
+            cuts.fruitA = keyOutBlackBox(imgEl, 0.20, 0.58, 0.18, 0.24, 20, 3.8);
+            cuts.fruitB = keyOutBlackBox(imgEl, 0.64, 0.68, 0.22, 0.25, 20, 3.8);
+          } else if (flavId === "green-apple") {
+            cuts.fruitA = keyOutBlackBox(imgEl, 0.14, 0.72, 0.22, 0.24, 20, 3.8);
+            cuts.fruitB = keyOutBlackBox(imgEl, 0.64, 0.64, 0.24, 0.26, 20, 3.8);
+          }
+          return cuts;
+        }
+
         function preloadFlavourMedia(glRenderer) {
           var texLoader = new THREE.TextureLoader();
           for (var i = 0; i < FLAVOURS.length; i++) {
             (function (flav) {
               var img = new Image();
               img.onload = function () {
-                var splashTex = extractPhotoSplashSpriteTex(img);
-                if (splashTex) {
-                  photoSplashTexCache[flav.id] = splashTex;
+                var cuts = extractPhotoSplashSpriteTex(flav.id, img);
+                if (cuts) {
+                  photoSplashTexCache[flav.id] = cuts;
                 }
                 if (FLAVOURS[activeFlavourIdx] && FLAVOURS[activeFlavourIdx].id === flav.id) {
                   drawCanLabelCanvas(flav);
-                  if (splashTex) {
+                  if (cuts) {
                     populateFruitSpiral(flav.id, false);
                   }
                 }
@@ -3414,14 +4309,6 @@
                   loadedTex.anisotropy = Math.min(4, glRenderer.capabilities.getMaxAnisotropy());
                 }
                 photoTexCache[flav.id] = loadedTex;
-                if (
-                  splashHaloMat &&
-                  FLAVOURS[activeFlavourIdx] &&
-                  FLAVOURS[activeFlavourIdx].id === flav.id
-                ) {
-                  splashHaloMat.map = loadedTex;
-                  splashHaloMat.needsUpdate = true;
-                }
               });
             })(FLAVOURS[i]);
           }
@@ -3643,49 +4530,66 @@
           iceGeo.computeVertexNormals();
 
           var iceShellMat = new THREE.MeshPhysicalMaterial({
-            color: 0xf0f8ff,
-            roughness: 0.04,
-            metalness: 0.08,
+            color: 0xe0f2fe,
+            emissive: 0x0c4a6e,
+            emissiveIntensity: 0.34,
+            roughness: 0.05,
+            metalness: 0.14,
             bumpMap: texBank.iceBumpTex,
-            bumpScale: 0.016,
+            bumpScale: 0.018,
             roughnessMap: texBank.iceRoughnessTex,
             clearcoat: 1.0,
             clearcoatRoughness: 0.02,
-            envMapIntensity: 2.6,
+            envMapIntensity: 2.8,
             transparent: true,
-            opacity: 0.56,
+            opacity: 0.72,
             depthWrite: false
           });
           grp.add(new THREE.Mesh(iceGeo, iceShellMat));
 
+          // Crisp frosty edge rim glint around chiseled ice bevels
+          var iceEdges = new THREE.EdgesGeometry(iceGeo, 28);
+          var iceEdgeLine = new THREE.LineSegments(
+            iceEdges,
+            new THREE.LineBasicMaterial({
+              color: 0xe0f2fe,
+              transparent: true,
+              opacity: 0.42
+            })
+          );
+          grp.add(iceEdgeLine);
+
           // Internal intersecting crystalline fracture planes & trapped air bubbles
           var crackMat = new THREE.MeshBasicMaterial({
             map: texBank.iceCrackTex,
-            color: 0xe0f2fe,
+            color: 0xf0f9ff,
             transparent: true,
-            opacity: 0.72,
+            opacity: 0.85,
             blending: THREE.AdditiveBlending,
             side: THREE.DoubleSide,
             depthWrite: false
           });
-          var crackPlaneA = new THREE.Mesh(new THREE.PlaneGeometry(0.27, 0.27), crackMat);
+          var crackPlaneA = new THREE.Mesh(new THREE.PlaneGeometry(0.28, 0.28), crackMat);
           crackPlaneA.rotation.set(0.38, 0.55, 0.2);
           grp.add(crackPlaneA);
 
-          var crackPlaneB = new THREE.Mesh(new THREE.PlaneGeometry(0.26, 0.26), crackMat);
+          var crackPlaneB = new THREE.Mesh(new THREE.PlaneGeometry(0.27, 0.27), crackMat);
           crackPlaneB.rotation.set(-0.45, -0.75, 0.65);
           grp.add(crackPlaneB);
 
           // Inner milky frosted core cube
           var coreMat = new THREE.MeshPhysicalMaterial({
-            color: 0xdbeafe,
-            roughness: 0.35,
+            color: 0xbae6fd,
+            emissive: 0x0284c7,
+            emissiveIntensity: 0.2,
+            roughness: 0.3,
             transparent: true,
-            opacity: 0.26,
+            opacity: 0.36,
             depthWrite: false
           });
-          grp.add(new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.15, 0.16), coreMat));
+          grp.add(new THREE.Mesh(new THREE.BoxGeometry(0.17, 0.16, 0.17), coreMat));
 
+          grp.scale.setScalar(1.22);
           return grp;
         }
 
@@ -3731,37 +4635,41 @@
 
           var cherryMat = new THREE.MeshPhysicalMaterial({
             map: texBank.cherrySkinTex,
-            roughness: 0.075,
-            metalness: 0.05,
+            emissive: 0x5c0618,
+            emissiveIntensity: 0.45,
+            roughness: 0.065,
+            metalness: 0.04,
             bumpMap: texBank.fruitBump,
             bumpScale: 0.0035,
             clearcoat: 1.0,
-            clearcoatRoughness: 0.025,
-            envMapIntensity: 1.85
+            clearcoatRoughness: 0.02,
+            envMapIntensity: 2.15
           });
 
           var stemMat = new THREE.MeshStandardMaterial({
-            color: 0x5c8a1f,
-            roughness: 0.52
+            color: 0x84cc16,
+            roughness: 0.48
           });
 
           if (variantIdx % 3 === 1) {
             // Photorealistic Halved Cherry with radial juicy flesh + 3D almond pit
-            var bowlGeo = new THREE.SphereGeometry(0.185, 28, 16, 0, Math.PI * 2, Math.PI * 0.5, Math.PI * 0.5);
+            var bowlGeo = new THREE.SphereGeometry(0.195, 28, 16, 0, Math.PI * 2, Math.PI * 0.5, Math.PI * 0.5);
             var bowlMesh = new THREE.Mesh(bowlGeo, cherryMat);
             bowlMesh.scale.set(1.0, 0.85, 1.0);
             grp.add(bowlMesh);
 
             var cutFaceMat = new THREE.MeshPhysicalMaterial({
               map: texBank.cherryHalfTex,
-              roughness: 0.08,
+              emissive: 0x6b0b20,
+              emissiveIntensity: 0.35,
+              roughness: 0.07,
               bumpMap: texBank.fruitBump,
               bumpScale: 0.004,
               clearcoat: 1.0,
               clearcoatRoughness: 0.02,
-              envMapIntensity: 1.7
+              envMapIntensity: 1.9
             });
-            var cutFaceMesh = new THREE.Mesh(new THREE.CircleGeometry(0.184, 32), cutFaceMat);
+            var cutFaceMesh = new THREE.Mesh(new THREE.CircleGeometry(0.194, 32), cutFaceMat);
             cutFaceMesh.rotation.x = -Math.PI / 2;
             cutFaceMesh.position.y = 0.002;
             grp.add(cutFaceMesh);
@@ -3773,17 +4681,17 @@
               clearcoat: 0.72,
               clearcoatRoughness: 0.14
             });
-            var pitMesh = new THREE.Mesh(new THREE.SphereGeometry(0.068, 18, 14), pitMat);
+            var pitMesh = new THREE.Mesh(new THREE.SphereGeometry(0.072, 18, 14), pitMat);
             pitMesh.scale.set(0.76, 0.56, 1.18);
-            pitMesh.position.set(0, 0.02, 0);
+            pitMesh.position.set(0, 0.022, 0);
             grp.add(pitMesh);
 
             var hStemCurve = new THREE.CatmullRomCurve3([
-              new THREE.Vector3(0, 0.0, -0.17),
-              new THREE.Vector3(0.02, 0.18, -0.22),
-              new THREE.Vector3(0.06, 0.34, -0.18)
+              new THREE.Vector3(0, 0.0, -0.18),
+              new THREE.Vector3(0.02, 0.19, -0.23),
+              new THREE.Vector3(0.06, 0.36, -0.18)
             ]);
-            grp.add(new THREE.Mesh(new THREE.TubeGeometry(hStemCurve, 12, 0.014, 8, false), stemMat));
+            grp.add(new THREE.Mesh(new THREE.TubeGeometry(hStemCurve, 12, 0.015, 8, false), stemMat));
 
             addWaterDropletsToSurface(
               grp,
@@ -3793,9 +4701,10 @@
                 [0.04, 0.015, -0.13],
                 [-0.14, -0.06, 0.08]
               ],
-              0.9
+              0.95
             );
-            grp.rotation.x = 0.65;
+            grp.rotation.x = 0.92;
+            grp.scale.setScalar(1.25);
             return grp;
           }
 
@@ -4134,25 +5043,47 @@
         }
 
         function buildSingleFruit(flavourId, idx) {
+          var cuts = photoSplashTexCache[flavourId];
+
+          // Interleave actual studio photograph cutouts (cherries/fruit/ice) cleanly keyed to alpha
+          if (cuts && idx % 4 === 1) {
+            var cutIdx = Math.floor(idx / 4);
+            var cutTex = cutIdx % 3 === 0 ? cuts.fruitA : cutIdx % 3 === 1 ? cuts.fruitB : cuts.ice;
+            if (cutTex) {
+              var cutWrap = new THREE.Group();
+              var cutMat = new THREE.SpriteMaterial({
+                map: cutTex,
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.96,
+                depthWrite: false
+              });
+              var cutSprite = new THREE.Sprite(cutMat);
+              cutSprite.scale.set(0.88, 0.88, 1);
+              cutWrap.add(cutSprite);
+              return cutWrap;
+            }
+          }
+
+          var modelIdx = idx - Math.floor((idx + 3) / 4);
           var baseGroup;
-          if (flavourId === "cherry-cola") baseGroup = createCherryGroup(idx);
-          else if (flavourId === "watermelon-mint") baseGroup = createWatermelonGroup(idx);
-          else if (flavourId === "citrus-blue-razz") baseGroup = createCitrusBlueRazzGroup(idx);
-          else baseGroup = createGreenAppleGroup(idx);
+          if (flavourId === "cherry-cola") baseGroup = createCherryGroup(modelIdx);
+          else if (flavourId === "watermelon-mint") baseGroup = createWatermelonGroup(modelIdx);
+          else if (flavourId === "citrus-blue-razz") baseGroup = createCitrusBlueRazzGroup(modelIdx);
+          else baseGroup = createGreenAppleGroup(modelIdx);
 
           // Attach real photo-extracted liquid splash aura sprite behind every 3rd prop when loaded
-          var splashTex = photoSplashTexCache[flavourId];
-          if (splashTex && idx % 3 === 0) {
+          if (cuts && cuts.splash && idx % 3 === 0) {
             var spMat = new THREE.SpriteMaterial({
-              map: splashTex,
+              map: cuts.splash,
               color: 0xffffff,
               transparent: true,
-              opacity: 0.68,
+              opacity: 0.62,
               blending: THREE.AdditiveBlending,
               depthWrite: false
             });
             var spSprite = new THREE.Sprite(spMat);
-            spSprite.scale.set(0.75, 0.75, 1);
+            spSprite.scale.set(0.78, 0.78, 1);
             spSprite.position.set(0, 0, -0.08);
             baseGroup.add(spSprite);
           }
@@ -4162,7 +5093,7 @@
         function disposeObject3D(obj) {
           if (!obj) return;
           obj.traverse(function (child) {
-            if (child.isMesh || child.isSprite) {
+            if (child.isMesh || child.isSprite || child.isLine) {
               if (child.geometry) child.geometry.dispose();
               if (child.material) {
                 if (Array.isArray(child.material)) {
@@ -4241,43 +5172,44 @@
             0.1,
             60
           );
-          camera.position.set(0, 0.25, 9.0);
+          camera.position.set(0, 0.16, 7.6);
 
           // Studio 3-point + Hemisphere + Interactive Specular Spark PointLight
-          var hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x1e1b4b, 0.68);
+          var hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x1e1b4b, 0.78);
           scene.add(hemiLight);
 
           targetKeyColor = new THREE.Color(initFlav.lightHex);
-          keyLight = new THREE.DirectionalLight(targetKeyColor.clone(), 1.95);
+          keyLight = new THREE.DirectionalLight(targetKeyColor.clone(), 2.25);
           keyLight.position.set(4.5, 5.5, 6.0);
           scene.add(keyLight);
 
-          fillLight = new THREE.DirectionalLight(0xe0f2fe, 0.9);
+          fillLight = new THREE.DirectionalLight(0xe0f2fe, 1.05);
           fillLight.position.set(-5.5, 2.0, 4.0);
           scene.add(fillLight);
 
           targetRimColor = new THREE.Color(initFlav.rimHex);
-          rimLight = new THREE.DirectionalLight(targetRimColor.clone(), 1.85);
+          rimLight = new THREE.DirectionalLight(targetRimColor.clone(), 2.1);
           rimLight.position.set(0.5, 3.0, -6.0);
           scene.add(rimLight);
 
-          sparkLight = new THREE.PointLight(0xffffff, 1.4, 18);
+          sparkLight = new THREE.PointLight(0xffffff, 1.6, 18);
           sparkLight.position.set(1.5, 2.2, 5.5);
           scene.add(sparkLight);
 
           preloadFlavourMedia(renderer);
 
-          // 3D Studio Splash Halo Backdrop behind the can (displays actual product photography)
+          // Clean circular studio rim spotlight glow behind the can (no blurred photo box)
           var haloAlpha = buildSplashHaloAlphaMap();
           splashHaloMat = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
+            color: initFlav.lightHex,
             alphaMap: haloAlpha,
             transparent: true,
-            opacity: 0.72,
+            opacity: 0.36,
+            blending: THREE.AdditiveBlending,
             depthWrite: false
           });
-          splashHaloMesh = new THREE.Mesh(new THREE.PlaneGeometry(12.2, 8.1), splashHaloMat);
-          splashHaloMesh.position.set(0, 0, -2.7);
+          splashHaloMesh = new THREE.Mesh(new THREE.PlaneGeometry(7.2, 7.2), splashHaloMat);
+          splashHaloMesh.position.set(0, 0, -2.5);
           scene.add(splashHaloMesh);
 
           canGroup = buildProductCan(initFlav);
@@ -4405,7 +5337,6 @@
           rootStyle.setProperty("--bg-surface-hover", flav.surfaceHoverHex);
           rootStyle.setProperty("--accent", flav.accentHex);
 
-          if (navFlavourEl) navFlavourEl.textContent = flav.label;
           if (cap1KickerEl) cap1KickerEl.textContent = flav.specs;
           if (cap1TitleEl) cap1TitleEl.textContent = flav.cap1Headline;
           if (cap1SubEl) cap1SubEl.textContent = flav.cap1Sub;
@@ -4448,8 +5379,8 @@
 
           if (webglActive && scene) {
             drawCanLabelCanvas(flav);
-            if (splashHaloMat && photoTexCache[flav.id]) {
-              splashHaloMat.map = photoTexCache[flav.id];
+            if (splashHaloMat) {
+              splashHaloMat.color.setHex(flav.lightHex);
               splashHaloMat.needsUpdate = true;
             }
             haloPulseScale = prefersReducedMotion ? 1 : 0.78;
@@ -4529,8 +5460,8 @@
           }
 
           // Camera zoom + subtle cursor parallax
-          var targetCamZ = THREE.MathUtils.lerp(9.0, 4.1, smoothScrollProg);
-          var targetCamY = THREE.MathUtils.lerp(0.22, -0.04, smoothScrollProg);
+          var targetCamZ = THREE.MathUtils.lerp(7.6, 3.85, smoothScrollProg);
+          var targetCamY = THREE.MathUtils.lerp(0.16, -0.04, smoothScrollProg);
           var camParallaxX = prefersReducedMotion ? 0 : dragState.pointerX * 0.24;
           var camParallaxY = prefersReducedMotion ? 0 : dragState.pointerY * 0.15;
           camera.position.z = targetCamZ;
@@ -4566,18 +5497,14 @@
             spinBurstVelocity = 0;
           }
 
-          // Animate 3D studio splash photography backdrop in sync with scroll & flavour burst
+          // Animate radial studio spotlight glow in sync with scroll & flavour burst
           if (splashHaloMesh && splashHaloMat) {
             haloPulseScale += (1 - haloPulseScale) * (1 - Math.exp(-5.0 * dt));
-            var baseHaloScale = THREE.MathUtils.lerp(0.95, 1.24, smoothScrollProg) * haloPulseScale;
+            var baseHaloScale = THREE.MathUtils.lerp(0.95, 1.28, smoothScrollProg) * haloPulseScale;
             splashHaloMesh.scale.set(baseHaloScale, baseHaloScale, 1);
-            splashHaloMesh.position.z = THREE.MathUtils.lerp(-2.9, -1.75, smoothScrollProg);
-            splashHaloMesh.rotation.z =
-              THREE.MathUtils.lerp(-0.04, 0.06, smoothScrollProg) +
-              (prefersReducedMotion ? 0 : Math.sin(elapsed * 0.45) * 0.025) +
-              spinBurstVelocity * 0.045;
+            splashHaloMesh.position.z = THREE.MathUtils.lerp(-2.6, -1.7, smoothScrollProg);
             splashHaloMat.opacity =
-              THREE.MathUtils.lerp(0.68, 0.88, smoothScrollProg) * Math.min(1, haloPulseScale);
+              THREE.MathUtils.lerp(0.32, 0.48, smoothScrollProg) * Math.min(1, haloPulseScale);
           }
 
           if (sparklePoints && !prefersReducedMotion) {
@@ -4597,8 +5524,8 @@
               var item = fruitItems[i];
               var normIdx = totalCount > 1 ? i / (totalCount - 1) : 0;
 
-              var baseRadius = THREE.MathUtils.lerp(3.45, 1.62, smoothScrollProg);
-              var radiusJitter = (i % 3) * 0.34;
+              var baseRadius = THREE.MathUtils.lerp(3.15, 1.55, smoothScrollProg);
+              var radiusJitter = (i % 3) * 0.32;
               var orbitR = baseRadius + radiusJitter;
 
               var helixAngle =
@@ -4607,7 +5534,7 @@
                 dragState.rotY * 0.45 +
                 (prefersReducedMotion ? 0 : elapsed * 0.24);
 
-              var verticalSpan = THREE.MathUtils.lerp(2.45, 1.5, smoothScrollProg);
+              var verticalSpan = THREE.MathUtils.lerp(2.25, 1.45, smoothScrollProg);
               var bobY = prefersReducedMotion ? 0 : Math.sin(elapsed * 1.5 + item.phase) * 0.14;
               var posY = THREE.MathUtils.lerp(-verticalSpan, verticalSpan, normIdx) + bobY;
 
@@ -4651,6 +5578,7 @@
         try {
           renderHeroPills();
           renderFlavourCards();
+          renderBundleBuilder();
           renderCartUI();
           applyFlavourDOM(FLAVOURS[activeFlavourIdx]);
           targetScrollProg = computeTargetScroll();
