@@ -486,6 +486,135 @@
         }
       }
 
+      /* Interactive 3D Drag Layer & Hero Quick Dock */
+      .hero-drag-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: auto;
+        cursor: grab;
+        touch-action: pan-y;
+      }
+
+      .hero-drag-layer.is-dragging {
+        cursor: grabbing;
+      }
+
+      .hero-caption,
+      .scroll-hint {
+        position: absolute;
+        z-index: 4;
+        pointer-events: none;
+      }
+
+      .hero-dock {
+        position: absolute;
+        right: max(20px, env(safe-area-inset-right, 20px));
+        bottom: max(20px, env(safe-area-inset-bottom, 20px));
+        z-index: 6;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(12, 12, 17, 0.72);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        pointer-events: auto;
+      }
+
+      .hero-drag-cue {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.56);
+        padding: 0 8px 0 6px;
+        user-select: none;
+      }
+
+      .hero-flavour-pills {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .hero-flav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 32px;
+        padding: 5px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.78);
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+      }
+
+      .hero-flav-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+      }
+
+      .hero-flav-btn.is-active {
+        background: var(--accent-soft);
+        border-color: var(--accent);
+        color: #ffffff;
+      }
+
+      .hero-flav-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .hero-quick-add {
+        min-height: 32px;
+        padding: 5px 12px;
+        border-radius: 8px;
+        border: none;
+        background: var(--accent);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: filter 0.18s ease, transform 0.18s ease;
+      }
+
+      .hero-quick-add:hover {
+        filter: brightness(1.12);
+        transform: translateY(-1px);
+      }
+
+      @media (max-width: 959px) {
+        .hero-dock {
+          left: max(16px, env(safe-area-inset-left, 16px));
+          right: max(16px, env(safe-area-inset-right, 16px));
+          bottom: max(16px, env(safe-area-inset-bottom, 16px));
+          justify-content: space-between;
+        }
+        .hero-drag-cue,
+        .hero-flav-label-txt {
+          display: none;
+        }
+        .scroll-hint {
+          bottom: 76px;
+        }
+        .hero-caption {
+          bottom: 132px;
+        }
+      }
+
       /* =========================================
          4. FLAVOURS SECTION (Solid surface below hero)
          ========================================= */
@@ -542,6 +671,52 @@
         font-size: 0.9375rem;
         line-height: 1.6;
         color: var(--text-muted);
+      }
+
+      .section-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 14px;
+      }
+
+      @media (max-width: 820px) {
+        .section-controls {
+          align-items: flex-start;
+        }
+      }
+
+      .pack-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px;
+        border-radius: 10px;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-surface);
+      }
+
+      .pack-btn {
+        min-height: 34px;
+        padding: 6px 12px;
+        border-radius: 7px;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.18s ease, color 0.18s ease;
+      }
+
+      .pack-btn:hover {
+        color: #ffffff;
+      }
+
+      .pack-btn.is-active {
+        background: var(--accent);
+        color: #ffffff;
       }
 
       .flavours-grid {
@@ -764,6 +939,232 @@
         transform: scale(0.97);
       }
 
+      .add-cart-btn:active {
+        transform: scale(0.97);
+      }
+
+      /* =========================================
+         4B. FORMULA & INTERACTIVE NUTRITION SECTION
+         ========================================= */
+      .formula-section {
+        position: relative;
+        z-index: 20;
+        background-color: var(--bg-page);
+        border-top: 1px solid var(--border-subtle);
+        padding: 84px max(24px, env(safe-area-inset-left, 24px)) 96px
+          max(24px, env(safe-area-inset-right, 24px));
+        transition: background-color 0.75s var(--ease-out-expo);
+      }
+
+      .formula-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+        gap: 36px;
+        align-items: stretch;
+      }
+
+      @media (max-width: 900px) {
+        .formula-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .formula-spotlight {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-surface);
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .formula-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.92;
+        transition: transform 0.65s var(--ease-out-expo);
+      }
+
+      .formula-spotlight:hover .formula-photo {
+        transform: scale(1.03);
+      }
+
+      .formula-photo-scrim {
+        position: relative;
+        z-index: 2;
+        padding: 28px;
+        background: linear-gradient(180deg, rgba(7, 7, 10, 0) 0%, rgba(7, 7, 10, 0.88) 60%, rgba(7, 7, 10, 0.96) 100%);
+      }
+
+      .formula-panel {
+        border-radius: 16px;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-surface);
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .formula-tabs {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 4px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        align-self: flex-start;
+      }
+
+      .formula-tab-btn {
+        min-height: 34px;
+        padding: 6px 14px;
+        border-radius: 7px;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        font-family: var(--font-body);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.18s ease, color 0.18s ease;
+      }
+
+      .formula-tab-btn.is-active {
+        background: var(--accent);
+        color: #ffffff;
+      }
+
+      .formula-tab-pane {
+        display: none;
+      }
+
+      .formula-tab-pane.is-active {
+        display: block;
+      }
+
+      .spec-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+
+      .spec-stat-box {
+        padding: 14px 16px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .spec-stat-val {
+        font-family: var(--font-display);
+        font-size: 1.9rem;
+        font-weight: 800;
+        font-style: italic;
+        line-height: 1;
+        color: #ffffff;
+        margin: 0 0 4px 0;
+      }
+
+      .spec-stat-lbl {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .meter-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .meter-row {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .meter-head {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8125rem;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      .meter-track {
+        height: 6px;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+      }
+
+      .meter-fill {
+        height: 100%;
+        border-radius: 99px;
+        background: var(--accent);
+        transition: width 0.65s var(--ease-out-expo), background-color 0.45s ease;
+      }
+
+      .nutrition-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+
+      .nutrition-table tr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nutrition-table td {
+        padding: 10px 0;
+        color: rgba(255, 255, 255, 0.86);
+      }
+
+      .nutrition-table td:last-child {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      .formula-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-top: 8px;
+      }
+
+      .btn-outline {
+        min-height: 42px;
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: transparent;
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: border-color 0.18s ease, background-color 0.18s ease;
+      }
+
+      .btn-outline:hover {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
       /* =========================================
          5. FOOTER
          ========================================= */
@@ -977,6 +1378,54 @@
         cursor: pointer;
       }
 
+      .cart-row-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .cart-thumb {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        flex-shrink: 0;
+      }
+
+      .cart-promo-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .cart-promo-input {
+        flex: 1;
+        min-width: 0;
+        height: 38px;
+        padding: 0 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.8125rem;
+      }
+
+      .cart-promo-btn {
+        height: 38px;
+        padding: 0 14px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
       .cart-checkout-btn:disabled {
         opacity: 0.45;
         cursor: not-allowed;
@@ -1035,8 +1484,9 @@
       <nav class="nav-center" aria-label="Primary navigation">
         <span class="nav-active-flavour" id="nav-flavour-label">Cherry Cola</span>
         <span class="nav-sep" aria-hidden="true">·</span>
-        <a href="#flavours" class="nav-link">Flavours</a>
         <a href="#hero-top" class="nav-link nav-link-hide-sm">3D Showcase</a>
+        <a href="#flavours" class="nav-link">Flavours</a>
+        <a href="#formula" class="nav-link nav-link-hide-sm">Formula</a>
       </nav>
       <button type="button" class="nav-cart-btn" id="nav-cart-btn" aria-label="Open cart">
         Cart (0)
@@ -1068,6 +1518,8 @@
     <main id="hero-top">
       <section class="hero-scroll-track" id="hero-track" aria-label="3D Product Showcase">
         <div class="hero-sticky-viewport">
+          <div class="hero-drag-layer" id="hero-drag-layer" aria-label="Drag to rotate 3D product"></div>
+
           <div class="hero-caption" id="caption-1" data-align="left">
             <p class="caption-kicker" id="cap1-kicker">500mL · 250mg Caffeine · Zero Sugar</p>
             <h2 class="caption-headline" id="cap1-title">Pure Voltage. Cherry Cola.</h2>
@@ -1096,6 +1548,14 @@
             <span class="scroll-hint-label">Scroll to explore</span>
             <span class="scroll-hint-line" aria-hidden="true"></span>
           </div>
+
+          <div class="hero-dock" aria-label="Interactive flavour controls">
+            <span class="hero-drag-cue">Drag 360°</span>
+            <div class="hero-flavour-pills" id="hero-flavour-pills"></div>
+            <button type="button" class="hero-quick-add" id="hero-quick-add-btn">
+              Add Can · $3.49
+            </button>
+          </div>
         </div>
       </section>
 
@@ -1107,12 +1567,88 @@
               <p class="section-eyebrow">Full Lineup</p>
               <h2 class="section-title" id="flavours-heading">Four Charged Flavours</h2>
             </div>
-            <p class="section-lead">
-              Select any flavour card to transform the 3D can, fruit spiral, and lighting rig, or add cans straight to your cart.
-            </p>
+            <div class="section-controls">
+              <div class="pack-toggle" id="pack-toggle" role="group" aria-label="Pack size">
+                <button type="button" class="pack-btn is-active" data-pack="single">Single Can</button>
+                <button type="button" class="pack-btn" data-pack="pack4">4-Pack · -10%</button>
+                <button type="button" class="pack-btn" data-pack="case12">12-Case · -18%</button>
+              </div>
+              <p class="section-lead">
+                Click any flavour card to inspect it in 3D above, or add packs straight to your order.
+              </p>
+            </div>
           </div>
 
           <div class="flavours-grid" id="flavours-grid"></div>
+        </div>
+      </section>
+
+      <!-- 4B. FORMULA & NUTRITION SECTION -->
+      <section class="formula-section" id="formula" aria-labelledby="formula-heading">
+        <div class="formula-grid">
+          <div class="formula-spotlight">
+            <img
+              id="formula-photo"
+              class="formula-photo"
+              src="/assets/aistudio/image_20261117_162622_ee207256.jpg"
+              alt="NEXUS BOLT active flavour studio shot"
+              referrerpolicy="no-referrer"
+            />
+            <div class="formula-photo-scrim">
+              <p class="section-eyebrow" id="formula-eyebrow">Active 3D Selection</p>
+              <h2 class="section-title" id="formula-heading">Cherry Cola Formula</h2>
+              <p class="section-lead" id="formula-lead" style="margin-top: 10px;">
+                Cold-carbonated zero-sugar matrix engineered for clean, sustained energy.
+              </p>
+            </div>
+          </div>
+
+          <div class="formula-panel">
+            <div>
+              <div class="formula-tabs" role="tablist" aria-label="Formula details">
+                <button type="button" class="formula-tab-btn is-active" data-tab="profile">
+                  Flavour Profile
+                </button>
+                <button type="button" class="formula-tab-btn" data-tab="nutrition">
+                  Nutrition Facts
+                </button>
+                <button type="button" class="formula-tab-btn" data-tab="actives">
+                  Active Fuel
+                </button>
+              </div>
+
+              <div class="formula-tab-pane is-active" id="tab-profile" style="margin-top: 22px;">
+                <div class="spec-stats-grid">
+                  <div class="spec-stat-box">
+                    <p class="spec-stat-val" id="stat-caffeine">250mg</p>
+                    <span class="spec-stat-lbl">Clean Caffeine</span>
+                  </div>
+                  <div class="spec-stat-box">
+                    <p class="spec-stat-val">0g</p>
+                    <span class="spec-stat-lbl">Added Sugar</span>
+                  </div>
+                </div>
+                <div class="meter-list" id="formula-meters"></div>
+              </div>
+
+              <div class="formula-tab-pane" id="tab-nutrition" style="margin-top: 18px;">
+                <table class="nutrition-table" id="formula-nutrition-table"></table>
+              </div>
+
+              <div class="formula-tab-pane" id="tab-actives" style="margin-top: 18px;">
+                <table class="nutrition-table" id="formula-actives-table"></table>
+              </div>
+            </div>
+
+            <div class="formula-actions">
+              <button type="button" class="add-cart-btn" id="formula-add-btn" style="min-height: 42px; padding: 8px 20px;">
+                Add Cherry Cola to Cart
+              </button>
+              <button type="button" class="btn-outline" id="formula-top-btn">
+                Inspect in 3D
+              </button>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -1139,8 +1675,18 @@
       </div>
       <div class="cart-items" id="cart-items-list"></div>
       <div class="cart-foot">
+        <div class="cart-promo-row">
+          <input
+            type="text"
+            class="cart-promo-input"
+            id="cart-promo-input"
+            placeholder="Promo code (try BOLT15)"
+            aria-label="Promo code"
+          />
+          <button type="button" class="cart-promo-btn" id="cart-promo-btn">Apply</button>
+        </div>
         <div class="cart-subtotal">
-          <span>Subtotal</span>
+          <span id="cart-subtotal-lbl">Subtotal</span>
           <span id="cart-subtotal-val">$0.00</span>
         </div>
         <button type="button" class="cart-checkout-btn" id="cart-checkout-btn" disabled>
@@ -1350,8 +1896,129 @@
           }
         ];
 
+        var PACK_SIZES = {
+          single: { id: "single", label: "Single Can", mult: 1, discount: 0 },
+          pack4: { id: "pack4", label: "4-Pack", mult: 4, discount: 0.1 },
+          case12: { id: "case12", label: "12-Case", mult: 12, discount: 0.18 }
+        };
+
+        var FORMULA_SPECS = {
+          "cherry-cola": {
+            caffeineShort: "250mg",
+            lead: "Velvety dark orchard cherry fused with crisp spiced cola fizz and zero sugar.",
+            meters: [
+              { label: "Energy Voltage", pct: 96 },
+              { label: "Orchard Cherry Depth", pct: 92 },
+              { label: "Fizz & Chill Crispness", pct: 88 },
+              { label: "Tart Bite", pct: 74 }
+            ],
+            nutrition: [
+              ["Serving Size", "1 Can (500mL)"],
+              ["Calories", "10 kcal"],
+              ["Total Carbohydrates", "0 g"],
+              ["Total Sugars", "0 g"],
+              ["Sodium", "85 mg"],
+              ["Vitamin B3 (Niacin)", "16 mg (100% DV)"],
+              ["Vitamin B6", "1.7 mg (100% DV)"],
+              ["Vitamin B12", "2.4 mcg (100% DV)"]
+            ],
+            actives: [
+              ["Natural Caffeine", "250 mg"],
+              ["L-Taurine", "1000 mg"],
+              ["Electrolyte Blend", "120 mg"],
+              ["Panax Ginseng Root", "50 mg"],
+              ["Sweetener Matrix", "Sucralose & Acesulfame K"]
+            ]
+          },
+          "watermelon-mint": {
+            caffeineShort: "160mg",
+            lead: "Sun-ripened crimson watermelon chilled with crushed garden mint snap.",
+            meters: [
+              { label: "Energy Voltage", pct: 80 },
+              { label: "Melon Juiciness", pct: 94 },
+              { label: "Garden Mint Chill", pct: 90 },
+              { label: "Tart Bite", pct: 62 }
+            ],
+            nutrition: [
+              ["Serving Size", "1 Can (300mL)"],
+              ["Calories", "5 kcal"],
+              ["Total Carbohydrates", "0 g"],
+              ["Total Sugars", "0 g"],
+              ["Sodium", "60 mg"],
+              ["Vitamin B3 (Niacin)", "16 mg (100% DV)"],
+              ["Vitamin B5 (Pantothenic)", "5 mg (100% DV)"],
+              ["Vitamin B12", "2.4 mcg (100% DV)"]
+            ],
+            actives: [
+              ["Clean Caffeine", "160 mg"],
+              ["L-Taurine", "1000 mg"],
+              ["Mint Leaf Botanical", "35 mg"],
+              ["Electrolyte Complex", "95 mg"],
+              ["Zero Sugar Finish", "0 g Added"]
+            ]
+          },
+          "citrus-blue-razz": {
+            caffeineShort: "200mg",
+            lead: "Electric blue raspberry collided with tart lime peel, lemon zest, and guarana.",
+            meters: [
+              { label: "Energy Voltage", pct: 90 },
+              { label: "Berry Tang", pct: 95 },
+              { label: "Citrus Zest Snap", pct: 92 },
+              { label: "Frost Finish", pct: 86 }
+            ],
+            nutrition: [
+              ["Serving Size", "1 Can (500mL)"],
+              ["Calories", "10 kcal"],
+              ["Total Carbohydrates", "0 g"],
+              ["Total Sugars", "0 g"],
+              ["Sodium", "90 mg"],
+              ["Vitamin B3 (Niacin)", "16 mg (100% DV)"],
+              ["Vitamin B6", "1.7 mg (100% DV)"],
+              ["Vitamin B12", "2.4 mcg (100% DV)"]
+            ],
+            actives: [
+              ["Caffeine + Guarana", "200 mg"],
+              ["L-Taurine", "1000 mg"],
+              ["L-Carnitine Tartrate", "150 mg"],
+              ["Citrus Bioflavonoids", "40 mg"],
+              ["Zero Sugar Finish", "0 g Added"]
+            ]
+          },
+          "green-apple": {
+            caffeineShort: "200mg",
+            lead: "Sharp orchard Granny Smith snap balanced with cool mint crispness.",
+            meters: [
+              { label: "Energy Voltage", pct: 88 },
+              { label: "Orchard Tartness", pct: 96 },
+              { label: "Crispness", pct: 94 },
+              { label: "Sweetness Balance", pct: 64 }
+            ],
+            nutrition: [
+              ["Serving Size", "1 Can (300mL)"],
+              ["Calories", "5 kcal"],
+              ["Total Carbohydrates", "0 g"],
+              ["Total Sugars", "0 g"],
+              ["Sodium", "65 mg"],
+              ["Vitamin B3 (Niacin)", "16 mg (100% DV)"],
+              ["Vitamin B6", "1.7 mg (100% DV)"],
+              ["Vitamin B12", "2.4 mcg (100% DV)"]
+            ],
+            actives: [
+              ["Natural Caffeine", "200 mg"],
+              ["L-Taurine", "1000 mg"],
+              ["B-Vitamin Matrix", "B3 · B5 · B6 · B12"],
+              ["Malic Orchard Acid", "Crisp Bite"],
+              ["Zero Sugar Finish", "0 g Added"]
+            ]
+          }
+        };
+
         var activeFlavourIdx = 0;
-        var cartQuantities = {};
+        var activePackId = "single";
+        var activeFormulaTab = "profile";
+        var appliedPromoRate = 0;
+        var appliedPromoCode = "";
+        var cartItemsMap = {};
 
         // ============================================================
         // 2. DOM REFERENCES
@@ -1359,6 +2026,9 @@
         var navFlavourEl = document.getElementById("nav-flavour-label");
         var navCartBtnEl = document.getElementById("nav-cart-btn");
         var heroTrackEl = document.getElementById("hero-track");
+        var heroDragLayerEl = document.getElementById("hero-drag-layer");
+        var heroPillsEl = document.getElementById("hero-flavour-pills");
+        var heroQuickAddBtnEl = document.getElementById("hero-quick-add-btn");
         var cap1El = document.getElementById("caption-1");
         var cap2El = document.getElementById("caption-2");
         var cap3El = document.getElementById("caption-3");
@@ -1372,13 +2042,26 @@
         var cap3TitleEl = document.getElementById("cap3-title");
         var cap3SubEl = document.getElementById("cap3-sub");
         var scrollHintEl = document.getElementById("scroll-hint");
+        var packToggleEl = document.getElementById("pack-toggle");
         var flavoursGridEl = document.getElementById("flavours-grid");
+        var formulaPhotoEl = document.getElementById("formula-photo");
+        var formulaHeadingEl = document.getElementById("formula-heading");
+        var formulaLeadEl = document.getElementById("formula-lead");
+        var formulaStatCaffeineEl = document.getElementById("stat-caffeine");
+        var formulaMetersEl = document.getElementById("formula-meters");
+        var formulaNutriTableEl = document.getElementById("formula-nutrition-table");
+        var formulaActivesTableEl = document.getElementById("formula-actives-table");
+        var formulaAddBtnEl = document.getElementById("formula-add-btn");
+        var formulaTopBtnEl = document.getElementById("formula-top-btn");
         var toastEl = document.getElementById("toast-notice");
         var cartBackdropEl = document.getElementById("cart-backdrop");
         var cartDrawerEl = document.getElementById("cart-drawer");
         var cartCloseBtnEl = document.getElementById("cart-close-btn");
         var cartItemsListEl = document.getElementById("cart-items-list");
+        var cartSubtotalLblEl = document.getElementById("cart-subtotal-lbl");
         var cartSubtotalEl = document.getElementById("cart-subtotal-val");
+        var cartPromoInputEl = document.getElementById("cart-promo-input");
+        var cartPromoBtnEl = document.getElementById("cart-promo-btn");
         var cartCheckoutBtnEl = document.getElementById("cart-checkout-btn");
         var fallbackEl = document.getElementById("webgl-fallback");
         var fallbackImgEl = document.getElementById("fallback-img");
@@ -1386,7 +2069,7 @@
         var fallbackTitleEl = document.getElementById("fallback-title");
 
         // ============================================================
-        // 3. CART & TOAST LOGIC
+        // 3. CART, PACK PRICING, FORMULA & TOAST LOGIC
         // ============================================================
         var toastTimer = null;
 
@@ -1400,22 +2083,35 @@
           }, 2800);
         }
 
+        function getPackUnitPrice(flav, packId) {
+          var pack = PACK_SIZES[packId] || PACK_SIZES.single;
+          var raw = flav.price * pack.mult * (1 - pack.discount);
+          return Math.round(raw * 100) / 100;
+        }
+
         function getCartTotals() {
-          var totalItems = 0;
-          var subtotal = 0;
-          for (var i = 0; i < FLAVOURS.length; i++) {
-            var flav = FLAVOURS[i];
-            var qty = cartQuantities[flav.id] || 0;
-            totalItems += qty;
-            subtotal += qty * flav.price;
+          var totalCans = 0;
+          var rawSum = 0;
+          var keys = Object.keys(cartItemsMap);
+          for (var i = 0; i < keys.length; i++) {
+            var entry = cartItemsMap[keys[i]];
+            if (!entry || entry.qty <= 0) continue;
+            var pack = PACK_SIZES[entry.packId] || PACK_SIZES.single;
+            totalCans += entry.qty * pack.mult;
+            rawSum += entry.qty * getPackUnitPrice(entry.flav, entry.packId);
           }
-          return { count: totalItems, sum: subtotal };
+          var finalSum = rawSum * (1 - appliedPromoRate);
+          return { count: totalCans, rawSum: rawSum, sum: finalSum };
         }
 
         function renderCartUI() {
           var totals = getCartTotals();
           if (navCartBtnEl) {
             navCartBtnEl.textContent = "Cart (" + totals.count + ")";
+          }
+          if (cartSubtotalLblEl) {
+            cartSubtotalLblEl.textContent =
+              appliedPromoRate > 0 ? "Subtotal (" + appliedPromoCode + " -15%)" : "Subtotal";
           }
           if (cartSubtotalEl) {
             cartSubtotalEl.textContent = "$" + totals.sum.toFixed(2);
@@ -1434,24 +2130,39 @@
             return;
           }
 
-          for (var i = 0; i < FLAVOURS.length; i++) {
-            (function (flav) {
-              var qty = cartQuantities[flav.id] || 0;
-              if (qty <= 0) return;
+          var keys = Object.keys(cartItemsMap);
+          for (var i = 0; i < keys.length; i++) {
+            (function (key) {
+              var entry = cartItemsMap[key];
+              if (!entry || entry.qty <= 0) return;
+              var flav = entry.flav;
+              var pack = PACK_SIZES[entry.packId] || PACK_SIZES.single;
+              var unitPrice = getPackUnitPrice(flav, entry.packId);
 
               var row = document.createElement("div");
               row.className = "cart-row";
 
+              var leftDiv = document.createElement("div");
+              leftDiv.className = "cart-row-left";
+
+              var thumbEl = document.createElement("img");
+              thumbEl.className = "cart-thumb";
+              thumbEl.src = flav.imageSrc;
+              thumbEl.alt = flav.label;
+
               var infoDiv = document.createElement("div");
               var titleP = document.createElement("p");
               titleP.className = "cart-row-title";
-              titleP.textContent = flav.label;
+              titleP.textContent = flav.label + " · " + pack.label;
               var metaSpan = document.createElement("span");
               metaSpan.className = "cart-row-meta";
               metaSpan.textContent =
-                flav.volume + " · $" + (flav.price * qty).toFixed(2);
+                flav.volume + " × " + entry.qty + " · $" + (unitPrice * entry.qty).toFixed(2);
               infoDiv.appendChild(titleP);
               infoDiv.appendChild(metaSpan);
+
+              leftDiv.appendChild(thumbEl);
+              leftDiv.appendChild(infoDiv);
 
               var qtyGroup = document.createElement("div");
               qtyGroup.className = "qty-group";
@@ -1462,13 +2173,14 @@
               minusBtn.textContent = "−";
               minusBtn.setAttribute("aria-label", "Remove one " + flav.label);
               minusBtn.addEventListener("click", function () {
-                cartQuantities[flav.id] = Math.max(0, (cartQuantities[flav.id] || 0) - 1);
+                entry.qty = Math.max(0, entry.qty - 1);
+                if (entry.qty === 0) delete cartItemsMap[key];
                 renderCartUI();
               });
 
               var valSpan = document.createElement("span");
               valSpan.className = "qty-val";
-              valSpan.textContent = String(qty);
+              valSpan.textContent = String(entry.qty);
 
               var plusBtn = document.createElement("button");
               plusBtn.type = "button";
@@ -1476,7 +2188,7 @@
               plusBtn.textContent = "+";
               plusBtn.setAttribute("aria-label", "Add one " + flav.label);
               plusBtn.addEventListener("click", function () {
-                cartQuantities[flav.id] = (cartQuantities[flav.id] || 0) + 1;
+                entry.qty += 1;
                 renderCartUI();
               });
 
@@ -1484,21 +2196,29 @@
               qtyGroup.appendChild(valSpan);
               qtyGroup.appendChild(plusBtn);
 
-              row.appendChild(infoDiv);
+              row.appendChild(leftDiv);
               row.appendChild(qtyGroup);
               cartItemsListEl.appendChild(row);
-            })(FLAVOURS[i]);
+            })(keys[i]);
           }
         }
 
-        function addFlavourToCart(flavourObj) {
-          cartQuantities[flavourObj.id] = (cartQuantities[flavourObj.id] || 0) + 1;
+        function addFlavourToCart(flavourObj, packOverride) {
+          var pId = packOverride || activePackId || "single";
+          var key = flavourObj.id + ":" + pId;
+          if (!cartItemsMap[key]) {
+            cartItemsMap[key] = { flav: flavourObj, packId: pId, qty: 0 };
+          }
+          cartItemsMap[key].qty += 1;
           renderCartUI();
           var totals = getCartTotals();
+          var packLabel = (PACK_SIZES[pId] || PACK_SIZES.single).label;
           showToast(
             "Added " +
               flavourObj.label +
-              " to cart · " +
+              " (" +
+              packLabel +
+              ") · " +
               totals.count +
               (totals.count === 1 ? " can" : " cans") +
               " ($" +
@@ -1526,15 +2246,38 @@
         if (navCartBtnEl) navCartBtnEl.addEventListener("click", openCartDrawer);
         if (cartCloseBtnEl) cartCloseBtnEl.addEventListener("click", closeCartDrawer);
         if (cartBackdropEl) cartBackdropEl.addEventListener("click", closeCartDrawer);
+
+        if (cartPromoBtnEl && cartPromoInputEl) {
+          cartPromoBtnEl.addEventListener("click", function () {
+            var code = (cartPromoInputEl.value || "").trim().toUpperCase();
+            if (code === "BOLT15" || code === "NEXUS15") {
+              appliedPromoRate = 0.15;
+              appliedPromoCode = code;
+              renderCartUI();
+              showToast("Promo code " + code + " applied — 15% off your pack.");
+            } else if (!code) {
+              appliedPromoRate = 0;
+              appliedPromoCode = "";
+              renderCartUI();
+              showToast("Promo code cleared.");
+            } else {
+              showToast("Code not recognized — try BOLT15 for 15% off.");
+            }
+          });
+        }
+
         if (cartCheckoutBtnEl) {
           cartCheckoutBtnEl.addEventListener("click", function () {
             var totals = getCartTotals();
             if (totals.count === 0) return;
-            cartQuantities = {};
+            cartItemsMap = {};
+            appliedPromoRate = 0;
+            appliedPromoCode = "";
+            if (cartPromoInputEl) cartPromoInputEl.value = "";
             renderCartUI();
             closeCartDrawer();
             showToast(
-              "Sample order reserved (" +
+              "Sample order confirmed (" +
                 totals.count +
                 (totals.count === 1 ? " can" : " cans") +
                 " · $" +
@@ -1544,15 +2287,150 @@
           });
         }
 
+        function renderFormulaSection(flav) {
+          var spec = FORMULA_SPECS[flav.id] || FORMULA_SPECS["cherry-cola"];
+          if (formulaPhotoEl) {
+            formulaPhotoEl.src = flav.imageSrc;
+            formulaPhotoEl.alt = "NEXUS BOLT " + flav.label + " studio shot";
+          }
+          if (formulaHeadingEl) formulaHeadingEl.textContent = flav.label + " Formula";
+          if (formulaLeadEl) formulaLeadEl.textContent = spec.lead;
+          if (formulaStatCaffeineEl) formulaStatCaffeineEl.textContent = spec.caffeineShort;
+          if (formulaAddBtnEl) {
+            var unitP = getPackUnitPrice(flav, activePackId);
+            var packLabel = (PACK_SIZES[activePackId] || PACK_SIZES.single).label;
+            formulaAddBtnEl.textContent =
+              "Add " + flav.label + " (" + packLabel + " · $" + unitP.toFixed(2) + ")";
+          }
+
+          if (formulaMetersEl) {
+            formulaMetersEl.innerHTML = "";
+            for (var m = 0; m < spec.meters.length; m++) {
+              var mObj = spec.meters[m];
+              var row = document.createElement("div");
+              row.className = "meter-row";
+              var hd = document.createElement("div");
+              hd.className = "meter-head";
+              var lbl = document.createElement("span");
+              lbl.textContent = mObj.label;
+              var val = document.createElement("span");
+              val.textContent = mObj.pct + "/100";
+              hd.appendChild(lbl);
+              hd.appendChild(val);
+              var trk = document.createElement("div");
+              trk.className = "meter-track";
+              var fill = document.createElement("div");
+              fill.className = "meter-fill";
+              fill.style.width = mObj.pct + "%";
+              trk.appendChild(fill);
+              row.appendChild(hd);
+              row.appendChild(trk);
+              formulaMetersEl.appendChild(row);
+            }
+          }
+
+          function fillTable(tblEl, rows) {
+            if (!tblEl) return;
+            tblEl.innerHTML = "";
+            for (var r = 0; r < rows.length; r++) {
+              var tr = document.createElement("tr");
+              var tdA = document.createElement("td");
+              tdA.textContent = rows[r][0];
+              var tdB = document.createElement("td");
+              tdB.textContent = rows[r][1];
+              tr.appendChild(tdA);
+              tr.appendChild(tdB);
+              tblEl.appendChild(tr);
+            }
+          }
+          fillTable(formulaNutriTableEl, spec.nutrition);
+          fillTable(formulaActivesTableEl, spec.actives);
+        }
+
+        // Formula tabs & action buttons
+        var formulaTabBtns = document.querySelectorAll(".formula-tab-btn");
+        for (var ft = 0; ft < formulaTabBtns.length; ft++) {
+          (function (btn) {
+            btn.addEventListener("click", function () {
+              activeFormulaTab = btn.getAttribute("data-tab") || "profile";
+              for (var j = 0; j < formulaTabBtns.length; j++) {
+                formulaTabBtns[j].classList.toggle(
+                  "is-active",
+                  formulaTabBtns[j].getAttribute("data-tab") === activeFormulaTab
+                );
+              }
+              var panes = document.querySelectorAll(".formula-tab-pane");
+              for (var k = 0; k < panes.length; k++) {
+                panes[k].classList.toggle(
+                  "is-active",
+                  panes[k].id === "tab-" + activeFormulaTab
+                );
+              }
+            });
+          })(formulaTabBtns[ft]);
+        }
+
+        if (formulaAddBtnEl) {
+          formulaAddBtnEl.addEventListener("click", function () {
+            addFlavourToCart(FLAVOURS[activeFlavourIdx]);
+          });
+        }
+        if (formulaTopBtnEl) {
+          formulaTopBtnEl.addEventListener("click", function () {
+            window.scrollTo({
+              top: 0,
+              behavior: prefersReducedMotion ? "auto" : "smooth"
+            });
+          });
+        }
+        if (heroQuickAddBtnEl) {
+          heroQuickAddBtnEl.addEventListener("click", function () {
+            addFlavourToCart(FLAVOURS[activeFlavourIdx], "single");
+          });
+        }
+
         // ============================================================
-        // 4. RENDER FLAVOUR CARDS
+        // 4. RENDER HERO DOCK & FLAVOUR CARDS
         // ============================================================
         var cardElements = [];
+        var heroPillButtons = [];
+
+        function renderHeroPills() {
+          if (!heroPillsEl) return;
+          heroPillsEl.innerHTML = "";
+          heroPillButtons = [];
+          for (var i = 0; i < FLAVOURS.length; i++) {
+            (function (idx, flav) {
+              var btn = document.createElement("button");
+              btn.type = "button";
+              btn.className = "hero-flav-btn" + (idx === activeFlavourIdx ? " is-active" : "");
+              btn.setAttribute("aria-label", "Switch 3D showcase to " + flav.label);
+
+              var dot = document.createElement("span");
+              dot.className = "hero-flav-dot";
+              dot.style.backgroundColor = flav.accentHex;
+
+              var txt = document.createElement("span");
+              txt.className = "hero-flav-label-txt";
+              txt.textContent = flav.label;
+
+              btn.appendChild(dot);
+              btn.appendChild(txt);
+              btn.addEventListener("click", function () {
+                selectFlavour(idx, false);
+              });
+              heroPillsEl.appendChild(btn);
+              heroPillButtons.push(btn);
+            })(i, FLAVOURS[i]);
+          }
+        }
 
         function renderFlavourCards() {
           if (!flavoursGridEl) return;
           flavoursGridEl.innerHTML = "";
           cardElements = [];
+
+          var pack = PACK_SIZES[activePackId] || PACK_SIZES.single;
 
           for (var i = 0; i < FLAVOURS.length; i++) {
             (function (idx, flav) {
@@ -1626,9 +2504,11 @@
               var footEl = document.createElement("div");
               footEl.className = "card-footer";
 
+              var unitPrice = getPackUnitPrice(flav, activePackId);
               var priceEl = document.createElement("span");
               priceEl.className = "card-price";
-              priceEl.textContent = "$" + flav.price.toFixed(2);
+              priceEl.textContent =
+                "$" + unitPrice.toFixed(2) + (pack.mult > 1 ? " / " + pack.mult + "pk" : "");
 
               var addBtn = document.createElement("button");
               addBtn.type = "button";
@@ -1659,6 +2539,25 @@
               flavoursGridEl.appendChild(card);
               cardElements.push(card);
             })(i, FLAVOURS[i]);
+          }
+        }
+
+        if (packToggleEl) {
+          var packBtns = packToggleEl.querySelectorAll(".pack-btn");
+          for (var pb = 0; pb < packBtns.length; pb++) {
+            (function (btn) {
+              btn.addEventListener("click", function () {
+                activePackId = btn.getAttribute("data-pack") || "single";
+                for (var j = 0; j < packBtns.length; j++) {
+                  packBtns[j].classList.toggle(
+                    "is-active",
+                    packBtns[j].getAttribute("data-pack") === activePackId
+                  );
+                }
+                renderFlavourCards();
+                renderFormulaSection(FLAVOURS[activeFlavourIdx]);
+              });
+            })(packBtns[pb]);
           }
         }
 
@@ -1695,6 +2594,62 @@
         var photoImgCache = {};
         var haloPulseScale = 1;
 
+        var photoSplashTexCache = {};
+        var sparklePoints = null;
+        var sparkLight = null;
+        var orgTexCache = null;
+
+        // Interactive 360 drag + studio light pointer tracking
+        var dragState = {
+          active: false,
+          lastX: 0,
+          lastY: 0,
+          rotY: 0,
+          rotX: 0,
+          velY: 0,
+          velX: 0,
+          pointerX: 0,
+          pointerY: 0
+        };
+
+        if (heroDragLayerEl) {
+          heroDragLayerEl.addEventListener("pointerdown", function (ev) {
+            if (ev.button !== 0 && ev.pointerType === "mouse") return;
+            dragState.active = true;
+            dragState.lastX = ev.clientX;
+            dragState.lastY = ev.clientY;
+            dragState.velY = 0;
+            dragState.velX = 0;
+            heroDragLayerEl.classList.add("is-dragging");
+          });
+
+          window.addEventListener("pointermove", function (ev) {
+            var nx = (ev.clientX / Math.max(1, window.innerWidth)) * 2 - 1;
+            var ny = -(ev.clientY / Math.max(1, window.innerHeight)) * 2 + 1;
+            dragState.pointerX = nx;
+            dragState.pointerY = ny;
+
+            if (!dragState.active) return;
+            var dx = ev.clientX - dragState.lastX;
+            var dy = ev.clientY - dragState.lastY;
+            dragState.lastX = ev.clientX;
+            dragState.lastY = ev.clientY;
+
+            dragState.velY = dx * 0.009;
+            dragState.velX = dy * 0.004;
+            dragState.rotY += dragState.velY;
+            dragState.rotX = Math.max(-0.45, Math.min(0.45, dragState.rotX + dragState.velX));
+          });
+
+          var endDrag = function () {
+            if (!dragState.active) return;
+            dragState.active = false;
+            heroDragLayerEl.classList.remove("is-dragging");
+          };
+          window.addEventListener("pointerup", endDrag);
+          window.addEventListener("pointercancel", endDrag);
+        }
+
         function detectSoftwareWebGL() {
           try {
             var testCanvas = document.createElement("canvas");
@@ -1716,25 +2671,41 @@
 
         function buildStudioEnvTexture(glRenderer) {
           var envCanvas = document.createElement("canvas");
-          envCanvas.width = 512;
-          envCanvas.height = 256;
+          envCanvas.width = 1024;
+          envCanvas.height = 512;
           var ctx = envCanvas.getContext("2d");
 
-          var grad = ctx.createLinearGradient(0, 0, 0, 256);
-          grad.addColorStop(0, "#3a4152");
-          grad.addColorStop(0.45, "#151822");
-          grad.addColorStop(0.55, "#0b0b10");
-          grad.addColorStop(1, "#050508");
+          var grad = ctx.createLinearGradient(0, 0, 0, 512);
+          grad.addColorStop(0.0, "#64748b");
+          grad.addColorStop(0.24, "#1e293b");
+          grad.addColorStop(0.5, "#0b0d14");
+          grad.addColorStop(0.76, "#06070c");
+          grad.addColorStop(1.0, "#020204");
           ctx.fillStyle = grad;
-          ctx.fillRect(0, 0, 512, 256);
+          ctx.fillRect(0, 0, 1024, 512);
 
-          // Studio softbox highlights
-          ctx.fillStyle = "rgba(255, 250, 242, 0.92)";
-          ctx.fillRect(60, 24, 96, 54);
-          ctx.fillStyle = "rgba(210, 232, 255, 0.78)";
-          ctx.fillRect(320, 32, 110, 44);
-          ctx.fillStyle = "rgba(255, 255, 255, 0.45)";
-          ctx.fillRect(210, 108, 70, 24);
+          function drawSoftbox(bx, by, bw, bh, cInner, cOuter) {
+            var g = ctx.createRadialGradient(
+              bx + bw / 2,
+              by + bh / 2,
+              Math.min(bw, bh) * 0.08,
+              bx + bw / 2,
+              by + bh / 2,
+              Math.max(bw, bh) * 0.62
+            );
+            g.addColorStop(0, cInner);
+            g.addColorStop(0.58, cOuter);
+            g.addColorStop(1, "rgba(0,0,0,0)");
+            ctx.fillStyle = g;
+            ctx.fillRect(bx - 24, by - 24, bw + 48, bh + 48);
+          }
+
+          // High-contrast vertical strip softboxes & rim pinlights for crisp cherry/ice reflections
+          drawSoftbox(95, 50, 68, 390, "rgba(255, 255, 255, 1.0)", "rgba(255, 244, 232, 0.5)");
+          drawSoftbox(810, 65, 66, 370, "rgba(224, 242, 254, 0.98)", "rgba(186, 230, 253, 0.42)");
+          drawSoftbox(420, 16, 200, 88, "rgba(255, 255, 255, 0.95)", "rgba(226, 232, 240, 0.25)");
+          drawSoftbox(290, 140, 32, 220, "rgba(255, 255, 255, 0.82)", "rgba(255, 255, 255, 0.12)");
+          drawSoftbox(650, 150, 30, 210, "rgba(255, 255, 255, 0.78)", "rgba(255, 255, 255, 0.1)");
 
           var rawTex = new THREE.CanvasTexture(envCanvas);
           rawTex.mapping = THREE.EquirectangularReflectionMapping;
@@ -1746,6 +2717,389 @@
           rawTex.dispose();
           pmrem.dispose();
           return envRT.texture;
+        }
+
+        function getOrganicTextures() {
+          if (orgTexCache) return orgTexCache;
+          orgTexCache = {};
+
+          // 1. Brushed Aluminum + Condensation Bump Map
+          var metalCanvas = document.createElement("canvas");
+          metalCanvas.width = 512;
+          metalCanvas.height = 512;
+          var mCtx = metalCanvas.getContext("2d");
+          mCtx.fillStyle = "#808080";
+          mCtx.fillRect(0, 0, 512, 512);
+          for (var y = 0; y < 512; y += 2) {
+            var shade = 116 + Math.floor(((Math.sin(y * 0.73) + 1) * 0.5) * 28);
+            mCtx.fillStyle = "rgb(" + shade + "," + shade + "," + shade + ")";
+            mCtx.fillRect(0, y, 512, 1);
+          }
+          for (var b = 0; b < 160; b++) {
+            var bx = (b * 97) % 512;
+            var by = (b * 151) % 512;
+            var br = 2 + (b % 5);
+            var bGrad = mCtx.createRadialGradient(bx, by, 0, bx, by, br);
+            bGrad.addColorStop(0, "#ffffff");
+            bGrad.addColorStop(0.7, "#b0b0b0");
+            bGrad.addColorStop(1, "rgba(128,128,128,0)");
+            mCtx.fillStyle = bGrad;
+            mCtx.beginPath();
+            mCtx.arc(bx, by, br, 0, Math.PI * 2);
+            mCtx.fill();
+          }
+          orgTexCache.canBump = new THREE.CanvasTexture(metalCanvas);
+          orgTexCache.canBump.wrapS = THREE.RepeatWrapping;
+          orgTexCache.canBump.wrapT = THREE.RepeatWrapping;
+
+          // 2. Organic Fruit Micro-Pore Bump
+          var bumpC = document.createElement("canvas");
+          bumpC.width = 256;
+          bumpC.height = 256;
+          var bCtx = bumpC.getContext("2d");
+          bCtx.fillStyle = "#808080";
+          bCtx.fillRect(0, 0, 256, 256);
+          for (var p = 0; p < 700; p++) {
+            var px = (p * 53) % 256;
+            var py = (p * 89) % 256;
+            bCtx.fillStyle = p % 2 === 0 ? "#9a9a9a" : "#686868";
+            bCtx.fillRect(px, py, 2, 2);
+          }
+          orgTexCache.fruitBump = new THREE.CanvasTexture(bumpC);
+          orgTexCache.fruitBump.wrapS = THREE.RepeatWrapping;
+          orgTexCache.fruitBump.wrapT = THREE.RepeatWrapping;
+
+          // 3. Bing Cherry Photographic Skin Texture (Deep Black-Mahogany -> Garnet -> Ruby)
+          var chC = document.createElement("canvas");
+          chC.width = 512;
+          chC.height = 512;
+          var chCtx = chC.getContext("2d");
+          var chGrad = chCtx.createLinearGradient(0, 0, 0, 512);
+          chGrad.addColorStop(0.0, "#1c0206");
+          chGrad.addColorStop(0.22, "#590615");
+          chGrad.addColorStop(0.52, "#9f1239");
+          chGrad.addColorStop(0.78, "#6f071a");
+          chGrad.addColorStop(1.0, "#240308");
+          chCtx.fillStyle = chGrad;
+          chCtx.fillRect(0, 0, 512, 512);
+          for (var cm = 0; cm < 220; cm++) {
+            var cmx = (cm * 97) % 512;
+            var cmy = (cm * 139) % 512;
+            var cmr = 16 + (cm % 32);
+            var mG = chCtx.createRadialGradient(cmx, cmy, 2, cmx, cmy, cmr);
+            mG.addColorStop(0, cm % 2 === 0 ? "rgba(190, 18, 60, 0.22)" : "rgba(25, 2, 7, 0.24)");
+            mG.addColorStop(1, "rgba(0,0,0,0)");
+            chCtx.fillStyle = mG;
+            chCtx.beginPath();
+            chCtx.arc(cmx, cmy, cmr, 0, Math.PI * 2);
+            chCtx.fill();
+          }
+          // Tiny lenticel sugar specks on cherry skin
+          for (var cs = 0; cs < 260; cs++) {
+            chCtx.fillStyle = "rgba(254, 205, 211, 0.22)";
+            chCtx.fillRect((cs * 73) % 512, (cs * 167) % 512, 2, 2);
+          }
+          orgTexCache.cherrySkinTex = new THREE.CanvasTexture(chC);
+          orgTexCache.cherrySkinTex.encoding = THREE.sRGBEncoding;
+
+          // 4. Halved Cherry Cut-Face Texture (Outer skin, fibrous ruby pulp, rose pit pocket)
+          var halfC = document.createElement("canvas");
+          halfC.width = 512;
+          halfC.height = 512;
+          var hfCtx = halfC.getContext("2d");
+          hfCtx.fillStyle = "#3b030c";
+          hfCtx.fillRect(0, 0, 512, 512);
+          var fleshRad = hfCtx.createRadialGradient(256, 256, 28, 256, 256, 248);
+          fleshRad.addColorStop(0.0, "#451a03");
+          fleshRad.addColorStop(0.24, "#fda4af");
+          fleshRad.addColorStop(0.42, "#e11d48");
+          fleshRad.addColorStop(0.74, "#9f1239");
+          fleshRad.addColorStop(0.92, "#4c0519");
+          fleshRad.addColorStop(1.0, "#27020a");
+          hfCtx.fillStyle = fleshRad;
+          hfCtx.beginPath();
+          hfCtx.arc(256, 256, 252, 0, Math.PI * 2);
+          hfCtx.fill();
+          // Radial juicy pulp fibers
+          for (var rf = 0; rf < 48; rf++) {
+            var rAng = (rf / 48) * Math.PI * 2;
+            hfCtx.strokeStyle =
+              rf % 2 === 0 ? "rgba(255, 228, 230, 0.24)" : "rgba(76, 5, 25, 0.28)";
+            hfCtx.lineWidth = 2 + (rf % 3);
+            hfCtx.beginPath();
+            hfCtx.moveTo(256 + Math.cos(rAng) * 58, 256 + Math.sin(rAng) * 58);
+            hfCtx.lineTo(256 + Math.cos(rAng) * 230, 256 + Math.sin(rAng) * 230);
+            hfCtx.stroke();
+          }
+          orgTexCache.cherryHalfTex = new THREE.CanvasTexture(halfC);
+          orgTexCache.cherryHalfTex.encoding = THREE.sRGBEncoding;
+
+          // 5. Woody Almond Cherry Pit Texture
+          var pitC = document.createElement("canvas");
+          pitC.width = 256;
+          pitC.height = 256;
+          var pCtx = pitC.getContext("2d");
+          var pGrad = pCtx.createLinearGradient(0, 0, 256, 256);
+          pGrad.addColorStop(0, "#d99b66");
+          pGrad.addColorStop(0.5, "#b46939");
+          pGrad.addColorStop(1, "#7c3f1d");
+          pCtx.fillStyle = pGrad;
+          pCtx.fillRect(0, 0, 256, 256);
+          pCtx.strokeStyle = "rgba(92, 42, 16, 0.45)";
+          pCtx.lineWidth = 2;
+          for (var pr = 0; pr < 18; pr++) {
+            pCtx.beginPath();
+            pCtx.moveTo(0, pr * 15);
+            pCtx.bezierCurveTo(85, pr * 15 + 6, 170, pr * 15 - 6, 256, pr * 15);
+            pCtx.stroke();
+          }
+          orgTexCache.cherryPitTex = new THREE.CanvasTexture(pitC);
+          orgTexCache.cherryPitTex.encoding = THREE.sRGBEncoding;
+
+          // 6. Fractured Crystal Ice Cube Textures (Bump, Frost Roughness, Internal Cracks)
+          var iceBC = document.createElement("canvas");
+          iceBC.width = 512;
+          iceBC.height = 512;
+          var ibCtx = iceBC.getContext("2d");
+          ibCtx.fillStyle = "#808080";
+          ibCtx.fillRect(0, 0, 512, 512);
+          for (var iw = 0; iw < 45; iw++) {
+            var iwx = (iw * 83) % 512;
+            var iwy = (iw * 127) % 512;
+            var iwr = 35 + (iw % 60);
+            var wGrad = ibCtx.createRadialGradient(iwx, iwy, 4, iwx, iwy, iwr);
+            wGrad.addColorStop(0, iw % 2 === 0 ? "rgba(180,180,180,0.42)" : "rgba(75,75,75,0.42)");
+            wGrad.addColorStop(1, "rgba(128,128,128,0)");
+            ibCtx.fillStyle = wGrad;
+            ibCtx.beginPath();
+            ibCtx.arc(iwx, iwy, iwr, 0, Math.PI * 2);
+            ibCtx.fill();
+          }
+          orgTexCache.iceBumpTex = new THREE.CanvasTexture(iceBC);
+          orgTexCache.iceBumpTex.wrapS = THREE.RepeatWrapping;
+          orgTexCache.iceBumpTex.wrapT = THREE.RepeatWrapping;
+
+          var iceRC = document.createElement("canvas");
+          iceRC.width = 512;
+          iceRC.height = 512;
+          var irCtx = iceRC.getContext("2d");
+          irCtx.fillStyle = "#181818";
+          irCtx.fillRect(0, 0, 512, 512);
+          for (var fr = 0; fr < 36; fr++) {
+            var frx = (fr * 71) % 512;
+            var fry = (fr * 113) % 512;
+            var frRad = irCtx.createRadialGradient(frx, fry, 2, frx, fry, 52);
+            frRad.addColorStop(0, "rgba(170,170,170,0.55)");
+            frRad.addColorStop(1, "rgba(24,24,24,0)");
+            irCtx.fillStyle = frRad;
+            irCtx.beginPath();
+            irCtx.arc(frx, fry, 52, 0, Math.PI * 2);
+            irCtx.fill();
+          }
+          orgTexCache.iceRoughnessTex = new THREE.CanvasTexture(iceRC);
+
+          var crackC = document.createElement("canvas");
+          crackC.width = 512;
+          crackC.height = 512;
+          var ckCtx = crackC.getContext("2d");
+          ckCtx.fillStyle = "#000000";
+          ckCtx.fillRect(0, 0, 512, 512);
+          // Internal frost cloud glow
+          var frostCore = ckCtx.createRadialGradient(256, 256, 12, 256, 256, 220);
+          frostCore.addColorStop(0, "rgba(215, 238, 255, 0.55)");
+          frostCore.addColorStop(0.55, "rgba(180, 220, 255, 0.22)");
+          frostCore.addColorStop(1, "rgba(0,0,0,0)");
+          ckCtx.fillStyle = frostCore;
+          ckCtx.fillRect(0, 0, 512, 512);
+          // Crisp crystalline fracture lines
+          for (var lc = 0; lc < 24; lc++) {
+            var sx = 90 + ((lc * 89) % 330);
+            var sy = 90 + ((lc * 137) % 330);
+            var ang = (lc * 47 * Math.PI) / 180;
+            var segLen = 70 + (lc % 5) * 32;
+            ckCtx.strokeStyle = lc % 3 === 0 ? "rgba(255,255,255,0.9)" : "rgba(200,232,255,0.65)";
+            ckCtx.lineWidth = lc % 4 === 0 ? 2.4 : 1.3;
+            ckCtx.beginPath();
+            ckCtx.moveTo(sx, sy);
+            ckCtx.lineTo(
+              sx + Math.cos(ang) * (segLen * 0.52) + Math.sin(lc) * 14,
+              sy + Math.sin(ang) * (segLen * 0.52) - Math.cos(lc) * 14
+            );
+            ckCtx.lineTo(sx + Math.cos(ang) * segLen, sy + Math.sin(ang) * segLen);
+            ckCtx.stroke();
+          }
+          // Trapped air micro-bubbles inside crystal
+          for (var mb = 0; mb < 90; mb++) {
+            var mbx = 80 + ((mb * 61) % 352);
+            var mby = 80 + ((mb * 107) % 352);
+            var mbr = 1.2 + (mb % 4) * 1.1;
+            ckCtx.fillStyle = "rgba(255,255,255,0.85)";
+            ckCtx.beginPath();
+            ckCtx.arc(mbx, mby, mbr, 0, Math.PI * 2);
+            ckCtx.fill();
+          }
+          orgTexCache.iceCrackTex = new THREE.CanvasTexture(crackC);
+
+          // 7. Lime & Lemon Citrus Wheel Cross-Section
+          function makeCitrusTex(rindCol, pithCol, pulpDark, pulpLight) {
+            var c = document.createElement("canvas");
+            c.width = 512;
+            c.height = 512;
+            var cx = c.getContext("2d");
+            cx.fillStyle = rindCol;
+            cx.fillRect(0, 0, 512, 512);
+            cx.beginPath();
+            cx.arc(256, 256, 228, 0, Math.PI * 2);
+            cx.fillStyle = pithCol;
+            cx.fill();
+            cx.beginPath();
+            cx.arc(256, 256, 204, 0, Math.PI * 2);
+            cx.fillStyle = pulpDark;
+            cx.fill();
+
+            for (var s = 0; s < 8; s++) {
+              var a0 = (s / 8) * Math.PI * 2 + 0.055;
+              var a1 = ((s + 1) / 8) * Math.PI * 2 - 0.055;
+              cx.beginPath();
+              cx.moveTo(256, 256);
+              cx.arc(256, 256, 194, a0, a1);
+              cx.closePath();
+              var segGrad = cx.createRadialGradient(256, 256, 18, 256, 256, 194);
+              segGrad.addColorStop(0, pithCol);
+              segGrad.addColorStop(0.2, pulpLight);
+              segGrad.addColorStop(0.84, pulpDark);
+              segGrad.addColorStop(1, pulpLight);
+              cx.fillStyle = segGrad;
+              cx.fill();
+            }
+            cx.beginPath();
+            cx.arc(256, 256, 22, 0, Math.PI * 2);
+            cx.fillStyle = pithCol;
+            cx.fill();
+
+            var t = new THREE.CanvasTexture(c);
+            t.encoding = THREE.sRGBEncoding;
+            return t;
+          }
+          orgTexCache.limeWheel = makeCitrusTex("#15803d", "#f0fdf4", "#22c55e", "#bbf7d0");
+          orgTexCache.lemonWheel = makeCitrusTex("#ca8a04", "#fefce8", "#eab308", "#fef08a");
+
+          // 8. Granny Smith Apple Skin & Juicy Apple Flesh
+          var appC = document.createElement("canvas");
+          appC.width = 512;
+          appC.height = 512;
+          var aCtx = appC.getContext("2d");
+          var aGrad = aCtx.createLinearGradient(0, 0, 0, 512);
+          aGrad.addColorStop(0, "#65a30d");
+          aGrad.addColorStop(0.45, "#4ade80");
+          aGrad.addColorStop(1, "#15803d");
+          aCtx.fillStyle = aGrad;
+          aCtx.fillRect(0, 0, 512, 512);
+          for (var f = 0; f < 500; f++) {
+            aCtx.fillStyle = f % 3 === 0 ? "rgba(254,249,195,0.45)" : "rgba(21,128,61,0.3)";
+            aCtx.fillRect((f * 71) % 512, (f * 113) % 512, 2, 2);
+          }
+          orgTexCache.appleSkin = new THREE.CanvasTexture(appC);
+          orgTexCache.appleSkin.encoding = THREE.sRGBEncoding;
+
+          // 9. Blueberry Dusty Waxy Bloom Skin
+          var bbC = document.createElement("canvas");
+          bbC.width = 256;
+          bbC.height = 256;
+          var bbCtx = bbC.getContext("2d");
+          var bbGrad = bbCtx.createLinearGradient(0, 0, 0, 256);
+          bbGrad.addColorStop(0, "#172554");
+          bbGrad.addColorStop(0.45, "#3b82f6");
+          bbGrad.addColorStop(0.7, "#1e3a8a");
+          bbGrad.addColorStop(1, "#0f172a");
+          bbCtx.fillStyle = bbGrad;
+          bbCtx.fillRect(0, 0, 256, 256);
+          for (var bf = 0; bf < 120; bf++) {
+            var bfx = (bf * 59) % 256;
+            var bfy = (bf * 97) % 256;
+            var bG = bbCtx.createRadialGradient(bfx, bfy, 1, bfx, bfy, 16);
+            bG.addColorStop(0, "rgba(191, 219, 254, 0.25)");
+            bG.addColorStop(1, "rgba(0,0,0,0)");
+            bbCtx.fillStyle = bG;
+            bbCtx.beginPath();
+            bbCtx.arc(bfx, bfy, 16, 0, Math.PI * 2);
+            bbCtx.fill();
+          }
+          orgTexCache.blueberrySkin = new THREE.CanvasTexture(bbC);
+          orgTexCache.blueberrySkin.encoding = THREE.sRGBEncoding;
+
+          // 10. Watermelon Striped Rind & Fibrous Crimson Pulp
+          var rindC = document.createElement("canvas");
+          rindC.width = 256;
+          rindC.height = 128;
+          var rCtx = rindC.getContext("2d");
+          rCtx.fillStyle = "#4d7c0f";
+          rCtx.fillRect(0, 0, 256, 128);
+          rCtx.fillStyle = "#14532d";
+          for (var st = 0; st < 256; st += 32) {
+            rCtx.fillRect(st, 0, 14, 128);
+          }
+          orgTexCache.watermelonRind = new THREE.CanvasTexture(rindC);
+          orgTexCache.watermelonRind.encoding = THREE.sRGBEncoding;
+
+          var wfC = document.createElement("canvas");
+          wfC.width = 256;
+          wfC.height = 256;
+          var wfCtx = wfC.getContext("2d");
+          wfCtx.fillStyle = "#f43f5e";
+          wfCtx.fillRect(0, 0, 256, 256);
+          for (var wp = 0; wp < 160; wp++) {
+            wfCtx.fillStyle = wp % 2 === 0 ? "rgba(255,228,230,0.16)" : "rgba(190,18,60,0.2)";
+            wfCtx.beginPath();
+            wfCtx.arc((wp * 43) % 256, (wp * 89) % 256, 3 + (wp % 5), 0, Math.PI * 2);
+            wfCtx.fill();
+          }
+          orgTexCache.watermelonFlesh = new THREE.CanvasTexture(wfC);
+          orgTexCache.watermelonFlesh.encoding = THREE.sRGBEncoding;
+
+          // 11. Veined Mint / Orchard Leaf Texture
+          var leafC = document.createElement("canvas");
+          leafC.width = 128;
+          leafC.height = 256;
+          var lCtx = leafC.getContext("2d");
+          var lGrad = lCtx.createLinearGradient(0, 0, 128, 256);
+          lGrad.addColorStop(0, "#4ade80");
+          lGrad.addColorStop(0.5, "#16a34a");
+          lGrad.addColorStop(1, "#14532d");
+          lCtx.fillStyle = lGrad;
+          lCtx.fillRect(0, 0, 128, 256);
+          lCtx.strokeStyle = "rgba(187, 247, 208, 0.55)";
+          lCtx.lineWidth = 3;
+          lCtx.beginPath();
+          lCtx.moveTo(64, 10);
+          lCtx.lineTo(64, 246);
+          lCtx.stroke();
+          lCtx.lineWidth = 1.6;
+          for (var v = 36; v < 220; v += 24) {
+            lCtx.beginPath();
+            lCtx.moveTo(64, v);
+            lCtx.lineTo(18, v - 18);
+            lCtx.moveTo(64, v);
+            lCtx.lineTo(110, v - 18);
+            lCtx.stroke();
+          }
+          orgTexCache.leafTex = new THREE.CanvasTexture(leafC);
+          orgTexCache.leafTex.encoding = THREE.sRGBEncoding;
+
+          // 12. Sparkling Mist Bokeh Sprite
+          var sparkC = document.createElement("canvas");
+          sparkC.width = 64;
+          sparkC.height = 64;
+          var sCtx = sparkC.getContext("2d");
+          var sGrad = sCtx.createRadialGradient(32, 32, 1, 32, 32, 30);
+          sGrad.addColorStop(0.0, "rgba(255,255,255,1)");
+          sGrad.addColorStop(0.35, "rgba(255,255,255,0.65)");
+          sGrad.addColorStop(1.0, "rgba(255,255,255,0)");
+          sCtx.fillStyle = sGrad;
+          sCtx.fillRect(0, 0, 64, 64);
+          orgTexCache.sparkleTex = new THREE.CanvasTexture(sparkC);
+
+          return orgTexCache;
         }
 
         function drawCanLabelCanvas(flav) {
@@ -1886,14 +3240,38 @@
             h * 0.85
           );
 
-          // Back nutrition panel (around u = 0 / u = 1)
+          // Back-of-can commercial Nutrition Facts box & Barcode (around u = 0 / u = 1)
+          ctx.fillStyle = "rgba(8, 8, 12, 0.72)";
+          ctx.fillRect(54, h * 0.16, 450, h * 0.68);
+          ctx.strokeStyle = "rgba(255,255,255,0.4)";
+          ctx.lineWidth = 3;
+          ctx.strokeRect(54, h * 0.16, 450, h * 0.68);
+
           ctx.textAlign = "left";
-          ctx.fillStyle = "rgba(255,255,255,0.68)";
-          ctx.font = "600 22px 'Inter', Arial, sans-serif";
-          ctx.fillText("SERVE ICE COLD", 64, h * 0.24);
-          ctx.font = "400 19px 'Inter', Arial, sans-serif";
-          ctx.fillText("ZERO SUGAR · B-VITAMINS · TAURINE", 64, h * 0.29);
-          ctx.fillText("CARBONATED SPARKLING ENERGY", 64, h * 0.33);
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "800 32px 'Barlow Condensed', Impact, sans-serif";
+          ctx.fillText("NUTRITION FACTS", 82, h * 0.22);
+          ctx.font = "500 20px 'Inter', Arial, sans-serif";
+          ctx.fillStyle = "rgba(255,255,255,0.85)";
+          ctx.fillText("Serving Size: 1 Can (" + flav.volume + ")", 82, h * 0.27);
+          ctx.fillRect(82, h * 0.30, 394, 4);
+          ctx.fillText("Calories  10        Sugar  0g", 82, h * 0.34);
+          ctx.fillText("Total Carb 0g       Sodium 85mg", 82, h * 0.38);
+          ctx.fillText("Niacin / B6 / B12   100% DV", 82, h * 0.42);
+          ctx.fillText("Taurine 1000mg · " + flav.caffeine, 82, h * 0.47);
+          ctx.font = "400 17px 'Inter', Arial, sans-serif";
+          ctx.fillStyle = "rgba(255,255,255,0.65)";
+          ctx.fillText("CARBONATED SPARKLING ENERGY", 82, h * 0.54);
+          ctx.fillText("SERVE ICE COLD · RECYCLE ALUMINUM", 82, h * 0.575);
+
+          // Crisp commercial barcode on lower back
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(82, h * 0.64, 230, 120);
+          ctx.fillStyle = "#09090b";
+          for (var bc = 0; bc < 34; bc++) {
+            var bw = (bc * 7) % 3 === 0 ? 4 : 2;
+            ctx.fillRect(94 + bc * 6, h * 0.655, bw, 88);
+          }
 
           // Composite real photographed can artwork onto the front face when loaded
           var cachedImg = photoImgCache[flav.id];
@@ -1960,7 +3338,6 @@
           alphaCanvas.height = 512;
           var aCtx = alphaCanvas.getContext("2d");
 
-          // Radial halo mask: dimmed center behind 3D can, luminous liquid splashes ring, soft fade out
           var rGrad = aCtx.createRadialGradient(256, 256, 18, 256, 256, 248);
           rGrad.addColorStop(0.0, "#242424");
           rGrad.addColorStop(0.22, "#757575");
@@ -1974,14 +3351,57 @@
           return aTex;
         }
 
+        function extractPhotoSplashSpriteTex(imgEl) {
+          try {
+            var spC = document.createElement("canvas");
+            spC.width = 256;
+            spC.height = 256;
+            var spCtx = spC.getContext("2d");
+            var iw = imgEl.naturalWidth;
+            var ih = imgEl.naturalHeight;
+            // Sample pure dark-backdrop splash droplets & arcs from right flank of the studio photo
+            spCtx.drawImage(imgEl, iw * 0.64, ih * 0.16, iw * 0.30, ih * 0.44, 0, 0, 256, 256);
+            var imgData = spCtx.getImageData(0, 0, 256, 256);
+            var pxData = imgData.data;
+            for (var py = 0; py < 256; py++) {
+              for (var px = 0; px < 256; px++) {
+                var idx = (py * 256 + px) * 4;
+                var r = pxData[idx];
+                var g = pxData[idx + 1];
+                var b = pxData[idx + 2];
+                var lum = 0.299 * r + 0.587 * g + 0.114 * b;
+                var dx = (px - 128) / 128;
+                var dy = (py - 128) / 128;
+                var radial = Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy));
+                var edgeFade = Math.min(1, radial * 2.1);
+                var alpha = Math.max(0, Math.min(255, (lum - 24) * 2.6)) * edgeFade;
+                pxData[idx + 3] = alpha;
+              }
+            }
+            spCtx.putImageData(imgData, 0, 0);
+            var tex = new THREE.CanvasTexture(spC);
+            tex.encoding = THREE.sRGBEncoding;
+            return tex;
+          } catch (e) {
+            return null;
+          }
+        }
+
         function preloadFlavourMedia(glRenderer) {
           var texLoader = new THREE.TextureLoader();
           for (var i = 0; i < FLAVOURS.length; i++) {
             (function (flav) {
               var img = new Image();
               img.onload = function () {
+                var splashTex = extractPhotoSplashSpriteTex(img);
+                if (splashTex) {
+                  photoSplashTexCache[flav.id] = splashTex;
+                }
                 if (FLAVOURS[activeFlavourIdx] && FLAVOURS[activeFlavourIdx].id === flav.id) {
                   drawCanLabelCanvas(flav);
+                  if (splashTex) {
+                    populateFruitSpiral(flav.id, false);
+                  }
                 }
               };
               img.src = flav.imageSrc;
@@ -2009,103 +3429,132 @@
 
         function buildProductCan(flav) {
           var group = new THREE.Group();
+          var texBank = getOrganicTextures();
           drawCanLabelCanvas(flav);
 
           var silverAlumMat = new THREE.MeshStandardMaterial({
-            color: 0xd9dde4,
-            metalness: 0.92,
-            roughness: 0.18
+            color: 0xe2e6ee,
+            metalness: 0.94,
+            roughness: 0.16,
+            bumpMap: texBank.canBump,
+            bumpScale: 0.0025
           });
 
           canLabelMat = new THREE.MeshPhysicalMaterial({
             map: labelTexture,
-            metalness: 0.42,
-            roughness: 0.24,
-            clearcoat: 0.55,
-            clearcoatRoughness: 0.18
+            metalness: 0.46,
+            roughness: 0.22,
+            bumpMap: texBank.canBump,
+            bumpScale: 0.004,
+            clearcoat: 0.72,
+            clearcoatRoughness: 0.14
           });
 
-          // 1. Main cylindrical body (rotated PI so u=0.5 faces +Z camera)
-          var bodyGeo = new THREE.CylinderGeometry(0.76, 0.76, 2.38, 64, 1, true);
+          // 1. Main cylindrical sleeve (rotated PI so u=0.5 faces +Z camera)
+          var bodyGeo = new THREE.CylinderGeometry(0.76, 0.76, 2.34, 72, 1, true);
           var bodyMesh = new THREE.Mesh(bodyGeo, canLabelMat);
           bodyMesh.rotation.y = Math.PI;
           group.add(bodyMesh);
 
-          // 2. Tapered upper shoulder
-          canTopMat = new THREE.MeshStandardMaterial({
+          // 2. Smooth Lathe-turned upper shoulder curve
+          canTopMat = new THREE.MeshPhysicalMaterial({
             color: new THREE.Color(flav.canGradTop),
-            metalness: 0.65,
-            roughness: 0.22
+            metalness: 0.74,
+            roughness: 0.19,
+            bumpMap: texBank.canBump,
+            bumpScale: 0.0025,
+            clearcoat: 0.65,
+            clearcoatRoughness: 0.15
           });
-          var shoulderGeo = new THREE.CylinderGeometry(0.64, 0.76, 0.34, 64, 1, false);
-          var shoulderMesh = new THREE.Mesh(shoulderGeo, canTopMat);
-          shoulderMesh.position.y = 1.36;
+          var shoulderPts = [
+            new THREE.Vector2(0.76, 1.17),
+            new THREE.Vector2(0.752, 1.24),
+            new THREE.Vector2(0.715, 1.34),
+            new THREE.Vector2(0.665, 1.44),
+            new THREE.Vector2(0.635, 1.51)
+          ];
+          var shoulderMesh = new THREE.Mesh(new THREE.LatheGeometry(shoulderPts, 64), canTopMat);
           group.add(shoulderMesh);
 
-          // 3. Brushed aluminum top rim torus
-          var topRimGeo = new THREE.TorusGeometry(0.635, 0.032, 16, 64);
-          var topRimMesh = new THREE.Mesh(topRimGeo, silverAlumMat);
-          topRimMesh.rotation.x = Math.PI / 2;
-          topRimMesh.position.y = 1.53;
-          group.add(topRimMesh);
-
-          // 4. Recessed aluminum lid
-          var lidGeo = new THREE.CylinderGeometry(0.615, 0.615, 0.04, 48);
-          var lidMesh = new THREE.Mesh(lidGeo, silverAlumMat);
-          lidMesh.position.y = 1.49;
+          // 3. Brushed aluminum curled top rim & recessed lid well
+          var lidProfilePts = [
+            new THREE.Vector2(0.635, 1.51),
+            new THREE.Vector2(0.655, 1.535),
+            new THREE.Vector2(0.63, 1.555),
+            new THREE.Vector2(0.605, 1.53),
+            new THREE.Vector2(0.59, 1.485),
+            new THREE.Vector2(0.0, 1.485)
+          ];
+          var lidMesh = new THREE.Mesh(new THREE.LatheGeometry(lidProfilePts, 64), silverAlumMat);
           group.add(lidMesh);
 
-          // 5. Sculpted pull-tab + rivet
-          var rivetGeo = new THREE.CylinderGeometry(0.045, 0.045, 0.04, 16);
-          var rivetMesh = new THREE.Mesh(rivetGeo, silverAlumMat);
-          rivetMesh.position.set(0, 1.525, 0.02);
+          // 4. Sculpted pull-tab + rivet + scored sip groove
+          var rivetMesh = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.042, 0.048, 0.036, 18),
+            silverAlumMat
+          );
+          rivetMesh.position.set(0, 1.505, 0.02);
           group.add(rivetMesh);
 
-          var tabRingGeo = new THREE.TorusGeometry(0.11, 0.02, 12, 24);
-          var tabRingMesh = new THREE.Mesh(tabRingGeo, silverAlumMat);
+          var tabRingMesh = new THREE.Mesh(
+            new THREE.TorusGeometry(0.11, 0.02, 12, 28),
+            silverAlumMat
+          );
           tabRingMesh.rotation.x = Math.PI / 2;
-          tabRingMesh.position.set(0, 1.53, -0.11);
+          tabRingMesh.position.set(0, 1.512, -0.11);
           group.add(tabRingMesh);
 
-          var tabNoseGeo = new THREE.BoxGeometry(0.15, 0.025, 0.16);
-          var tabNoseMesh = new THREE.Mesh(tabNoseGeo, silverAlumMat);
-          tabNoseMesh.position.set(0, 1.53, 0.09);
+          var tabNoseMesh = new THREE.Mesh(
+            new THREE.BoxGeometry(0.15, 0.022, 0.16),
+            silverAlumMat
+          );
+          tabNoseMesh.position.set(0, 1.512, 0.09);
           group.add(tabNoseMesh);
 
-          // 6. Tapered bottom base + rim
-          canBotMat = new THREE.MeshStandardMaterial({
+          // 5. Smooth Lathe-turned lower chime base + aluminum rim
+          canBotMat = new THREE.MeshPhysicalMaterial({
             color: new THREE.Color(flav.canGradBot),
-            metalness: 0.68,
-            roughness: 0.24
+            metalness: 0.74,
+            roughness: 0.21,
+            bumpMap: texBank.canBump,
+            bumpScale: 0.0025,
+            clearcoat: 0.55
           });
-          var baseGeo = new THREE.CylinderGeometry(0.76, 0.63, 0.24, 64);
-          var baseMesh = new THREE.Mesh(baseGeo, canBotMat);
-          baseMesh.position.y = -1.31;
+          var botPts = [
+            new THREE.Vector2(0.76, -1.17),
+            new THREE.Vector2(0.735, -1.25),
+            new THREE.Vector2(0.67, -1.35),
+            new THREE.Vector2(0.62, -1.42)
+          ];
+          var baseMesh = new THREE.Mesh(new THREE.LatheGeometry(botPts, 64), canBotMat);
           group.add(baseMesh);
 
-          var botRimGeo = new THREE.TorusGeometry(0.625, 0.028, 14, 64);
-          var botRimMesh = new THREE.Mesh(botRimGeo, silverAlumMat);
+          var botRimMesh = new THREE.Mesh(
+            new THREE.TorusGeometry(0.618, 0.026, 14, 64),
+            silverAlumMat
+          );
           botRimMesh.rotation.x = Math.PI / 2;
-          botRimMesh.position.y = -1.43;
+          botRimMesh.position.y = -1.425;
           group.add(botRimMesh);
 
-          // 7. Chilled condensation droplets clinging to can wall
-          var dropGeo = new THREE.SphereGeometry(0.019, 8, 8);
+          // 6. Chilled specular water condensation beads
+          var dropGeo = new THREE.SphereGeometry(0.017, 10, 10);
           var dropMat = new THREE.MeshPhysicalMaterial({
             color: 0xffffff,
-            roughness: 0.04,
-            metalness: 0.08,
-            clearcoat: 1.0
+            roughness: 0.015,
+            metalness: 0.1,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.02
           });
-          var dropCount = 34;
+          var dropCount = 64;
           var dropInst = new THREE.InstancedMesh(dropGeo, dropMat, dropCount);
           var dummy = new THREE.Object3D();
           for (var d = 0; d < dropCount; d++) {
-            var ang = (d / dropCount) * Math.PI * 2 + (d % 3) * 0.41;
-            var dy = ((d * 37) % 100) / 100 * 2.1 - 1.05;
-            var sc = 0.65 + ((d * 19) % 10) * 0.07;
-            dummy.position.set(Math.sin(ang) * 0.764, dy, Math.cos(ang) * 0.764);
-            dummy.scale.set(sc, sc * 1.25, sc * 0.7);
+            var ang = ((d * 137.5) % 360) * (Math.PI / 180);
+            var dy = (((d * 43) % 100) / 100) * 2.18 - 1.09;
+            var sc = 0.45 + ((d * 23) % 14) * 0.085;
+            dummy.position.set(Math.sin(ang) * 0.762, dy, Math.cos(ang) * 0.762);
+            dummy.scale.set(sc, sc * 1.28, sc * 0.62);
             dummy.rotation.set(0, ang, 0);
             dummy.updateMatrix();
             dropInst.setMatrixAt(d, dummy.matrix);
@@ -2117,263 +3566,603 @@
         }
 
         // ============================================================
-        // 6. PROCEDURAL FRUIT PRIMITIVE BUILDERS (18 per flavour)
+        // 6. PHOTOREALISTIC PROCEDURAL FRUIT & ICE BUILDERS (18 items)
         // ============================================================
-        function createCherryGroup() {
-          var grp = new THREE.Group();
-          var cherryMat = new THREE.MeshPhysicalMaterial({
-            color: 0x990f24,
-            roughness: 0.14,
-            metalness: 0.06,
-            clearcoat: 0.95,
-            clearcoatRoughness: 0.1
+        function createCurvedLeafMesh(leafMat, w, len) {
+          var leafGeo = new THREE.PlaneGeometry(w, len, 4, 6);
+          var posAttr = leafGeo.attributes.position;
+          for (var i = 0; i < posAttr.count; i++) {
+            var lx = posAttr.getX(i);
+            var ly = posAttr.getY(i);
+            var normY = ly / (len * 0.5);
+            // Taper width toward leaf tip & base
+            var widthFactor = Math.max(0.05, Math.cos(normY * 1.38));
+            posAttr.setX(i, lx * widthFactor);
+            // Gentle midrib arch and V-fold
+            posAttr.setZ(i, -Math.pow(normY, 2) * 0.045 + Math.abs(lx) * 0.18);
+          }
+          leafGeo.computeVertexNormals();
+          return new THREE.Mesh(leafGeo, leafMat);
+        }
+
+        function addWaterDropletsToSurface(grp, pointsList, scaleMul) {
+          var dropGeo = new THREE.SphereGeometry(0.014 * (scaleMul || 1), 8, 8);
+          var dropMat = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            roughness: 0.01,
+            metalness: 0.12,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.01,
+            envMapIntensity: 2.5
           });
-          var stemMat = new THREE.MeshStandardMaterial({
-            color: 0x4d7c0f,
-            roughness: 0.65,
-            metalness: 0.0
+          for (var d = 0; d < pointsList.length; d++) {
+            var pt = pointsList[d];
+            var dm = new THREE.Mesh(dropGeo, dropMat);
+            dm.position.set(pt[0], pt[1], pt[2]);
+            var ds = 0.65 + (d % 3) * 0.25;
+            dm.scale.set(ds, ds * 1.15, ds * 0.72);
+            grp.add(dm);
+          }
+        }
+
+        function createCrystalIceCube() {
+          var grp = new THREE.Group();
+          var texBank = getOrganicTextures();
+          var shape = new THREE.Shape();
+          var r = 0.145;
+          var s = 0.036;
+          shape.moveTo(-r + s, -r);
+          shape.lineTo(r - s, -r);
+          shape.quadraticCurveTo(r, -r, r, -r + s);
+          shape.lineTo(r, r - s);
+          shape.quadraticCurveTo(r, r, r - s, r);
+          shape.lineTo(-r + s, r);
+          shape.quadraticCurveTo(-r, r, -r, r - s);
+          shape.lineTo(-r, -r + s);
+          shape.quadraticCurveTo(-r, -r, -r + s, -r);
+
+          var iceGeo = new THREE.ExtrudeGeometry(shape, {
+            depth: 0.22,
+            curveSegments: 5,
+            bevelEnabled: true,
+            bevelThickness: 0.036,
+            bevelSize: 0.032,
+            bevelSegments: 3
+          });
+          iceGeo.center();
+
+          // Chiseled subtle vertex wave using position-based hash so seams stay welded
+          var iPos = iceGeo.attributes.position;
+          for (var vi = 0; vi < iPos.count; vi++) {
+            var vx = iPos.getX(vi);
+            var vy = iPos.getY(vi);
+            var vz = iPos.getZ(vi);
+            var ch = Math.sin(vx * 18.7 + vy * 13.1 + vz * 21.3) * 0.01;
+            iPos.setXYZ(vi, vx + vx * ch * 2.2, vy + vy * ch * 2.2, vz + vz * ch * 2.2);
+          }
+          iceGeo.computeVertexNormals();
+
+          var iceShellMat = new THREE.MeshPhysicalMaterial({
+            color: 0xf0f8ff,
+            roughness: 0.04,
+            metalness: 0.08,
+            bumpMap: texBank.iceBumpTex,
+            bumpScale: 0.016,
+            roughnessMap: texBank.iceRoughnessTex,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.02,
+            envMapIntensity: 2.6,
+            transparent: true,
+            opacity: 0.56,
+            depthWrite: false
+          });
+          grp.add(new THREE.Mesh(iceGeo, iceShellMat));
+
+          // Internal intersecting crystalline fracture planes & trapped air bubbles
+          var crackMat = new THREE.MeshBasicMaterial({
+            map: texBank.iceCrackTex,
+            color: 0xe0f2fe,
+            transparent: true,
+            opacity: 0.72,
+            blending: THREE.AdditiveBlending,
+            side: THREE.DoubleSide,
+            depthWrite: false
+          });
+          var crackPlaneA = new THREE.Mesh(new THREE.PlaneGeometry(0.27, 0.27), crackMat);
+          crackPlaneA.rotation.set(0.38, 0.55, 0.2);
+          grp.add(crackPlaneA);
+
+          var crackPlaneB = new THREE.Mesh(new THREE.PlaneGeometry(0.26, 0.26), crackMat);
+          crackPlaneB.rotation.set(-0.45, -0.75, 0.65);
+          grp.add(crackPlaneB);
+
+          // Inner milky frosted core cube
+          var coreMat = new THREE.MeshPhysicalMaterial({
+            color: 0xdbeafe,
+            roughness: 0.35,
+            transparent: true,
+            opacity: 0.26,
+            depthWrite: false
+          });
+          grp.add(new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.15, 0.16), coreMat));
+
+          return grp;
+        }
+
+        function buildSculptedWholeCherryGeo() {
+          var cPts = [
+            new THREE.Vector2(0.0, -0.175),
+            new THREE.Vector2(0.095, -0.18),
+            new THREE.Vector2(0.178, -0.095),
+            new THREE.Vector2(0.192, 0.028),
+            new THREE.Vector2(0.145, 0.142),
+            new THREE.Vector2(0.056, 0.165),
+            new THREE.Vector2(0.0, 0.1)
+          ];
+          var geo = new THREE.LatheGeometry(cPts, 32);
+          var pos = geo.attributes.position;
+          for (var i = 0; i < pos.count; i++) {
+            var vx = pos.getX(i);
+            var vy = pos.getY(i);
+            var vz = pos.getZ(i);
+            var theta = Math.atan2(vz, vx);
+            var rXZ = Math.sqrt(vx * vx + vz * vz);
+            if (rXZ > 0.001) {
+              var yWeight = Math.max(0, 1 - Math.abs(vy) / 0.178);
+              // Natural longitudinal cherry suture cleft + cheek lobes (periodic at seam)
+              var cleft = -0.02 * Math.exp(-Math.pow(theta, 2) / 0.38) * yWeight;
+              var cheek = 0.011 * Math.cos(theta * 2.0) * yWeight;
+              var newR = rXZ + cleft + cheek;
+              var ratio = newR / rXZ;
+              pos.setX(i, vx * ratio);
+              pos.setZ(i, vz * ratio);
+            }
+          }
+          geo.computeVertexNormals();
+          return geo;
+        }
+
+        function createCherryGroup(variantIdx) {
+          if (variantIdx % 3 === 2) {
+            return createCrystalIceCube();
+          }
+          var grp = new THREE.Group();
+          var texBank = getOrganicTextures();
+
+          var cherryMat = new THREE.MeshPhysicalMaterial({
+            map: texBank.cherrySkinTex,
+            roughness: 0.075,
+            metalness: 0.05,
+            bumpMap: texBank.fruitBump,
+            bumpScale: 0.0035,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.025,
+            envMapIntensity: 1.85
           });
 
-          var berryGeo = new THREE.SphereGeometry(0.18, 20, 16);
+          var stemMat = new THREE.MeshStandardMaterial({
+            color: 0x5c8a1f,
+            roughness: 0.52
+          });
+
+          if (variantIdx % 3 === 1) {
+            // Photorealistic Halved Cherry with radial juicy flesh + 3D almond pit
+            var bowlGeo = new THREE.SphereGeometry(0.185, 28, 16, 0, Math.PI * 2, Math.PI * 0.5, Math.PI * 0.5);
+            var bowlMesh = new THREE.Mesh(bowlGeo, cherryMat);
+            bowlMesh.scale.set(1.0, 0.85, 1.0);
+            grp.add(bowlMesh);
+
+            var cutFaceMat = new THREE.MeshPhysicalMaterial({
+              map: texBank.cherryHalfTex,
+              roughness: 0.08,
+              bumpMap: texBank.fruitBump,
+              bumpScale: 0.004,
+              clearcoat: 1.0,
+              clearcoatRoughness: 0.02,
+              envMapIntensity: 1.7
+            });
+            var cutFaceMesh = new THREE.Mesh(new THREE.CircleGeometry(0.184, 32), cutFaceMat);
+            cutFaceMesh.rotation.x = -Math.PI / 2;
+            cutFaceMesh.position.y = 0.002;
+            grp.add(cutFaceMesh);
+
+            // 3D Sculpted Almond Cherry Pit nestled in juicy center cavity
+            var pitMat = new THREE.MeshPhysicalMaterial({
+              map: texBank.cherryPitTex,
+              roughness: 0.34,
+              clearcoat: 0.72,
+              clearcoatRoughness: 0.14
+            });
+            var pitMesh = new THREE.Mesh(new THREE.SphereGeometry(0.068, 18, 14), pitMat);
+            pitMesh.scale.set(0.76, 0.56, 1.18);
+            pitMesh.position.set(0, 0.02, 0);
+            grp.add(pitMesh);
+
+            var hStemCurve = new THREE.CatmullRomCurve3([
+              new THREE.Vector3(0, 0.0, -0.17),
+              new THREE.Vector3(0.02, 0.18, -0.22),
+              new THREE.Vector3(0.06, 0.34, -0.18)
+            ]);
+            grp.add(new THREE.Mesh(new THREE.TubeGeometry(hStemCurve, 12, 0.014, 8, false), stemMat));
+
+            addWaterDropletsToSurface(
+              grp,
+              [
+                [0.11, 0.015, 0.06],
+                [-0.09, 0.015, -0.09],
+                [0.04, 0.015, -0.13],
+                [-0.14, -0.06, 0.08]
+              ],
+              0.9
+            );
+            grp.rotation.x = 0.65;
+            return grp;
+          }
+
+          // Twin Sculpted Whole Bing Cherries with water droplets & two-tone stems
+          var berryGeo = buildSculptedWholeCherryGeo();
 
           var berryA = new THREE.Mesh(berryGeo, cherryMat);
-          berryA.scale.set(1.05, 0.92, 1.02);
           berryA.position.set(-0.17, -0.14, 0.03);
+          berryA.rotation.set(0.1, 0.2, 0.15);
           grp.add(berryA);
 
           var berryB = new THREE.Mesh(berryGeo, cherryMat);
-          berryB.scale.set(1.02, 0.92, 1.05);
           berryB.position.set(0.17, -0.17, -0.03);
+          berryB.rotation.set(-0.08, -0.35, -0.18);
           grp.add(berryB);
 
+          // Glistening 3D condensation droplets clinging to cherry skin
+          addWaterDropletsToSurface(
+            grp,
+            [
+              [-0.28, -0.09, 0.16],
+              [-0.12, -0.05, 0.19],
+              [-0.22, -0.21, 0.18],
+              [-0.04, -0.14, 0.12],
+              [0.09, -0.09, 0.14],
+              [0.26, -0.11, 0.12],
+              [0.21, -0.24, 0.14],
+              [0.31, -0.18, -0.08]
+            ],
+            0.95
+          );
+
           var curveA = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(-0.17, -0.02, 0.03),
-            new THREE.Vector3(-0.11, 0.22, 0.05),
-            new THREE.Vector3(0.0, 0.42, 0.0)
+            new THREE.Vector3(-0.17, -0.03, 0.03),
+            new THREE.Vector3(-0.1, 0.22, 0.05),
+            new THREE.Vector3(0.0, 0.44, 0.0)
           ]);
-          var stemA = new THREE.Mesh(new THREE.TubeGeometry(curveA, 12, 0.018, 8, false), stemMat);
-          grp.add(stemA);
+          grp.add(new THREE.Mesh(new THREE.TubeGeometry(curveA, 14, 0.014, 8, false), stemMat));
 
           var curveB = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0.17, -0.05, -0.03),
+            new THREE.Vector3(0.17, -0.06, -0.03),
             new THREE.Vector3(0.11, 0.2, -0.02),
-            new THREE.Vector3(0.0, 0.42, 0.0)
+            new THREE.Vector3(0.0, 0.44, 0.0)
           ]);
-          var stemB = new THREE.Mesh(new THREE.TubeGeometry(curveB, 12, 0.018, 8, false), stemMat);
-          grp.add(stemB);
+          grp.add(new THREE.Mesh(new THREE.TubeGeometry(curveB, 14, 0.014, 8, false), stemMat));
 
           var capMesh = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.026, 0.02, 0.06, 8),
-            new THREE.MeshStandardMaterial({ color: 0x573b26, roughness: 0.8 })
+            new THREE.CylinderGeometry(0.025, 0.017, 0.06, 10),
+            new THREE.MeshStandardMaterial({ color: 0x7c5b36, roughness: 0.78 })
           );
-          capMesh.position.set(0, 0.43, 0);
+          capMesh.position.set(0, 0.455, 0);
           grp.add(capMesh);
 
           return grp;
         }
 
-        function createWatermelonGroup() {
+        function createWatermelonGroup(variantIdx) {
+          if (variantIdx % 4 === 3) {
+            return createCrystalIceCube();
+          }
           var grp = new THREE.Group();
-          var fleshMat = new THREE.MeshStandardMaterial({
-            color: 0xf43f5e,
-            roughness: 0.35,
-            metalness: 0.04
+          var texBank = getOrganicTextures();
+
+          var fleshMat = new THREE.MeshPhysicalMaterial({
+            map: texBank.watermelonFlesh,
+            roughness: 0.2,
+            bumpMap: texBank.fruitBump,
+            bumpScale: 0.008,
+            clearcoat: 0.65,
+            clearcoatRoughness: 0.14,
+            envMapIntensity: 1.5
           });
           var pithMat = new THREE.MeshStandardMaterial({
-            color: 0xd9f99d,
-            roughness: 0.55
+            color: 0xecfccb,
+            roughness: 0.5
           });
           var rindMat = new THREE.MeshStandardMaterial({
-            color: 0x15803d,
-            roughness: 0.42
+            map: texBank.watermelonRind,
+            roughness: 0.32
           });
-          var seedMat = new THREE.MeshStandardMaterial({
+          var seedMat = new THREE.MeshPhysicalMaterial({
             color: 0x111827,
-            roughness: 0.25
+            roughness: 0.14,
+            clearcoat: 0.9
           });
           var mintMat = new THREE.MeshStandardMaterial({
-            color: 0x22c55e,
-            roughness: 0.48
+            map: texBank.leafTex,
+            roughness: 0.4,
+            side: THREE.DoubleSide
           });
 
-          var wedgeAngle = Math.PI * 0.44;
-          var fleshGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.12, 16, 1, false, 0, wedgeAngle);
-          var fleshMesh = new THREE.Mesh(fleshGeo, fleshMat);
-          grp.add(fleshMesh);
+          var wedgeArc = Math.PI * 0.42;
+          var rFlesh = 0.34;
+          var wedgeShape = new THREE.Shape();
+          wedgeShape.moveTo(0, 0);
+          wedgeShape.lineTo(rFlesh, 0);
+          wedgeShape.absarc(0, 0, rFlesh, 0, wedgeArc, false);
+          wedgeShape.closePath();
 
-          var pithGeo = new THREE.CylinderGeometry(
-            0.35,
-            0.35,
-            0.122,
-            16,
-            1,
-            true,
-            0,
-            wedgeAngle
+          var fleshGeo = new THREE.ExtrudeGeometry(wedgeShape, {
+            depth: 0.11,
+            bevelEnabled: true,
+            bevelThickness: 0.014,
+            bevelSize: 0.01,
+            bevelSegments: 3
+          });
+          fleshGeo.rotateX(-Math.PI / 2);
+          fleshGeo.translate(0, -0.055, 0);
+          grp.add(new THREE.Mesh(fleshGeo, fleshMat));
+
+          var pithMesh = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.365, 0.365, 0.125, 20, 1, true, Math.PI * 0.5, wedgeArc),
+            pithMat
           );
-          var pithMesh = new THREE.Mesh(pithGeo, pithMat);
           grp.add(pithMesh);
 
-          var rindGeo = new THREE.CylinderGeometry(
-            0.375,
-            0.375,
-            0.126,
-            16,
-            1,
-            true,
-            0,
-            wedgeAngle
+          var rindMesh = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.39, 0.39, 0.132, 20, 1, true, Math.PI * 0.5, wedgeArc),
+            rindMat
           );
-          var rindMesh = new THREE.Mesh(rindGeo, rindMat);
           grp.add(rindMesh);
 
-          var seedGeo = new THREE.SphereGeometry(0.02, 8, 8);
-          for (var s = 0; s < 4; s++) {
-            var rDist = 0.14 + (s % 2) * 0.09;
-            var sAng = 0.18 + s * 0.26;
-            var seedMesh = new THREE.Mesh(seedGeo, seedMat);
-            seedMesh.scale.set(0.7, 0.4, 1.3);
-            seedMesh.position.set(Math.sin(sAng) * rDist, 0.062, Math.cos(sAng) * rDist);
-            grp.add(seedMesh);
+          var seedGeo = new THREE.SphereGeometry(0.019, 10, 8);
+          for (var s = 0; s < 5; s++) {
+            var rDist = 0.14 + (s % 2) * 0.095;
+            var sAng = 0.18 + s * 0.21;
+            var seedTop = new THREE.Mesh(seedGeo, seedMat);
+            seedTop.scale.set(0.7, 0.35, 1.35);
+            seedTop.position.set(Math.cos(sAng) * rDist, 0.068, -Math.sin(sAng) * rDist);
+            seedTop.rotation.y = sAng;
+            grp.add(seedTop);
           }
 
-          var leafGeo = new THREE.SphereGeometry(0.11, 10, 8);
-          var leafMesh = new THREE.Mesh(leafGeo, mintMat);
-          leafMesh.scale.set(1.3, 0.16, 0.65);
-          leafMesh.position.set(0.05, 0.1, 0.05);
-          leafMesh.rotation.set(0.25, 0.6, 0.2);
+          var leafMesh = createCurvedLeafMesh(mintMat, 0.16, 0.28);
+          leafMesh.position.set(0.06, 0.11, -0.04);
+          leafMesh.rotation.set(-1.1, 0.4, 0.2);
           grp.add(leafMesh);
 
-          grp.position.set(-0.1, 0, -0.1);
+          addWaterDropletsToSurface(
+            grp,
+            [
+              [0.18, 0.072, -0.08],
+              [0.24, 0.072, -0.18],
+              [0.11, 0.072, -0.19]
+            ],
+            0.85
+          );
+
+          grp.position.set(-0.08, 0, 0.08);
           return grp;
         }
 
         function createCitrusBlueRazzGroup(variantIdx) {
           var grp = new THREE.Group();
+          var texBank = getOrganicTextures();
+          if (variantIdx % 5 === 4) {
+            return createCrystalIceCube();
+          }
           if (variantIdx % 2 === 0) {
-            // Blueberry with 5-point calyx crown
-            var berryMat = new THREE.MeshStandardMaterial({
-              color: 0x1e3a8a,
-              roughness: 0.42,
-              metalness: 0.05
+            var berryMat = new THREE.MeshPhysicalMaterial({
+              map: texBank.blueberrySkin,
+              roughness: 0.38,
+              metalness: 0.04,
+              bumpMap: texBank.fruitBump,
+              bumpScale: 0.005,
+              clearcoat: 0.28,
+              clearcoatRoughness: 0.38,
+              envMapIntensity: 1.4
             });
             var crownMat = new THREE.MeshStandardMaterial({
-              color: 0x172554,
-              roughness: 0.6
+              color: 0x0f172a,
+              roughness: 0.65
             });
-            var berry = new THREE.Mesh(new THREE.SphereGeometry(0.23, 20, 16), berryMat);
-            berry.scale.set(1.06, 0.88, 1.06);
-            grp.add(berry);
+            var bPts = [
+              new THREE.Vector2(0.0, -0.18),
+              new THREE.Vector2(0.14, -0.17),
+              new THREE.Vector2(0.23, -0.05),
+              new THREE.Vector2(0.22, 0.09),
+              new THREE.Vector2(0.11, 0.175),
+              new THREE.Vector2(0.04, 0.145),
+              new THREE.Vector2(0.0, 0.15)
+            ];
+            grp.add(new THREE.Mesh(new THREE.LatheGeometry(bPts, 28), berryMat));
 
-            var coneGeo = new THREE.ConeGeometry(0.042, 0.075, 5);
+            var coneGeo = new THREE.ConeGeometry(0.036, 0.07, 5);
             for (var c = 0; c < 5; c++) {
               var ang = (c / 5) * Math.PI * 2;
               var tip = new THREE.Mesh(coneGeo, crownMat);
-              tip.position.set(Math.cos(ang) * 0.065, 0.19, Math.sin(ang) * 0.065);
-              tip.rotation.z = -Math.cos(ang) * 0.45;
-              tip.rotation.x = Math.sin(ang) * 0.45;
+              tip.position.set(Math.cos(ang) * 0.068, 0.185, Math.sin(ang) * 0.068);
+              tip.rotation.z = -Math.cos(ang) * 0.52;
+              tip.rotation.x = Math.sin(ang) * 0.52;
               grp.add(tip);
             }
+            addWaterDropletsToSurface(
+              grp,
+              [
+                [0.2, 0.04, 0.09],
+                [-0.18, -0.03, 0.12],
+                [0.06, -0.08, 0.2]
+              ],
+              0.85
+            );
           } else {
-            // Lime / Lemon Wheel
             var isLime = variantIdx % 4 === 1;
-            var rindCol = isLime ? 0x16a34a : 0xeab308;
-            var pulpCol = isLime ? 0x86efac : 0xfef08a;
+            var wheelTex = isLime ? texBank.limeWheel : texBank.lemonWheel;
+            var rindCol = isLime ? 0x15803d : 0xca8a04;
 
-            var wheelRind = new THREE.Mesh(
-              new THREE.CylinderGeometry(0.27, 0.27, 0.07, 24),
-              new THREE.MeshStandardMaterial({ color: rindCol, roughness: 0.42 })
-            );
-            grp.add(wheelRind);
+            var sideMat = new THREE.MeshStandardMaterial({
+              color: rindCol,
+              roughness: 0.32,
+              bumpMap: texBank.fruitBump,
+              bumpScale: 0.008
+            });
+            var faceMat = new THREE.MeshPhysicalMaterial({
+              map: wheelTex,
+              roughness: 0.12,
+              clearcoat: 0.95,
+              clearcoatRoughness: 0.06,
+              envMapIntensity: 1.7
+            });
 
-            var wheelPulp = new THREE.Mesh(
-              new THREE.CylinderGeometry(0.235, 0.235, 0.074, 24),
-              new THREE.MeshStandardMaterial({ color: pulpCol, roughness: 0.25 })
-            );
-            grp.add(wheelPulp);
+            var wheelGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.068, 32);
+            var wheelMesh = new THREE.Mesh(wheelGeo, [sideMat, faceMat, faceMat]);
+            grp.add(wheelMesh);
 
-            var pithGeo = new THREE.BoxGeometry(0.45, 0.078, 0.014);
-            var pithMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.6 });
-            for (var p = 0; p < 3; p++) {
-              var spoke = new THREE.Mesh(pithGeo, pithMat);
-              spoke.rotation.y = (p * Math.PI) / 3;
-              grp.add(spoke);
-            }
+            var mintMat = new THREE.MeshStandardMaterial({
+              map: texBank.leafTex,
+              roughness: 0.42,
+              side: THREE.DoubleSide
+            });
+            var leafMesh = createCurvedLeafMesh(mintMat, 0.14, 0.24);
+            leafMesh.position.set(0.18, 0.07, 0);
+            leafMesh.rotation.set(-1.1, 0.3, -0.4);
+            grp.add(leafMesh);
           }
           return grp;
         }
 
         function createGreenAppleGroup(variantIdx) {
+          if (variantIdx % 4 === 3) {
+            return createCrystalIceCube();
+          }
           var grp = new THREE.Group();
+          var texBank = getOrganicTextures();
           var skinMat = new THREE.MeshPhysicalMaterial({
-            color: 0x4ade80,
-            roughness: 0.2,
-            metalness: 0.05,
-            clearcoat: 0.75,
-            clearcoatRoughness: 0.15
+            map: texBank.appleSkin,
+            roughness: 0.12,
+            metalness: 0.04,
+            bumpMap: texBank.fruitBump,
+            bumpScale: 0.004,
+            clearcoat: 0.95,
+            clearcoatRoughness: 0.06,
+            envMapIntensity: 1.75
           });
           var stemMat = new THREE.MeshStandardMaterial({ color: 0x573b26, roughness: 0.82 });
-          var leafMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.45 });
+          var leafMat = new THREE.MeshStandardMaterial({
+            map: texBank.leafTex,
+            roughness: 0.4,
+            side: THREE.DoubleSide
+          });
 
           if (variantIdx % 2 === 0) {
-            // Whole Granny Smith Apple via Lathe profile
             var pts = [
-              new THREE.Vector2(0.0, -0.2),
-              new THREE.Vector2(0.08, -0.23),
-              new THREE.Vector2(0.2, -0.16),
-              new THREE.Vector2(0.25, 0.02),
-              new THREE.Vector2(0.22, 0.18),
-              new THREE.Vector2(0.09, 0.22),
-              new THREE.Vector2(0.0, 0.16)
+              new THREE.Vector2(0.0, -0.17),
+              new THREE.Vector2(0.06, -0.22),
+              new THREE.Vector2(0.17, -0.18),
+              new THREE.Vector2(0.245, -0.02),
+              new THREE.Vector2(0.23, 0.14),
+              new THREE.Vector2(0.12, 0.22),
+              new THREE.Vector2(0.04, 0.19),
+              new THREE.Vector2(0.0, 0.14)
             ];
-            var appleMesh = new THREE.Mesh(new THREE.LatheGeometry(pts, 24), skinMat);
-            grp.add(appleMesh);
+            grp.add(new THREE.Mesh(new THREE.LatheGeometry(pts, 32), skinMat));
 
             var stemCurve = new THREE.CatmullRomCurve3([
-              new THREE.Vector3(0, 0.16, 0),
-              new THREE.Vector3(0.02, 0.27, 0.01),
-              new THREE.Vector3(0.06, 0.34, 0.02)
+              new THREE.Vector3(0, 0.14, 0),
+              new THREE.Vector3(0.025, 0.26, 0.01),
+              new THREE.Vector3(0.065, 0.34, 0.02)
             ]);
-            var stemMesh = new THREE.Mesh(
-              new THREE.TubeGeometry(stemCurve, 10, 0.016, 8, false),
-              stemMat
-            );
-            grp.add(stemMesh);
+            grp.add(new THREE.Mesh(new THREE.TubeGeometry(stemCurve, 12, 0.015, 8, false), stemMat));
 
-            var leafMesh = new THREE.Mesh(new THREE.SphereGeometry(0.11, 10, 8), leafMat);
-            leafMesh.scale.set(1.25, 0.14, 0.6);
-            leafMesh.position.set(0.09, 0.26, 0.02);
-            leafMesh.rotation.set(0.2, 0.3, 0.35);
+            var leafMesh = createCurvedLeafMesh(leafMat, 0.14, 0.26);
+            leafMesh.position.set(0.11, 0.26, 0.02);
+            leafMesh.rotation.set(-0.9, 0.4, -0.5);
             grp.add(leafMesh);
-          } else {
-            // Crisp Apple Wedge
-            var fleshMat = new THREE.MeshStandardMaterial({ color: 0xfefce8, roughness: 0.42 });
-            var wedgeFlesh = new THREE.Mesh(
-              new THREE.CylinderGeometry(0.28, 0.28, 0.14, 16, 1, false, 0, Math.PI * 0.46),
-              fleshMat
-            );
-            grp.add(wedgeFlesh);
 
-            var wedgePeel = new THREE.Mesh(
-              new THREE.CylinderGeometry(0.292, 0.292, 0.142, 16, 1, true, 0, Math.PI * 0.46),
+            addWaterDropletsToSurface(
+              grp,
+              [
+                [0.21, 0.06, 0.11],
+                [-0.19, -0.03, 0.14],
+                [0.05, 0.11, 0.21]
+              ],
+              0.9
+            );
+          } else {
+            var fleshMat = new THREE.MeshPhysicalMaterial({
+              color: 0xfefce8,
+              roughness: 0.26,
+              clearcoat: 0.55,
+              envMapIntensity: 1.4
+            });
+            var wedgeArc = Math.PI * 0.44;
+            var wShape = new THREE.Shape();
+            wShape.moveTo(0, 0);
+            wShape.lineTo(0.29, 0);
+            wShape.absarc(0, 0, 0.29, 0, wedgeArc, false);
+            wShape.closePath();
+
+            var wGeo = new THREE.ExtrudeGeometry(wShape, {
+              depth: 0.12,
+              bevelEnabled: true,
+              bevelThickness: 0.014,
+              bevelSize: 0.01,
+              bevelSegments: 3
+            });
+            wGeo.rotateX(-Math.PI / 2);
+            wGeo.translate(0, -0.06, 0);
+            grp.add(new THREE.Mesh(wGeo, fleshMat));
+
+            var peelMesh = new THREE.Mesh(
+              new THREE.CylinderGeometry(0.305, 0.305, 0.132, 20, 1, true, Math.PI * 0.5, wedgeArc),
               skinMat
             );
-            grp.add(wedgePeel);
+            grp.add(peelMesh);
+
+            var seedMesh = new THREE.Mesh(
+              new THREE.SphereGeometry(0.018, 8, 8),
+              new THREE.MeshPhysicalMaterial({ color: 0x3b1d0a, roughness: 0.2, clearcoat: 0.8 })
+            );
+            seedMesh.scale.set(0.7, 0.4, 1.4);
+            seedMesh.position.set(0.08, 0.072, -0.06);
+            grp.add(seedMesh);
           }
           return grp;
         }
 
         function buildSingleFruit(flavourId, idx) {
-          if (flavourId === "cherry-cola") return createCherryGroup();
-          if (flavourId === "watermelon-mint") return createWatermelonGroup();
-          if (flavourId === "citrus-blue-razz") return createCitrusBlueRazzGroup(idx);
-          return createGreenAppleGroup(idx);
+          var baseGroup;
+          if (flavourId === "cherry-cola") baseGroup = createCherryGroup(idx);
+          else if (flavourId === "watermelon-mint") baseGroup = createWatermelonGroup(idx);
+          else if (flavourId === "citrus-blue-razz") baseGroup = createCitrusBlueRazzGroup(idx);
+          else baseGroup = createGreenAppleGroup(idx);
+
+          // Attach real photo-extracted liquid splash aura sprite behind every 3rd prop when loaded
+          var splashTex = photoSplashTexCache[flavourId];
+          if (splashTex && idx % 3 === 0) {
+            var spMat = new THREE.SpriteMaterial({
+              map: splashTex,
+              color: 0xffffff,
+              transparent: true,
+              opacity: 0.68,
+              blending: THREE.AdditiveBlending,
+              depthWrite: false
+            });
+            var spSprite = new THREE.Sprite(spMat);
+            spSprite.scale.set(0.75, 0.75, 1);
+            spSprite.position.set(0, 0, -0.08);
+            baseGroup.add(spSprite);
+          }
+          return baseGroup;
         }
 
         function disposeObject3D(obj) {
           if (!obj) return;
           obj.traverse(function (child) {
-            if (child.isMesh) {
+            if (child.isMesh || child.isSprite) {
               if (child.geometry) child.geometry.dispose();
               if (child.material) {
                 if (Array.isArray(child.material)) {
@@ -2436,7 +4225,7 @@
           renderer.setSize(window.innerWidth, window.innerHeight);
           renderer.outputEncoding = THREE.sRGBEncoding;
           renderer.toneMapping = THREE.ACESFilmicToneMapping;
-          renderer.toneMappingExposure = 1.15;
+          renderer.toneMappingExposure = 1.22;
 
           scene = new THREE.Scene();
           var initFlav = FLAVOURS[activeFlavourIdx];
@@ -2454,23 +4243,27 @@
           );
           camera.position.set(0, 0.25, 9.0);
 
-          // Studio 3-point + Hemisphere lighting rig
-          var hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x1e1b4b, 0.65);
+          // Studio 3-point + Hemisphere + Interactive Specular Spark PointLight
+          var hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x1e1b4b, 0.68);
           scene.add(hemiLight);
 
           targetKeyColor = new THREE.Color(initFlav.lightHex);
-          keyLight = new THREE.DirectionalLight(targetKeyColor.clone(), 1.85);
+          keyLight = new THREE.DirectionalLight(targetKeyColor.clone(), 1.95);
           keyLight.position.set(4.5, 5.5, 6.0);
           scene.add(keyLight);
 
-          fillLight = new THREE.DirectionalLight(0xe0f2fe, 0.85);
+          fillLight = new THREE.DirectionalLight(0xe0f2fe, 0.9);
           fillLight.position.set(-5.5, 2.0, 4.0);
           scene.add(fillLight);
 
           targetRimColor = new THREE.Color(initFlav.rimHex);
-          rimLight = new THREE.DirectionalLight(targetRimColor.clone(), 1.75);
+          rimLight = new THREE.DirectionalLight(targetRimColor.clone(), 1.85);
           rimLight.position.set(0.5, 3.0, -6.0);
           scene.add(rimLight);
+
+          sparkLight = new THREE.PointLight(0xffffff, 1.4, 18);
+          sparkLight.position.set(1.5, 2.2, 5.5);
+          scene.add(sparkLight);
 
           preloadFlavourMedia(renderer);
 
@@ -2492,6 +4285,31 @@
 
           fruitRingGroup = new THREE.Group();
           scene.add(fruitRingGroup);
+
+          // Sparkling mist & cold droplet bokeh particles
+          var texBank = getOrganicTextures();
+          var sparkCount = 96;
+          var sparkPos = new Float32Array(sparkCount * 3);
+          for (var sp = 0; sp < sparkCount; sp++) {
+            var spAng = (sp / sparkCount) * Math.PI * 2 * 3.0;
+            var spRad = 1.4 + ((sp * 17) % 28) * 0.12;
+            sparkPos[sp * 3] = Math.cos(spAng) * spRad;
+            sparkPos[sp * 3 + 1] = (((sp * 31) % 100) / 100) * 6.0 - 3.0;
+            sparkPos[sp * 3 + 2] = Math.sin(spAng) * spRad;
+          }
+          var sparkGeo = new THREE.BufferGeometry();
+          sparkGeo.setAttribute("position", new THREE.BufferAttribute(sparkPos, 3));
+          var sparkMat = new THREE.PointsMaterial({
+            map: texBank.sparkleTex,
+            color: 0xffffff,
+            size: 0.085,
+            transparent: true,
+            opacity: 0.58,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+          });
+          sparklePoints = new THREE.Points(sparkGeo, sparkMat);
+          scene.add(sparklePoints);
 
           clock = new THREE.Clock();
           populateFruitSpiral(initFlav.id, false);
@@ -2612,6 +4430,13 @@
               cardElements[i].classList.remove("is-active");
             }
           }
+          for (var hp = 0; hp < heroPillButtons.length; hp++) {
+            heroPillButtons[hp].classList.toggle("is-active", hp === activeFlavourIdx);
+          }
+          if (heroQuickAddBtnEl) {
+            heroQuickAddBtnEl.textContent = "Add Can · $" + flav.price.toFixed(2);
+          }
+          renderFormulaSection(flav);
         }
 
         function selectFlavour(idx, shouldScrollTop) {
@@ -2695,23 +4520,42 @@
           if (keyLight) keyLight.color.lerp(targetKeyColor, colorLerp);
           if (rimLight) rimLight.color.lerp(targetRimColor, colorLerp);
 
-          // Camera zoom: z from 9.0 down to 4.1
+          // Interactive studio specular highlight tracking cursor
+          if (sparkLight) {
+            var targetLX = 1.5 + dragState.pointerX * 3.8;
+            var targetLY = 2.0 + dragState.pointerY * 2.8;
+            sparkLight.position.x += (targetLX - sparkLight.position.x) * 0.1;
+            sparkLight.position.y += (targetLY - sparkLight.position.y) * 0.1;
+          }
+
+          // Camera zoom + subtle cursor parallax
           var targetCamZ = THREE.MathUtils.lerp(9.0, 4.1, smoothScrollProg);
           var targetCamY = THREE.MathUtils.lerp(0.22, -0.04, smoothScrollProg);
+          var camParallaxX = prefersReducedMotion ? 0 : dragState.pointerX * 0.24;
+          var camParallaxY = prefersReducedMotion ? 0 : dragState.pointerY * 0.15;
           camera.position.z = targetCamZ;
-          camera.position.y = targetCamY;
+          camera.position.x += (camParallaxX - camera.position.x) * 0.08;
+          camera.position.y += (targetCamY + camParallaxY - camera.position.y) * 0.08;
           camera.lookAt(0, 0, 0);
 
-          // Can spin + heroic tilt
+          // 360 drag inertia
+          if (!dragState.active) {
+            dragState.rotY += dragState.velY;
+            dragState.velY *= Math.exp(-4.2 * dt);
+            dragState.rotX *= Math.exp(-3.0 * dt);
+          }
+
+          // Can spin + heroic tilt + user drag inspection
           if (!prefersReducedMotion) {
             idleRotation += dt * 0.36;
           }
           if (canGroup) {
-            canGroup.rotation.y = smoothScrollProg * Math.PI * 2.8 + idleRotation;
+            canGroup.rotation.y = smoothScrollProg * Math.PI * 2.8 + idleRotation + dragState.rotY;
             canGroup.rotation.z =
               THREE.MathUtils.lerp(-0.14, 0.12, smoothScrollProg) +
               (prefersReducedMotion ? 0 : Math.sin(elapsed * 1.1) * 0.03);
-            canGroup.rotation.x = THREE.MathUtils.lerp(0.08, -0.1, smoothScrollProg);
+            canGroup.rotation.x =
+              THREE.MathUtils.lerp(0.08, -0.1, smoothScrollProg) + dragState.rotX;
             canGroup.position.y = prefersReducedMotion ? 0 : Math.sin(elapsed * 1.6) * 0.07;
           }
 
@@ -2736,10 +4580,15 @@
               THREE.MathUtils.lerp(0.68, 0.88, smoothScrollProg) * Math.min(1, haloPulseScale);
           }
 
+          if (sparklePoints && !prefersReducedMotion) {
+            sparklePoints.rotation.y -= (0.14 + spinBurstVelocity * 0.35) * dt;
+            sparklePoints.position.y = Math.sin(elapsed * 0.7) * 0.12;
+          }
+
           // Orbiting 18 fruit spiral
           if (fruitRingGroup) {
             if (!prefersReducedMotion) {
-              fruitRingGroup.rotation.y += (0.22 + spinBurstVelocity) * dt;
+              fruitRingGroup.rotation.y += (0.22 + spinBurstVelocity) * dt + dragState.velY * 0.65;
             }
             var timeSinceSwitch = elapsed - flavourSwitchTime;
             var totalCount = fruitItems.length;
@@ -2748,7 +4597,6 @@
               var item = fruitItems[i];
               var normIdx = totalCount > 1 ? i / (totalCount - 1) : 0;
 
-              // Spiral radius shrinks as user scrolls in
               var baseRadius = THREE.MathUtils.lerp(3.45, 1.62, smoothScrollProg);
               var radiusJitter = (i % 3) * 0.34;
               var orbitR = baseRadius + radiusJitter;
@@ -2756,6 +4604,7 @@
               var helixAngle =
                 i * 0.74 +
                 smoothScrollProg * Math.PI * 2.4 +
+                dragState.rotY * 0.45 +
                 (prefersReducedMotion ? 0 : elapsed * 0.24);
 
               var verticalSpan = THREE.MathUtils.lerp(2.45, 1.5, smoothScrollProg);
@@ -2773,7 +4622,6 @@
                 item.group.rotation.y += item.tumbleSpeedY * dt;
               }
 
-              // Staggered pop-in on flavour switch
               var popScale = 1;
               if (flavourSwitchTime > -1 && !prefersReducedMotion) {
                 var localT = timeSinceSwitch - item.popDelay;
@@ -2781,7 +4629,6 @@
                   popScale = 0.001;
                 } else if (localT < 0.42) {
                   var p = localT / 0.42;
-                  // Smooth overshoot pop
                   popScale = 1 - Math.pow(1 - p, 3) * Math.cos(p * Math.PI * 1.8);
                 }
               }
@@ -2802,6 +4649,7 @@
         // 10. BOOTSTRAP
         // ============================================================
         try {
+          renderHeroPills();
           renderFlavourCards();
           renderCartUI();
           applyFlavourDOM(FLAVOURS[activeFlavourIdx]);
