@@ -1,0 +1,6 @@
+{
+  "name": "NEXUS BOLT — 3D Energy Drink Showcase",
+  "description": "Interactive 3D scroll showcase and flavour explorer for NEXUS BOLT zero-sugar sparkling energy drinks.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

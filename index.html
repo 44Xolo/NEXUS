@@ -1,0 +1,2826 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>NEXUS BOLT — Zero Sugar Sparkling Energy Drink</title>
+    <meta
+      name="description"
+      content="Explore NEXUS BOLT zero-sugar sparkling energy drinks in interactive 3D: Cherry Cola, Watermelon Mint, Citrus Blue Razz, and Green Apple."
+    />
+    <meta property="og:title" content="NEXUS BOLT — Zero Sugar Sparkling Energy Drink" />
+    <meta
+      property="og:description"
+      content="Explore NEXUS BOLT zero-sugar sparkling energy drinks in interactive 3D: Cherry Cola, Watermelon Mint, Citrus Blue Razz, and Green Apple."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-page: #0c0507;
+        --bg-surface: #160a0e;
+        --bg-surface-hover: #210f15;
+        --border-subtle: rgba(255, 255, 255, 0.1);
+        --text-primary: #f8fafc;
+        --text-muted: rgba(248, 250, 252, 0.68);
+        --accent: #e11d48;
+        --accent-soft: rgba(225, 29, 72, 0.16);
+        --accent-contrast: #ffffff;
+        --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+        --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-page);
+        color: var(--text-primary);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-page);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        transition: background-color 0.75s var(--ease-out-expo);
+      }
+
+      body.splash-locked {
+        overflow: hidden;
+        height: 100vh;
+        touch-action: none;
+      }
+
+      /* Focus ring accessibility */
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      /* =========================================
+         1. SPLASH SCREEN (Uber-style rising letters)
+         ========================================= */
+      #splash-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 45%, #230910 0%, #07070a 68%);
+        padding: 24px env(safe-area-inset-right, 24px) 24px env(safe-area-inset-left, 24px);
+        transform: translateY(0%);
+        transition: transform 0.85s var(--ease-out-expo);
+        will-change: transform;
+      }
+
+      .splash-photo-layer {
+        position: absolute;
+        inset: -4%;
+        z-index: 0;
+        background-image: url("/assets/aistudio/image_20261117_162622_ee207256.jpg");
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transform: scale(1.14);
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95) 20%, rgba(0, 0, 0, 0) 76%);
+        mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.95) 20%, rgba(0, 0, 0, 0) 76%);
+        animation: splashPhotoReveal 2.1s var(--ease-out-expo) forwards;
+        pointer-events: none;
+        will-change: transform, opacity;
+      }
+
+      #splash-screen > *:not(.splash-photo-layer) {
+        position: relative;
+        z-index: 1;
+      }
+
+      @keyframes splashPhotoReveal {
+        0% {
+          opacity: 0;
+          transform: scale(1.14);
+        }
+        100% {
+          opacity: 0.42;
+          transform: scale(1.02);
+        }
+      }
+
+      #splash-screen.is-leaving {
+        transform: translateY(-105%);
+        pointer-events: none;
+      }
+
+      .splash-wordmark {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
+        gap: 0.04em;
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(3.5rem, 12vw, 8.5rem);
+        font-weight: 800;
+        font-style: italic;
+        letter-spacing: 0.03em;
+        line-height: 0.94;
+        text-transform: uppercase;
+        color: #ffffff;
+        user-select: none;
+      }
+
+      .splash-space {
+        width: 0.28em;
+      }
+
+      .splash-char-mask {
+        display: inline-block;
+        overflow: hidden;
+        padding: 0.04em 0.02em;
+      }
+
+      .splash-char {
+        display: inline-block;
+        transform: translateY(118%);
+        animation: charRise 0.72s var(--ease-out-expo) forwards;
+        will-change: transform;
+      }
+
+      .splash-bolt {
+        color: #e11d48;
+      }
+
+      .splash-sub {
+        margin-top: 18px;
+        font-family: var(--font-body);
+        font-size: 0.8125rem;
+        font-weight: 500;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+        opacity: 0;
+        transform: translateY(12px);
+        animation: subRise 0.6s var(--ease-out-expo) 0.55s forwards;
+      }
+
+      @keyframes charRise {
+        to {
+          transform: translateY(0%);
+        }
+      }
+
+      @keyframes subRise {
+        to {
+          opacity: 1;
+          transform: translateY(0%);
+        }
+      }
+
+      /* =========================================
+         2. FIXED TOP NAVIGATION (3-zone contract)
+         ========================================= */
+      .site-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: max(14px, env(safe-area-inset-top, 14px))
+          max(24px, env(safe-area-inset-right, 24px)) 14px
+          max(24px, env(safe-area-inset-left, 24px));
+        background: linear-gradient(180deg, rgba(7, 7, 10, 0.82) 0%, rgba(7, 7, 10, 0) 100%);
+        pointer-events: none;
+      }
+
+      .site-nav > * {
+        pointer-events: auto;
+      }
+
+      .nav-brand {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 800;
+        font-style: italic;
+        letter-spacing: 0.04em;
+        color: #ffffff;
+        text-decoration: none;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .nav-center {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        min-width: 0;
+      }
+
+      .nav-link {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.78);
+        text-decoration: none;
+        white-space: nowrap;
+        flex-shrink: 0;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 2px;
+        transition: color 0.18s ease, border-color 0.18s ease;
+      }
+
+      .nav-link:hover {
+        color: #ffffff;
+        border-bottom-color: var(--accent);
+      }
+
+      .nav-active-flavour {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 180px;
+      }
+
+      .nav-sep {
+        color: rgba(255, 255, 255, 0.28);
+        user-select: none;
+      }
+
+      .nav-cart-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background-color: rgba(15, 15, 20, 0.88);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+        flex-shrink: 0;
+        cursor: pointer;
+        transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      }
+
+      .nav-cart-btn:hover {
+        background-color: var(--accent);
+        border-color: var(--accent);
+        transform: translateY(-1px);
+      }
+
+      @media (max-width: 640px) {
+        .site-nav {
+          gap: 12px;
+          padding-left: max(16px, env(safe-area-inset-left, 16px));
+          padding-right: max(16px, env(safe-area-inset-right, 16px));
+        }
+
+        .nav-active-flavour,
+        .nav-sep,
+        .nav-link-hide-sm {
+          display: none;
+        }
+      }
+
+      /* =========================================
+         3. 3D SCROLL HERO (450vh + fixed WebGL)
+         ========================================= */
+      #webgl-stage {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        pointer-events: none;
+      }
+
+      #webgl-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      #webgl-fallback {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        text-align: center;
+        background: radial-gradient(circle at 50% 45%, var(--accent-soft), var(--bg-page) 68%);
+        pointer-events: none;
+      }
+
+      #webgl-fallback.is-visible {
+        display: flex;
+      }
+
+      .fallback-card {
+        max-width: 340px;
+        padding: 28px 24px;
+        border-radius: 14px;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-surface);
+      }
+
+      .hero-scroll-track {
+        position: relative;
+        z-index: 10;
+        height: 450vh;
+        pointer-events: none;
+      }
+
+      .hero-sticky-viewport {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
+        width: 100%;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .hero-caption {
+        position: absolute;
+        left: max(24px, env(safe-area-inset-left, 24px));
+        right: max(24px, env(safe-area-inset-right, 24px));
+        bottom: max(76px, calc(env(safe-area-inset-bottom, 0px) + 64px));
+        max-width: 680px;
+        margin: 0 auto;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(22px);
+        transition: none;
+        will-change: opacity, transform;
+      }
+
+      @media (min-width: 960px) {
+        .hero-caption {
+          text-align: left;
+          margin: 0;
+          left: max(56px, env(safe-area-inset-left, 56px));
+          right: auto;
+          bottom: 12vh;
+          max-width: 460px;
+        }
+
+        .hero-caption[data-align="right"] {
+          left: auto;
+          right: max(56px, env(safe-area-inset-right, 56px));
+          text-align: right;
+        }
+      }
+
+      .caption-kicker {
+        margin: 0 0 8px 0;
+        font-family: var(--font-body);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+      }
+
+      .caption-headline {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+        font-weight: 800;
+        font-style: italic;
+        line-height: 0.94;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        color: #ffffff;
+        text-wrap: balance;
+        text-shadow: 0 8px 32px rgba(0, 0, 0, 0.72);
+      }
+
+      .caption-sub {
+        margin: 14px 0 0 0;
+        font-size: 1rem;
+        line-height: 1.55;
+        color: rgba(248, 250, 252, 0.84);
+        text-shadow: 0 2px 16px rgba(0, 0, 0, 0.85);
+      }
+
+      /* Bottom scroll hint */
+      .scroll-hint {
+        position: absolute;
+        left: 50%;
+        bottom: max(22px, env(safe-area-inset-bottom, 22px));
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        opacity: 1;
+        will-change: opacity, transform;
+      }
+
+      .scroll-hint-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .scroll-hint-line {
+        width: 1px;
+        height: 28px;
+        background: rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scroll-hint-line::after {
+        content: "";
+        position: absolute;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--accent);
+        animation: scrollLineDrop 1.7s var(--ease-out-expo) infinite;
+      }
+
+      @keyframes scrollLineDrop {
+        0% {
+          transform: translateY(0%);
+        }
+        100% {
+          transform: translateY(200%);
+        }
+      }
+
+      /* =========================================
+         4. FLAVOURS SECTION (Solid surface below hero)
+         ========================================= */
+      .flavours-section {
+        position: relative;
+        z-index: 20;
+        background-color: var(--bg-page);
+        border-top: 1px solid var(--border-subtle);
+        padding: 96px max(24px, env(safe-area-inset-left, 24px))
+          max(96px, calc(env(safe-area-inset-bottom, 24px) + 72px))
+          max(24px, env(safe-area-inset-right, 24px));
+        transition: background-color 0.75s var(--ease-out-expo);
+      }
+
+      .flavours-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 48px;
+      }
+
+      .section-eyebrow {
+        margin: 0 0 8px 0;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        transition: color 0.5s ease;
+      }
+
+      .section-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+        font-weight: 800;
+        font-style: italic;
+        line-height: 0.98;
+        text-transform: uppercase;
+        color: var(--text-primary);
+        text-wrap: balance;
+      }
+
+      .section-lead {
+        margin: 0;
+        max-width: 420px;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        color: var(--text-muted);
+      }
+
+      .flavours-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      @media (max-width: 1080px) {
+        .flavours-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 600px) {
+        .flavours-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .flavour-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+        border-radius: 14px;
+        border: 1px solid var(--border-subtle);
+        background-color: var(--bg-surface);
+        cursor: pointer;
+        text-align: left;
+        transition:
+          transform 0.2s var(--ease-out-expo),
+          background-color 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      .flavour-card:hover {
+        transform: translateY(-3px);
+        background-color: var(--bg-surface-hover);
+        border-color: rgba(255, 255, 255, 0.24);
+      }
+
+      .flavour-card.is-active {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent);
+      }
+
+      /* Product Photo + Animated Colour Swatch */
+      .swatch-frame {
+        position: relative;
+        width: 100%;
+        height: 196px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 18px;
+        background: var(--swatch-bg);
+      }
+
+      .card-photo {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.35s var(--ease-out-expo);
+      }
+
+      .card-photo-sweep {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        background: linear-gradient(
+          115deg,
+          rgba(255, 255, 255, 0) 20%,
+          rgba(255, 255, 255, 0.16) 48%,
+          rgba(255, 255, 255, 0) 76%
+        );
+        transform: translateX(-120%);
+        animation: cardPhotoSweep 6.5s var(--ease-out-expo) infinite;
+        pointer-events: none;
+        will-change: transform;
+      }
+
+      @keyframes cardPhotoSweep {
+        0%,
+        55% {
+          transform: translateX(-120%);
+        }
+        100% {
+          transform: translateX(120%);
+        }
+      }
+
+      .flavour-card:hover .card-photo {
+        transform: scale(1.04);
+      }
+
+      .swatch-sheen {
+        position: absolute;
+        inset: -35%;
+        background: conic-gradient(
+          from 0deg at 50% 50%,
+          rgba(255, 255, 255, 0) 0deg,
+          rgba(255, 255, 255, 0.26) 65deg,
+          rgba(255, 255, 255, 0) 130deg,
+          rgba(0, 0, 0, 0.22) 240deg,
+          rgba(255, 255, 255, 0) 360deg
+        );
+        animation: swatchSpin 8s linear infinite;
+        will-change: transform;
+      }
+
+      .swatch-core {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 30% 28%,
+          rgba(255, 255, 255, 0.32) 0%,
+          rgba(255, 255, 255, 0) 58%
+        );
+      }
+
+      .card-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .swatch-chip {
+        position: relative;
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: var(--swatch-bg);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+      }
+
+      @keyframes swatchSpin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .card-meta {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+      }
+
+      .card-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.75rem;
+        font-weight: 700;
+        font-style: italic;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        color: #ffffff;
+        line-height: 1.05;
+      }
+
+      .card-desc {
+        margin: 0 0 20px 0;
+        font-size: 0.875rem;
+        line-height: 1.55;
+        color: var(--text-muted);
+      }
+
+      .card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .card-price {
+        font-size: 1.125rem;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        color: #ffffff;
+      }
+
+      .add-cart-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background-color: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
+        cursor: pointer;
+        transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      }
+
+      .add-cart-btn:hover {
+        background-color: var(--accent);
+        border-color: var(--accent);
+        color: var(--accent-contrast);
+      }
+
+      .add-cart-btn:active {
+        transform: scale(0.97);
+      }
+
+      /* =========================================
+         5. FOOTER
+         ========================================= */
+      .site-footer {
+        position: relative;
+        z-index: 20;
+        background-color: var(--bg-page);
+        border-top: 1px solid var(--border-subtle);
+        padding: 28px max(24px, env(safe-area-inset-left, 24px))
+          max(28px, env(safe-area-inset-bottom, 28px))
+          max(24px, env(safe-area-inset-right, 24px));
+        transition: background-color 0.75s var(--ease-out-expo);
+      }
+
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 0.8125rem;
+        color: var(--text-muted);
+      }
+
+      .footer-top-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+        padding-bottom: 2px;
+      }
+
+      .footer-top-link:hover {
+        border-bottom-color: var(--accent);
+      }
+
+      /* =========================================
+         6. TOAST & CART DRAWER
+         ========================================= */
+      .toast-notice {
+        position: fixed;
+        right: max(20px, env(safe-area-inset-right, 20px));
+        bottom: max(20px, env(safe-area-inset-bottom, 20px));
+        z-index: 60;
+        max-width: min(360px, calc(100vw - 40px));
+        padding: 14px 18px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background-color: #121217;
+        color: #ffffff;
+        font-size: 0.875rem;
+        line-height: 1.45;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+        opacity: 0;
+        transform: translateY(14px);
+        pointer-events: none;
+        transition: opacity 0.22s ease, transform 0.22s var(--ease-out-expo);
+      }
+
+      .toast-notice.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .cart-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 70;
+        background: rgba(0, 0, 0, 0.65);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+
+      .cart-backdrop.is-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .cart-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 80;
+        width: min(400px, 100vw);
+        background-color: #111116;
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        flex-direction: column;
+        padding: max(20px, env(safe-area-inset-top, 20px))
+          max(20px, env(safe-area-inset-right, 20px))
+          max(20px, env(safe-area-inset-bottom, 20px)) 20px;
+        transform: translateX(100%);
+        transition: transform 0.32s var(--ease-out-expo);
+      }
+
+      .cart-drawer.is-open {
+        transform: translateX(0%);
+      }
+
+      .cart-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .cart-heading {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.75rem;
+        font-weight: 700;
+        font-style: italic;
+        text-transform: uppercase;
+      }
+
+      .cart-close {
+        min-width: 40px;
+        min-height: 40px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: transparent;
+        color: #ffffff;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .cart-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .cart-row-title {
+        font-weight: 600;
+        font-size: 0.9375rem;
+        margin: 0 0 4px 0;
+      }
+
+      .cart-row-meta {
+        font-size: 0.8125rem;
+        color: var(--text-muted);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .qty-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .qty-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffffff;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .qty-val {
+        min-width: 20px;
+        text-align: center;
+        font-size: 0.875rem;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .cart-foot {
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .cart-subtotal {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 14px;
+        font-size: 1rem;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .cart-checkout-btn {
+        width: 100%;
+        min-height: 44px;
+        border-radius: 8px;
+        border: none;
+        background-color: var(--accent);
+        color: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .cart-checkout-btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      /* =========================================
+         7. REDUCED MOTION SUPPORT
+         ========================================= */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .splash-char,
+        .splash-sub,
+        .splash-photo-layer {
+          animation: none;
+          transform: none;
+          opacity: 1;
+        }
+        .splash-photo-layer {
+          opacity: 0.3;
+        }
+        #splash-screen {
+          transition: opacity 0.25s ease;
+        }
+        #splash-screen.is-leaving {
+          transform: none;
+          opacity: 0;
+        }
+        .swatch-sheen,
+        .card-photo-sweep,
+        .scroll-hint-line::after {
+          animation: none;
+        }
+        .flavour-card,
+        .nav-cart-btn,
+        .add-cart-btn,
+        .toast-notice,
+        .cart-drawer {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="splash-locked">
+    <!-- 1. SPLASH SCREEN -->
+    <div id="splash-screen" aria-hidden="false">
+      <div class="splash-photo-layer" aria-hidden="true"></div>
+      <h1 class="splash-wordmark" id="splash-wordmark" aria-label="NEXUS BOLT"></h1>
+      <p class="splash-sub">Zero Sugar Energy</p>
+    </div>
+
+    <!-- 2. FIXED NAVIGATION -->
+    <header class="site-nav">
+      <a href="#hero-top" class="nav-brand" id="nav-brand-link">NEXUS BOLT</a>
+      <nav class="nav-center" aria-label="Primary navigation">
+        <span class="nav-active-flavour" id="nav-flavour-label">Cherry Cola</span>
+        <span class="nav-sep" aria-hidden="true">·</span>
+        <a href="#flavours" class="nav-link">Flavours</a>
+        <a href="#hero-top" class="nav-link nav-link-hide-sm">3D Showcase</a>
+      </nav>
+      <button type="button" class="nav-cart-btn" id="nav-cart-btn" aria-label="Open cart">
+        Cart (0)
+      </button>
+    </header>
+
+    <!-- FIXED 3D WEBGL STAGE -->
+    <div id="webgl-stage" aria-hidden="true">
+      <canvas id="webgl-canvas"></canvas>
+    </div>
+    <div id="webgl-fallback" aria-hidden="true">
+      <div class="fallback-card">
+        <div class="swatch-frame" style="height: 170px; margin-bottom: 14px;">
+          <img
+            id="fallback-img"
+            class="card-photo"
+            src="/assets/aistudio/image_20261117_162622_ee207256.jpg"
+            alt="NEXUS BOLT Cherry Cola can"
+            referrerpolicy="no-referrer"
+          />
+        </div>
+        <p class="caption-kicker" id="fallback-kicker">Zero Sugar · 500mL</p>
+        <h2 class="card-title" id="fallback-title" style="margin-bottom: 8px;">NEXUS BOLT — Cherry Cola</h2>
+        <p class="card-desc">3D WebGL preview is unavailable in this browser view. Scroll below to explore all four flavours.</p>
+      </div>
+    </div>
+
+    <!-- 3. 3D SCROLL HERO (450vh) -->
+    <main id="hero-top">
+      <section class="hero-scroll-track" id="hero-track" aria-label="3D Product Showcase">
+        <div class="hero-sticky-viewport">
+          <div class="hero-caption" id="caption-1" data-align="left">
+            <p class="caption-kicker" id="cap1-kicker">500mL · 250mg Caffeine · Zero Sugar</p>
+            <h2 class="caption-headline" id="cap1-title">Pure Voltage. Cherry Cola.</h2>
+            <p class="caption-sub" id="cap1-sub">
+              Velvety dark orchard cherry fused with crisp spiced cola fizz.
+            </p>
+          </div>
+
+          <div class="hero-caption" id="caption-2" data-align="right">
+            <p class="caption-kicker" id="cap2-kicker">Formulated For Focus</p>
+            <h2 class="caption-headline" id="cap2-title">Zero Sugar. Zero Crash.</h2>
+            <p class="caption-sub" id="cap2-sub">
+              Taurine, B-vitamins, and clean crisp carbonation engineered for sustained drive.
+            </p>
+          </div>
+
+          <div class="hero-caption" id="caption-3" data-align="left">
+            <p class="caption-kicker" id="cap3-kicker">Serve Ice Cold</p>
+            <h2 class="caption-headline" id="cap3-title">Crack The Bolt.</h2>
+            <p class="caption-sub" id="cap3-sub">
+              Scroll to the lineup below to switch flavours or build your pack.
+            </p>
+          </div>
+
+          <div class="scroll-hint" id="scroll-hint">
+            <span class="scroll-hint-label">Scroll to explore</span>
+            <span class="scroll-hint-line" aria-hidden="true"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. FLAVOURS SECTION -->
+      <section class="flavours-section" id="flavours" aria-labelledby="flavours-heading">
+        <div class="flavours-container">
+          <div class="section-header">
+            <div>
+              <p class="section-eyebrow">Full Lineup</p>
+              <h2 class="section-title" id="flavours-heading">Four Charged Flavours</h2>
+            </div>
+            <p class="section-lead">
+              Select any flavour card to transform the 3D can, fruit spiral, and lighting rig, or add cans straight to your cart.
+            </p>
+          </div>
+
+          <div class="flavours-grid" id="flavours-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>NEXUS BOLT · Zero Sugar Sparkling Energy</span>
+        <a href="#hero-top" class="footer-top-link">Back to top</a>
+      </div>
+    </footer>
+
+    <!-- TOAST -->
+    <div class="toast-notice" id="toast-notice" role="status" aria-live="polite"></div>
+
+    <!-- CART DRAWER -->
+    <div class="cart-backdrop" id="cart-backdrop"></div>
+    <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart" aria-hidden="true">
+      <div class="cart-head">
+        <h2 class="cart-heading">Your Pack</h2>
+        <button type="button" class="cart-close" id="cart-close-btn" aria-label="Close cart">
+          ✕
+        </button>
+      </div>
+      <div class="cart-items" id="cart-items-list"></div>
+      <div class="cart-foot">
+        <div class="cart-subtotal">
+          <span>Subtotal</span>
+          <span id="cart-subtotal-val">$0.00</span>
+        </div>
+        <button type="button" class="cart-checkout-btn" id="cart-checkout-btn" disabled>
+          Place Sample Order
+        </button>
+      </div>
+    </aside>
+
+    <!-- THREE.JS r128 FROM CDNJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- INLINE VANILLA JS -->
+    <script>
+      (function () {
+        "use strict";
+
+        // ============================================================
+        // 0. REDUCED MOTION & SPLASH FAILSAFE (runs first, never stalls)
+        // ============================================================
+        var reducedMotionQuery = window.matchMedia
+          ? window.matchMedia("(prefers-reduced-motion: reduce)")
+          : null;
+        var prefersReducedMotion = reducedMotionQuery ? reducedMotionQuery.matches : false;
+        if (reducedMotionQuery && typeof reducedMotionQuery.addEventListener === "function") {
+          reducedMotionQuery.addEventListener("change", function (ev) {
+            prefersReducedMotion = ev.matches;
+          });
+        }
+
+        var splashEl = document.getElementById("splash-screen");
+        var wordmarkEl = document.getElementById("splash-wordmark");
+
+        function populateSplashChars() {
+          if (!wordmarkEl) return;
+          var labelStr = "NEXUS BOLT";
+          var charIdx = 0;
+          for (var i = 0; i < labelStr.length; i++) {
+            var ch = labelStr.charAt(i);
+            if (ch === " ") {
+              var spaceEl = document.createElement("span");
+              spaceEl.className = "splash-space";
+              spaceEl.setAttribute("aria-hidden", "true");
+              wordmarkEl.appendChild(spaceEl);
+              continue;
+            }
+            var maskEl = document.createElement("span");
+            maskEl.className = "splash-char-mask";
+            var innerEl = document.createElement("span");
+            innerEl.className = "splash-char" + (i >= 6 ? " splash-bolt" : "");
+            innerEl.textContent = ch;
+            innerEl.style.animationDelay = charIdx * 45 + "ms";
+            maskEl.appendChild(innerEl);
+            wordmarkEl.appendChild(maskEl);
+            charIdx++;
+          }
+        }
+
+        function dismissSplash() {
+          document.body.classList.remove("splash-locked");
+          if (splashEl) {
+            splashEl.classList.add("is-leaving");
+            splashEl.setAttribute("aria-hidden", "true");
+            window.setTimeout(function () {
+              if (splashEl && splashEl.parentNode) {
+                splashEl.parentNode.removeChild(splashEl);
+              }
+            }, 950);
+          }
+        }
+
+        try {
+          populateSplashChars();
+        } catch (err) {
+          // Never allow splash text setup to block dismissal
+        }
+
+        var splashDelayMs = prefersReducedMotion ? 900 : 2300;
+        window.setTimeout(dismissSplash, splashDelayMs);
+
+        // ============================================================
+        // 1. FLAVOUR DEFINITIONS (No reserved global names)
+        // ============================================================
+        var FLAVOURS = [
+          {
+            id: "cherry-cola",
+            label: "Cherry Cola",
+            canLine: "CHERRY COLA",
+            subLabel: "SPARKLING CHERRY COLA",
+            price: 3.49,
+            volume: "500mL",
+            caffeine: "250mg Caffeine",
+            specs: "500mL · 250mg Caffeine · Zero Sugar",
+            desc: "Velvety dark orchard cherry fused with crisp spiced cola fizz and a high-voltage zero-sugar finish.",
+            bgHex: "#0c0507",
+            surfaceHex: "#160a0e",
+            surfaceHoverHex: "#240f16",
+            accentHex: "#e11d48",
+            lightHex: 0xfb7185,
+            rimHex: 0xe11d48,
+            sceneBgHex: 0x0c0507,
+            canGradTop: "#0d0d12",
+            canGradMid: "#991b1b",
+            canGradBot: "#1c080d",
+            canStripe: "#fb7185",
+            swatchBg: "linear-gradient(135deg, #1a080c 0%, #b91c1c 52%, #fb7185 100%)",
+            imageSrc: "/assets/aistudio/image_20261117_162622_ee207256.jpg",
+            cropBox: { x: 0.37, y: 0.08, w: 0.26, h: 0.85, tiltRad: 0 },
+            cap1Headline: "Pure Voltage. Cherry Cola.",
+            cap1Sub: "Velvety dark orchard cherry fused with crisp spiced cola fizz.",
+            cap2Headline: "250mg Caffeine. Zero Crash.",
+            cap2Sub: "Zero sugar formulation engineered for sustained output and clean focus.",
+            cap3Headline: "Serve Ice Cold. Crack The Bolt.",
+            cap3Sub: "Scroll below to switch flavours or build your cold pack."
+          },
+          {
+            id: "watermelon-mint",
+            label: "Watermelon Mint",
+            canLine: "WATERMELON MINT",
+            subLabel: "NATURAL FLAVOURS · ZERO SUGAR",
+            price: 3.29,
+            volume: "300mL",
+            caffeine: "Taurine + Caffeine",
+            specs: "300mL · Taurine + Caffeine · Zero Sugar",
+            desc: "Sun-ripened crimson watermelon chilled with crushed garden mint leaves for an ultra-crisp lift.",
+            bgHex: "#0e060a",
+            surfaceHex: "#190c13",
+            surfaceHoverHex: "#27121d",
+            accentHex: "#ec4899",
+            lightHex: 0xf472b6,
+            rimHex: 0x4ade80,
+            sceneBgHex: 0x0e060a,
+            canGradTop: "#ec4899",
+            canGradMid: "#db2777",
+            canGradBot: "#16a34a",
+            canStripe: "#86efac",
+            swatchBg: "linear-gradient(135deg, #f43f5e 0%, #ec4899 48%, #22c55e 100%)",
+            imageSrc: "/assets/aistudio/image_20261117_162618_4bc0caab.jpg",
+            cropBox: { x: 0.355, y: 0.08, w: 0.29, h: 0.85, tiltRad: 0.13 },
+            cap1Headline: "Crisp Chill. Watermelon Mint.",
+            cap1Sub: "Sun-ripened crimson melon layered with garden-fresh mint snap.",
+            cap2Headline: "Taurine + Caffeine. Zero Sugar.",
+            cap2Sub: "Lightly sparkling 300mL slim formula built for instant refreshment.",
+            cap3Headline: "Garden Fresh. Full Charge.",
+            cap3Sub: "Scroll below to switch flavours or add Watermelon Mint to your pack."
+          },
+          {
+            id: "citrus-blue-razz",
+            label: "Citrus Blue Razz",
+            canLine: "CITRUS BLUE RAZZ",
+            subLabel: "EXTREME ENERGY · FOCUS",
+            price: 3.49,
+            volume: "500mL",
+            caffeine: "200mg Caffeine",
+            specs: "500mL · 200mg Caffeine · B-Vitamins",
+            desc: "High-voltage blue raspberry collided with tart lime peel, lemon zest, and guarana extract.",
+            bgHex: "#050814",
+            surfaceHex: "#0b1228",
+            surfaceHoverHex: "#121d3d",
+            accentHex: "#0ea5e9",
+            lightHex: 0x38bdf8,
+            rimHex: 0x818cf8,
+            sceneBgHex: 0x050814,
+            canGradTop: "#0284c7",
+            canGradMid: "#2563eb",
+            canGradBot: "#312e81",
+            canStripe: "#38bdf8",
+            swatchBg: "linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #6d28d9 100%)",
+            imageSrc: "/assets/aistudio/image_20261117_162022_e2962744.jpg",
+            cropBox: { x: 0.37, y: 0.08, w: 0.26, h: 0.85, tiltRad: 0 },
+            cap1Headline: "Extreme Focus. Citrus Blue Razz.",
+            cap1Sub: "Electric blue raspberry fused with bright lime and lemon zest.",
+            cap2Headline: "200mg Caffeine + Guarana.",
+            cap2Sub: "B-vitamins, taurine, and zero sugar in a 500mL frost-charged can.",
+            cap3Headline: "Storm In A Can. Stay Charged.",
+            cap3Sub: "Scroll below to switch flavours or add Citrus Blue Razz to your pack."
+          },
+          {
+            id: "green-apple",
+            label: "Green Apple",
+            canLine: "GREEN APPLE",
+            subLabel: "NATURAL GREEN APPLE FLAVOUR",
+            price: 3.29,
+            volume: "300mL",
+            caffeine: "200mg Caffeine",
+            specs: "300mL · 200mg Caffeine · B-Vitamins",
+            desc: "Sharp orchard Granny Smith snap balanced with cool mint crispness and clean zero-sugar energy.",
+            bgHex: "#050e07",
+            surfaceHex: "#0b1a0f",
+            surfaceHoverHex: "#122b19",
+            accentHex: "#22c55e",
+            lightHex: 0x4ade80,
+            rimHex: 0xa3e635,
+            sceneBgHex: 0x050e07,
+            canGradTop: "#15803d",
+            canGradMid: "#22c55e",
+            canGradBot: "#365314",
+            canStripe: "#bef264",
+            swatchBg: "linear-gradient(135deg, #14532d 0%, #22c55e 52%, #a3e635 100%)",
+            imageSrc: "/assets/aistudio/image_20261117_162619_09ebd828.jpg",
+            cropBox: { x: 0.37, y: 0.08, w: 0.26, h: 0.85, tiltRad: 0 },
+            cap1Headline: "Sharp Snap. Green Apple.",
+            cap1Sub: "Crisp Granny Smith bite chilled with an icy mint-tinted finish.",
+            cap2Headline: "Clean Energy. Zero Sugar.",
+            cap2Sub: "200mg caffeine with taurine and B-vitamins in a sleek 300mL can.",
+            cap3Headline: "Orchard Cold. Fuel The Bolt.",
+            cap3Sub: "Scroll below to switch flavours or add Green Apple to your pack."
+          }
+        ];
+
+        var activeFlavourIdx = 0;
+        var cartQuantities = {};
+
+        // ============================================================
+        // 2. DOM REFERENCES
+        // ============================================================
+        var navFlavourEl = document.getElementById("nav-flavour-label");
+        var navCartBtnEl = document.getElementById("nav-cart-btn");
+        var heroTrackEl = document.getElementById("hero-track");
+        var cap1El = document.getElementById("caption-1");
+        var cap2El = document.getElementById("caption-2");
+        var cap3El = document.getElementById("caption-3");
+        var cap1KickerEl = document.getElementById("cap1-kicker");
+        var cap1TitleEl = document.getElementById("cap1-title");
+        var cap1SubEl = document.getElementById("cap1-sub");
+        var cap2KickerEl = document.getElementById("cap2-kicker");
+        var cap2TitleEl = document.getElementById("cap2-title");
+        var cap2SubEl = document.getElementById("cap2-sub");
+        var cap3KickerEl = document.getElementById("cap3-kicker");
+        var cap3TitleEl = document.getElementById("cap3-title");
+        var cap3SubEl = document.getElementById("cap3-sub");
+        var scrollHintEl = document.getElementById("scroll-hint");
+        var flavoursGridEl = document.getElementById("flavours-grid");
+        var toastEl = document.getElementById("toast-notice");
+        var cartBackdropEl = document.getElementById("cart-backdrop");
+        var cartDrawerEl = document.getElementById("cart-drawer");
+        var cartCloseBtnEl = document.getElementById("cart-close-btn");
+        var cartItemsListEl = document.getElementById("cart-items-list");
+        var cartSubtotalEl = document.getElementById("cart-subtotal-val");
+        var cartCheckoutBtnEl = document.getElementById("cart-checkout-btn");
+        var fallbackEl = document.getElementById("webgl-fallback");
+        var fallbackImgEl = document.getElementById("fallback-img");
+        var fallbackKickerEl = document.getElementById("fallback-kicker");
+        var fallbackTitleEl = document.getElementById("fallback-title");
+
+        // ============================================================
+        // 3. CART & TOAST LOGIC
+        // ============================================================
+        var toastTimer = null;
+
+        function showToast(msg) {
+          if (!toastEl) return;
+          toastEl.textContent = msg;
+          toastEl.classList.add("is-visible");
+          if (toastTimer) window.clearTimeout(toastTimer);
+          toastTimer = window.setTimeout(function () {
+            toastEl.classList.remove("is-visible");
+          }, 2800);
+        }
+
+        function getCartTotals() {
+          var totalItems = 0;
+          var subtotal = 0;
+          for (var i = 0; i < FLAVOURS.length; i++) {
+            var flav = FLAVOURS[i];
+            var qty = cartQuantities[flav.id] || 0;
+            totalItems += qty;
+            subtotal += qty * flav.price;
+          }
+          return { count: totalItems, sum: subtotal };
+        }
+
+        function renderCartUI() {
+          var totals = getCartTotals();
+          if (navCartBtnEl) {
+            navCartBtnEl.textContent = "Cart (" + totals.count + ")";
+          }
+          if (cartSubtotalEl) {
+            cartSubtotalEl.textContent = "$" + totals.sum.toFixed(2);
+          }
+          if (cartCheckoutBtnEl) {
+            cartCheckoutBtnEl.disabled = totals.count === 0;
+          }
+          if (!cartItemsListEl) return;
+
+          cartItemsListEl.innerHTML = "";
+          if (totals.count === 0) {
+            var emptyP = document.createElement("p");
+            emptyP.className = "card-desc";
+            emptyP.textContent = "Your pack is empty. Add any flavour below to get started.";
+            cartItemsListEl.appendChild(emptyP);
+            return;
+          }
+
+          for (var i = 0; i < FLAVOURS.length; i++) {
+            (function (flav) {
+              var qty = cartQuantities[flav.id] || 0;
+              if (qty <= 0) return;
+
+              var row = document.createElement("div");
+              row.className = "cart-row";
+
+              var infoDiv = document.createElement("div");
+              var titleP = document.createElement("p");
+              titleP.className = "cart-row-title";
+              titleP.textContent = flav.label;
+              var metaSpan = document.createElement("span");
+              metaSpan.className = "cart-row-meta";
+              metaSpan.textContent =
+                flav.volume + " · $" + (flav.price * qty).toFixed(2);
+              infoDiv.appendChild(titleP);
+              infoDiv.appendChild(metaSpan);
+
+              var qtyGroup = document.createElement("div");
+              qtyGroup.className = "qty-group";
+
+              var minusBtn = document.createElement("button");
+              minusBtn.type = "button";
+              minusBtn.className = "qty-btn";
+              minusBtn.textContent = "−";
+              minusBtn.setAttribute("aria-label", "Remove one " + flav.label);
+              minusBtn.addEventListener("click", function () {
+                cartQuantities[flav.id] = Math.max(0, (cartQuantities[flav.id] || 0) - 1);
+                renderCartUI();
+              });
+
+              var valSpan = document.createElement("span");
+              valSpan.className = "qty-val";
+              valSpan.textContent = String(qty);
+
+              var plusBtn = document.createElement("button");
+              plusBtn.type = "button";
+              plusBtn.className = "qty-btn";
+              plusBtn.textContent = "+";
+              plusBtn.setAttribute("aria-label", "Add one " + flav.label);
+              plusBtn.addEventListener("click", function () {
+                cartQuantities[flav.id] = (cartQuantities[flav.id] || 0) + 1;
+                renderCartUI();
+              });
+
+              qtyGroup.appendChild(minusBtn);
+              qtyGroup.appendChild(valSpan);
+              qtyGroup.appendChild(plusBtn);
+
+              row.appendChild(infoDiv);
+              row.appendChild(qtyGroup);
+              cartItemsListEl.appendChild(row);
+            })(FLAVOURS[i]);
+          }
+        }
+
+        function addFlavourToCart(flavourObj) {
+          cartQuantities[flavourObj.id] = (cartQuantities[flavourObj.id] || 0) + 1;
+          renderCartUI();
+          var totals = getCartTotals();
+          showToast(
+            "Added " +
+              flavourObj.label +
+              " to cart · " +
+              totals.count +
+              (totals.count === 1 ? " can" : " cans") +
+              " ($" +
+              totals.sum.toFixed(2) +
+              ")"
+          );
+        }
+
+        function openCartDrawer() {
+          if (cartBackdropEl) cartBackdropEl.classList.add("is-open");
+          if (cartDrawerEl) {
+            cartDrawerEl.classList.add("is-open");
+            cartDrawerEl.setAttribute("aria-hidden", "false");
+          }
+        }
+
+        function closeCartDrawer() {
+          if (cartBackdropEl) cartBackdropEl.classList.remove("is-open");
+          if (cartDrawerEl) {
+            cartDrawerEl.classList.remove("is-open");
+            cartDrawerEl.setAttribute("aria-hidden", "true");
+          }
+        }
+
+        if (navCartBtnEl) navCartBtnEl.addEventListener("click", openCartDrawer);
+        if (cartCloseBtnEl) cartCloseBtnEl.addEventListener("click", closeCartDrawer);
+        if (cartBackdropEl) cartBackdropEl.addEventListener("click", closeCartDrawer);
+        if (cartCheckoutBtnEl) {
+          cartCheckoutBtnEl.addEventListener("click", function () {
+            var totals = getCartTotals();
+            if (totals.count === 0) return;
+            cartQuantities = {};
+            renderCartUI();
+            closeCartDrawer();
+            showToast(
+              "Sample order reserved (" +
+                totals.count +
+                (totals.count === 1 ? " can" : " cans") +
+                " · $" +
+                totals.sum.toFixed(2) +
+                ")"
+            );
+          });
+        }
+
+        // ============================================================
+        // 4. RENDER FLAVOUR CARDS
+        // ============================================================
+        var cardElements = [];
+
+        function renderFlavourCards() {
+          if (!flavoursGridEl) return;
+          flavoursGridEl.innerHTML = "";
+          cardElements = [];
+
+          for (var i = 0; i < FLAVOURS.length; i++) {
+            (function (idx, flav) {
+              var card = document.createElement("article");
+              card.className = "flavour-card" + (idx === activeFlavourIdx ? " is-active" : "");
+              card.setAttribute("tabindex", "0");
+              card.setAttribute("role", "button");
+              card.setAttribute("aria-label", "Preview " + flav.label + " in 3D");
+              card.style.setProperty("--swatch-bg", flav.swatchBg);
+
+              var upperDiv = document.createElement("div");
+
+              var swatchFrame = document.createElement("div");
+              swatchFrame.className = "swatch-frame";
+              var swatchSheen = document.createElement("div");
+              swatchSheen.className = "swatch-sheen";
+              var swatchCore = document.createElement("div");
+              swatchCore.className = "swatch-core";
+              swatchFrame.appendChild(swatchSheen);
+              swatchFrame.appendChild(swatchCore);
+
+              var photoEl = document.createElement("img");
+              photoEl.className = "card-photo";
+              photoEl.src = flav.imageSrc;
+              photoEl.alt = "NEXUS BOLT " + flav.label + " can";
+              photoEl.loading = "lazy";
+              photoEl.setAttribute("referrerpolicy", "no-referrer");
+              photoEl.addEventListener("error", function () {
+                photoEl.style.display = "none";
+              });
+              swatchFrame.appendChild(photoEl);
+
+              var sweepEl = document.createElement("div");
+              sweepEl.className = "card-photo-sweep";
+              sweepEl.setAttribute("aria-hidden", "true");
+              swatchFrame.appendChild(sweepEl);
+
+              var metaEl = document.createElement("div");
+              metaEl.className = "card-meta";
+              metaEl.textContent = flav.specs;
+
+              var titleRow = document.createElement("div");
+              titleRow.className = "card-title-row";
+
+              var titleEl = document.createElement("h3");
+              titleEl.className = "card-title";
+              titleEl.textContent = flav.label;
+
+              var chipEl = document.createElement("span");
+              chipEl.className = "swatch-chip";
+              chipEl.setAttribute("aria-hidden", "true");
+              var chipSheen = document.createElement("span");
+              chipSheen.className = "swatch-sheen";
+              var chipCore = document.createElement("span");
+              chipCore.className = "swatch-core";
+              chipEl.appendChild(chipSheen);
+              chipEl.appendChild(chipCore);
+
+              titleRow.appendChild(titleEl);
+              titleRow.appendChild(chipEl);
+
+              var descEl = document.createElement("p");
+              descEl.className = "card-desc";
+              descEl.textContent = flav.desc;
+
+              upperDiv.appendChild(swatchFrame);
+              upperDiv.appendChild(metaEl);
+              upperDiv.appendChild(titleRow);
+              upperDiv.appendChild(descEl);
+
+              var footEl = document.createElement("div");
+              footEl.className = "card-footer";
+
+              var priceEl = document.createElement("span");
+              priceEl.className = "card-price";
+              priceEl.textContent = "$" + flav.price.toFixed(2);
+
+              var addBtn = document.createElement("button");
+              addBtn.type = "button";
+              addBtn.className = "add-cart-btn";
+              addBtn.textContent = "Add to cart";
+              addBtn.addEventListener("click", function (ev) {
+                ev.stopPropagation();
+                addFlavourToCart(flav);
+              });
+
+              footEl.appendChild(priceEl);
+              footEl.appendChild(addBtn);
+
+              card.appendChild(upperDiv);
+              card.appendChild(footEl);
+
+              card.addEventListener("click", function () {
+                selectFlavour(idx, true);
+              });
+
+              card.addEventListener("keydown", function (ev) {
+                if (ev.key === "Enter" || ev.key === " ") {
+                  ev.preventDefault();
+                  selectFlavour(idx, true);
+                }
+              });
+
+              flavoursGridEl.appendChild(card);
+              cardElements.push(card);
+            })(i, FLAVOURS[i]);
+          }
+        }
+
+        // ============================================================
+        // 5. THREE.JS 3D SCENE (r128)
+        // ============================================================
+        var webglActive = false;
+        var renderer = null;
+        var scene = null;
+        var camera = null;
+        var canGroup = null;
+        var canLabelMat = null;
+        var canTopMat = null;
+        var canBotMat = null;
+        var labelCanvas = null;
+        var labelCtx = null;
+        var labelTexture = null;
+        var fruitRingGroup = null;
+        var fruitItems = [];
+        var keyLight = null;
+        var rimLight = null;
+        var fillLight = null;
+        var targetBgColor = null;
+        var targetKeyColor = null;
+        var targetRimColor = null;
+        var spinBurstVelocity = 0;
+        var flavourSwitchTime = -10;
+        var idleRotation = 0;
+        var isSoftwareGl = false;
+        var clock = null;
+        var splashHaloMesh = null;
+        var splashHaloMat = null;
+        var photoTexCache = {};
+        var photoImgCache = {};
+        var haloPulseScale = 1;
+
+        function detectSoftwareWebGL() {
+          try {
+            var testCanvas = document.createElement("canvas");
+            var gl =
+              testCanvas.getContext("webgl2") ||
+              testCanvas.getContext("webgl") ||
+              testCanvas.getContext("experimental-webgl");
+            if (!gl) return true;
+            var ext = gl.getExtension("WEBGL_debug_renderer_info");
+            var param = ext ? ext.UNMASKED_RENDERER_WEBGL : gl.RENDERER;
+            var gpuStr = String(gl.getParameter(param) || "");
+            var loseExt = gl.getExtension("WEBGL_lose_context");
+            if (loseExt) loseExt.loseContext();
+            return /SwiftShader|llvmpipe|softpipe|Software|Basic Render/i.test(gpuStr);
+          } catch (e) {
+            return true;
+          }
+        }
+
+        function buildStudioEnvTexture(glRenderer) {
+          var envCanvas = document.createElement("canvas");
+          envCanvas.width = 512;
+          envCanvas.height = 256;
+          var ctx = envCanvas.getContext("2d");
+
+          var grad = ctx.createLinearGradient(0, 0, 0, 256);
+          grad.addColorStop(0, "#3a4152");
+          grad.addColorStop(0.45, "#151822");
+          grad.addColorStop(0.55, "#0b0b10");
+          grad.addColorStop(1, "#050508");
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, 512, 256);
+
+          // Studio softbox highlights
+          ctx.fillStyle = "rgba(255, 250, 242, 0.92)";
+          ctx.fillRect(60, 24, 96, 54);
+          ctx.fillStyle = "rgba(210, 232, 255, 0.78)";
+          ctx.fillRect(320, 32, 110, 44);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.45)";
+          ctx.fillRect(210, 108, 70, 24);
+
+          var rawTex = new THREE.CanvasTexture(envCanvas);
+          rawTex.mapping = THREE.EquirectangularReflectionMapping;
+          rawTex.encoding = THREE.sRGBEncoding;
+
+          var pmrem = new THREE.PMREMGenerator(glRenderer);
+          pmrem.compileEquirectangularShader();
+          var envRT = pmrem.fromEquirectangular(rawTex);
+          rawTex.dispose();
+          pmrem.dispose();
+          return envRT.texture;
+        }
+
+        function drawCanLabelCanvas(flav) {
+          if (!labelCanvas) {
+            labelCanvas = document.createElement("canvas");
+            labelCanvas.width = 2048;
+            labelCanvas.height = 1024;
+            labelCtx = labelCanvas.getContext("2d");
+          }
+          var ctx = labelCtx;
+          var w = labelCanvas.width;
+          var h = labelCanvas.height;
+
+          ctx.clearRect(0, 0, w, h);
+
+          // Base metallic gradient
+          var baseGrad = ctx.createLinearGradient(0, 0, 0, h);
+          baseGrad.addColorStop(0, flav.canGradTop);
+          baseGrad.addColorStop(0.52, flav.canGradMid);
+          baseGrad.addColorStop(1, flav.canGradBot);
+          ctx.fillStyle = baseGrad;
+          ctx.fillRect(0, 0, w, h);
+
+          // Special Watermelon rind pattern on bottom half
+          if (flav.id === "watermelon-mint") {
+            ctx.fillStyle = "#4ade80";
+            ctx.beginPath();
+            ctx.moveTo(0, h * 0.56);
+            ctx.lineTo(w * 0.5, h * 0.68);
+            ctx.lineTo(w, h * 0.56);
+            ctx.lineTo(w, h * 0.62);
+            ctx.lineTo(w * 0.5, h * 0.74);
+            ctx.lineTo(0, h * 0.62);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = "#166534";
+            for (var sx = 40; sx < w; sx += 92) {
+              ctx.fillRect(sx, h * 0.64, 28, h * 0.36);
+            }
+            ctx.fillStyle = "#111827";
+            for (var sd = 65; sd < w; sd += 110) {
+              ctx.beginPath();
+              ctx.ellipse(sd, h * 0.56, 8, 15, 0.25, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          } else {
+            // Dynamic diagonal energy shards
+            ctx.save();
+            ctx.globalAlpha = 0.24;
+            ctx.fillStyle = flav.canStripe;
+            ctx.beginPath();
+            ctx.moveTo(w * 0.16, 0);
+            ctx.lineTo(w * 0.32, 0);
+            ctx.lineTo(w * 0.62, h);
+            ctx.lineTo(w * 0.44, h);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(w * 0.72, 0);
+            ctx.lineTo(w * 0.84, 0);
+            ctx.lineTo(w * 0.48, h);
+            ctx.lineTo(w * 0.38, h);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+          }
+
+          // Subtle horizontal brushed aluminum sheen bands
+          var sheenGrad = ctx.createLinearGradient(0, 0, w, 0);
+          sheenGrad.addColorStop(0, "rgba(0,0,0,0.34)");
+          sheenGrad.addColorStop(0.28, "rgba(255,255,255,0.08)");
+          sheenGrad.addColorStop(0.5, "rgba(255,255,255,0.16)");
+          sheenGrad.addColorStop(0.72, "rgba(255,255,255,0.06)");
+          sheenGrad.addColorStop(1, "rgba(0,0,0,0.34)");
+          ctx.fillStyle = sheenGrad;
+          ctx.fillRect(0, 0, w, h);
+
+          // Center front panel (at u = 0.5 -> w * 0.5)
+          var cx = w * 0.5;
+
+          // Lightning bolt icon behind wordmark
+          ctx.save();
+          ctx.translate(cx, h * 0.27);
+          ctx.fillStyle = "#ffffff";
+          ctx.shadowColor = "rgba(0,0,0,0.55)";
+          ctx.shadowBlur = 18;
+          ctx.beginPath();
+          ctx.moveTo(18, -108);
+          ctx.lineTo(-48, 8);
+          ctx.lineTo(-2, 8);
+          ctx.lineTo(-24, 110);
+          ctx.lineTo(54, -12);
+          ctx.lineTo(6, -12);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+
+          // NEXUS BOLT display lockup
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#ffffff";
+          ctx.shadowColor = "rgba(0,0,0,0.65)";
+          ctx.shadowBlur = 16;
+          ctx.font = "italic 800 132px 'Barlow Condensed', Impact, sans-serif";
+          ctx.fillText("NEXUS", cx - 190, h * 0.26);
+          ctx.fillText("BOLT", cx + 175, h * 0.26);
+
+          ctx.shadowBlur = 0;
+          ctx.fillStyle = "rgba(255,255,255,0.92)";
+          ctx.font = "600 32px 'Inter', Arial, sans-serif";
+          ctx.fillText("E N E R G Y   D R I N K", cx, h * 0.37);
+
+          // Flavour plaque
+          ctx.fillStyle = "rgba(7, 7, 12, 0.72)";
+          var plaqueW = 660;
+          var plaqueH = 128;
+          ctx.fillRect(cx - plaqueW / 2, h * 0.44, plaqueW, plaqueH);
+          ctx.strokeStyle = flav.canStripe;
+          ctx.lineWidth = 4;
+          ctx.strokeRect(cx - plaqueW / 2, h * 0.44, plaqueW, plaqueH);
+
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "italic 800 72px 'Barlow Condensed', Impact, sans-serif";
+          ctx.fillText(flav.canLine, cx, h * 0.44 + plaqueH / 2 + 4);
+
+          // Sub-label & specs
+          ctx.fillStyle = "rgba(255,255,255,0.88)";
+          ctx.font = "600 26px 'Inter', Arial, sans-serif";
+          ctx.fillText(flav.subLabel, cx, h * 0.63);
+
+          ctx.fillStyle = "rgba(255,255,255,0.75)";
+          ctx.font = "600 26px 'Inter', Arial, sans-serif";
+          ctx.fillText(
+            flav.caffeine.toUpperCase() + "  ·  ZERO SUGAR  ·  " + flav.volume,
+            cx,
+            h * 0.85
+          );
+
+          // Back nutrition panel (around u = 0 / u = 1)
+          ctx.textAlign = "left";
+          ctx.fillStyle = "rgba(255,255,255,0.68)";
+          ctx.font = "600 22px 'Inter', Arial, sans-serif";
+          ctx.fillText("SERVE ICE COLD", 64, h * 0.24);
+          ctx.font = "400 19px 'Inter', Arial, sans-serif";
+          ctx.fillText("ZERO SUGAR · B-VITAMINS · TAURINE", 64, h * 0.29);
+          ctx.fillText("CARBONATED SPARKLING ENERGY", 64, h * 0.33);
+
+          // Composite real photographed can artwork onto the front face when loaded
+          var cachedImg = photoImgCache[flav.id];
+          if (cachedImg && cachedImg.complete && cachedImg.naturalWidth > 0 && flav.cropBox) {
+            var cb = flav.cropBox;
+            var sx = cb.x * cachedImg.naturalWidth;
+            var sy = cb.y * cachedImg.naturalHeight;
+            var sw = cb.w * cachedImg.naturalWidth;
+            var sh = cb.h * cachedImg.naturalHeight;
+            var destW = 780;
+            var destH = h;
+            var destX = cx - destW / 2;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(destX, 0, destW, destH);
+            ctx.clip();
+
+            ctx.translate(cx, h * 0.5);
+            if (cb.tiltRad) {
+              ctx.rotate(cb.tiltRad);
+            }
+            ctx.drawImage(
+              cachedImg,
+              sx,
+              sy,
+              sw,
+              sh,
+              -destW * 0.54,
+              -destH * 0.52,
+              destW * 1.08,
+              destH * 1.04
+            );
+            ctx.restore();
+
+            // Feather horizontal edges smoothly into the metallic side wrap
+            var edgeFadeL = ctx.createLinearGradient(destX, 0, destX + 120, 0);
+            edgeFadeL.addColorStop(0, flav.canGradMid);
+            edgeFadeL.addColorStop(1, "rgba(0,0,0,0)");
+            ctx.fillStyle = edgeFadeL;
+            ctx.fillRect(destX, 0, 120, h);
+
+            var edgeFadeR = ctx.createLinearGradient(destX + destW - 120, 0, destX + destW, 0);
+            edgeFadeR.addColorStop(0, "rgba(0,0,0,0)");
+            edgeFadeR.addColorStop(1, flav.canGradMid);
+            ctx.fillStyle = edgeFadeR;
+            ctx.fillRect(destX + destW - 120, 0, 120, h);
+          }
+
+          if (!labelTexture) {
+            labelTexture = new THREE.CanvasTexture(labelCanvas);
+            labelTexture.encoding = THREE.sRGBEncoding;
+            if (renderer && renderer.capabilities) {
+              labelTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+            }
+          } else {
+            labelTexture.needsUpdate = true;
+          }
+        }
+
+        function buildSplashHaloAlphaMap() {
+          var alphaCanvas = document.createElement("canvas");
+          alphaCanvas.width = 512;
+          alphaCanvas.height = 512;
+          var aCtx = alphaCanvas.getContext("2d");
+
+          // Radial halo mask: dimmed center behind 3D can, luminous liquid splashes ring, soft fade out
+          var rGrad = aCtx.createRadialGradient(256, 256, 18, 256, 256, 248);
+          rGrad.addColorStop(0.0, "#242424");
+          rGrad.addColorStop(0.22, "#757575");
+          rGrad.addColorStop(0.45, "#ffffff");
+          rGrad.addColorStop(0.72, "#a8a8a8");
+          rGrad.addColorStop(0.95, "#000000");
+          aCtx.fillStyle = rGrad;
+          aCtx.fillRect(0, 0, 512, 512);
+
+          var aTex = new THREE.CanvasTexture(alphaCanvas);
+          return aTex;
+        }
+
+        function preloadFlavourMedia(glRenderer) {
+          var texLoader = new THREE.TextureLoader();
+          for (var i = 0; i < FLAVOURS.length; i++) {
+            (function (flav) {
+              var img = new Image();
+              img.onload = function () {
+                if (FLAVOURS[activeFlavourIdx] && FLAVOURS[activeFlavourIdx].id === flav.id) {
+                  drawCanLabelCanvas(flav);
+                }
+              };
+              img.src = flav.imageSrc;
+              photoImgCache[flav.id] = img;
+
+              texLoader.load(flav.imageSrc, function (loadedTex) {
+                loadedTex.encoding = THREE.sRGBEncoding;
+                loadedTex.minFilter = THREE.LinearMipmapLinearFilter;
+                if (glRenderer && glRenderer.capabilities) {
+                  loadedTex.anisotropy = Math.min(4, glRenderer.capabilities.getMaxAnisotropy());
+                }
+                photoTexCache[flav.id] = loadedTex;
+                if (
+                  splashHaloMat &&
+                  FLAVOURS[activeFlavourIdx] &&
+                  FLAVOURS[activeFlavourIdx].id === flav.id
+                ) {
+                  splashHaloMat.map = loadedTex;
+                  splashHaloMat.needsUpdate = true;
+                }
+              });
+            })(FLAVOURS[i]);
+          }
+        }
+
+        function buildProductCan(flav) {
+          var group = new THREE.Group();
+          drawCanLabelCanvas(flav);
+
+          var silverAlumMat = new THREE.MeshStandardMaterial({
+            color: 0xd9dde4,
+            metalness: 0.92,
+            roughness: 0.18
+          });
+
+          canLabelMat = new THREE.MeshPhysicalMaterial({
+            map: labelTexture,
+            metalness: 0.42,
+            roughness: 0.24,
+            clearcoat: 0.55,
+            clearcoatRoughness: 0.18
+          });
+
+          // 1. Main cylindrical body (rotated PI so u=0.5 faces +Z camera)
+          var bodyGeo = new THREE.CylinderGeometry(0.76, 0.76, 2.38, 64, 1, true);
+          var bodyMesh = new THREE.Mesh(bodyGeo, canLabelMat);
+          bodyMesh.rotation.y = Math.PI;
+          group.add(bodyMesh);
+
+          // 2. Tapered upper shoulder
+          canTopMat = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(flav.canGradTop),
+            metalness: 0.65,
+            roughness: 0.22
+          });
+          var shoulderGeo = new THREE.CylinderGeometry(0.64, 0.76, 0.34, 64, 1, false);
+          var shoulderMesh = new THREE.Mesh(shoulderGeo, canTopMat);
+          shoulderMesh.position.y = 1.36;
+          group.add(shoulderMesh);
+
+          // 3. Brushed aluminum top rim torus
+          var topRimGeo = new THREE.TorusGeometry(0.635, 0.032, 16, 64);
+          var topRimMesh = new THREE.Mesh(topRimGeo, silverAlumMat);
+          topRimMesh.rotation.x = Math.PI / 2;
+          topRimMesh.position.y = 1.53;
+          group.add(topRimMesh);
+
+          // 4. Recessed aluminum lid
+          var lidGeo = new THREE.CylinderGeometry(0.615, 0.615, 0.04, 48);
+          var lidMesh = new THREE.Mesh(lidGeo, silverAlumMat);
+          lidMesh.position.y = 1.49;
+          group.add(lidMesh);
+
+          // 5. Sculpted pull-tab + rivet
+          var rivetGeo = new THREE.CylinderGeometry(0.045, 0.045, 0.04, 16);
+          var rivetMesh = new THREE.Mesh(rivetGeo, silverAlumMat);
+          rivetMesh.position.set(0, 1.525, 0.02);
+          group.add(rivetMesh);
+
+          var tabRingGeo = new THREE.TorusGeometry(0.11, 0.02, 12, 24);
+          var tabRingMesh = new THREE.Mesh(tabRingGeo, silverAlumMat);
+          tabRingMesh.rotation.x = Math.PI / 2;
+          tabRingMesh.position.set(0, 1.53, -0.11);
+          group.add(tabRingMesh);
+
+          var tabNoseGeo = new THREE.BoxGeometry(0.15, 0.025, 0.16);
+          var tabNoseMesh = new THREE.Mesh(tabNoseGeo, silverAlumMat);
+          tabNoseMesh.position.set(0, 1.53, 0.09);
+          group.add(tabNoseMesh);
+
+          // 6. Tapered bottom base + rim
+          canBotMat = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(flav.canGradBot),
+            metalness: 0.68,
+            roughness: 0.24
+          });
+          var baseGeo = new THREE.CylinderGeometry(0.76, 0.63, 0.24, 64);
+          var baseMesh = new THREE.Mesh(baseGeo, canBotMat);
+          baseMesh.position.y = -1.31;
+          group.add(baseMesh);
+
+          var botRimGeo = new THREE.TorusGeometry(0.625, 0.028, 14, 64);
+          var botRimMesh = new THREE.Mesh(botRimGeo, silverAlumMat);
+          botRimMesh.rotation.x = Math.PI / 2;
+          botRimMesh.position.y = -1.43;
+          group.add(botRimMesh);
+
+          // 7. Chilled condensation droplets clinging to can wall
+          var dropGeo = new THREE.SphereGeometry(0.019, 8, 8);
+          var dropMat = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            roughness: 0.04,
+            metalness: 0.08,
+            clearcoat: 1.0
+          });
+          var dropCount = 34;
+          var dropInst = new THREE.InstancedMesh(dropGeo, dropMat, dropCount);
+          var dummy = new THREE.Object3D();
+          for (var d = 0; d < dropCount; d++) {
+            var ang = (d / dropCount) * Math.PI * 2 + (d % 3) * 0.41;
+            var dy = ((d * 37) % 100) / 100 * 2.1 - 1.05;
+            var sc = 0.65 + ((d * 19) % 10) * 0.07;
+            dummy.position.set(Math.sin(ang) * 0.764, dy, Math.cos(ang) * 0.764);
+            dummy.scale.set(sc, sc * 1.25, sc * 0.7);
+            dummy.rotation.set(0, ang, 0);
+            dummy.updateMatrix();
+            dropInst.setMatrixAt(d, dummy.matrix);
+          }
+          dropInst.instanceMatrix.needsUpdate = true;
+          group.add(dropInst);
+
+          return group;
+        }
+
+        // ============================================================
+        // 6. PROCEDURAL FRUIT PRIMITIVE BUILDERS (18 per flavour)
+        // ============================================================
+        function createCherryGroup() {
+          var grp = new THREE.Group();
+          var cherryMat = new THREE.MeshPhysicalMaterial({
+            color: 0x990f24,
+            roughness: 0.14,
+            metalness: 0.06,
+            clearcoat: 0.95,
+            clearcoatRoughness: 0.1
+          });
+          var stemMat = new THREE.MeshStandardMaterial({
+            color: 0x4d7c0f,
+            roughness: 0.65,
+            metalness: 0.0
+          });
+
+          var berryGeo = new THREE.SphereGeometry(0.18, 20, 16);
+
+          var berryA = new THREE.Mesh(berryGeo, cherryMat);
+          berryA.scale.set(1.05, 0.92, 1.02);
+          berryA.position.set(-0.17, -0.14, 0.03);
+          grp.add(berryA);
+
+          var berryB = new THREE.Mesh(berryGeo, cherryMat);
+          berryB.scale.set(1.02, 0.92, 1.05);
+          berryB.position.set(0.17, -0.17, -0.03);
+          grp.add(berryB);
+
+          var curveA = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-0.17, -0.02, 0.03),
+            new THREE.Vector3(-0.11, 0.22, 0.05),
+            new THREE.Vector3(0.0, 0.42, 0.0)
+          ]);
+          var stemA = new THREE.Mesh(new THREE.TubeGeometry(curveA, 12, 0.018, 8, false), stemMat);
+          grp.add(stemA);
+
+          var curveB = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(0.17, -0.05, -0.03),
+            new THREE.Vector3(0.11, 0.2, -0.02),
+            new THREE.Vector3(0.0, 0.42, 0.0)
+          ]);
+          var stemB = new THREE.Mesh(new THREE.TubeGeometry(curveB, 12, 0.018, 8, false), stemMat);
+          grp.add(stemB);
+
+          var capMesh = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.026, 0.02, 0.06, 8),
+            new THREE.MeshStandardMaterial({ color: 0x573b26, roughness: 0.8 })
+          );
+          capMesh.position.set(0, 0.43, 0);
+          grp.add(capMesh);
+
+          return grp;
+        }
+
+        function createWatermelonGroup() {
+          var grp = new THREE.Group();
+          var fleshMat = new THREE.MeshStandardMaterial({
+            color: 0xf43f5e,
+            roughness: 0.35,
+            metalness: 0.04
+          });
+          var pithMat = new THREE.MeshStandardMaterial({
+            color: 0xd9f99d,
+            roughness: 0.55
+          });
+          var rindMat = new THREE.MeshStandardMaterial({
+            color: 0x15803d,
+            roughness: 0.42
+          });
+          var seedMat = new THREE.MeshStandardMaterial({
+            color: 0x111827,
+            roughness: 0.25
+          });
+          var mintMat = new THREE.MeshStandardMaterial({
+            color: 0x22c55e,
+            roughness: 0.48
+          });
+
+          var wedgeAngle = Math.PI * 0.44;
+          var fleshGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.12, 16, 1, false, 0, wedgeAngle);
+          var fleshMesh = new THREE.Mesh(fleshGeo, fleshMat);
+          grp.add(fleshMesh);
+
+          var pithGeo = new THREE.CylinderGeometry(
+            0.35,
+            0.35,
+            0.122,
+            16,
+            1,
+            true,
+            0,
+            wedgeAngle
+          );
+          var pithMesh = new THREE.Mesh(pithGeo, pithMat);
+          grp.add(pithMesh);
+
+          var rindGeo = new THREE.CylinderGeometry(
+            0.375,
+            0.375,
+            0.126,
+            16,
+            1,
+            true,
+            0,
+            wedgeAngle
+          );
+          var rindMesh = new THREE.Mesh(rindGeo, rindMat);
+          grp.add(rindMesh);
+
+          var seedGeo = new THREE.SphereGeometry(0.02, 8, 8);
+          for (var s = 0; s < 4; s++) {
+            var rDist = 0.14 + (s % 2) * 0.09;
+            var sAng = 0.18 + s * 0.26;
+            var seedMesh = new THREE.Mesh(seedGeo, seedMat);
+            seedMesh.scale.set(0.7, 0.4, 1.3);
+            seedMesh.position.set(Math.sin(sAng) * rDist, 0.062, Math.cos(sAng) * rDist);
+            grp.add(seedMesh);
+          }
+
+          var leafGeo = new THREE.SphereGeometry(0.11, 10, 8);
+          var leafMesh = new THREE.Mesh(leafGeo, mintMat);
+          leafMesh.scale.set(1.3, 0.16, 0.65);
+          leafMesh.position.set(0.05, 0.1, 0.05);
+          leafMesh.rotation.set(0.25, 0.6, 0.2);
+          grp.add(leafMesh);
+
+          grp.position.set(-0.1, 0, -0.1);
+          return grp;
+        }
+
+        function createCitrusBlueRazzGroup(variantIdx) {
+          var grp = new THREE.Group();
+          if (variantIdx % 2 === 0) {
+            // Blueberry with 5-point calyx crown
+            var berryMat = new THREE.MeshStandardMaterial({
+              color: 0x1e3a8a,
+              roughness: 0.42,
+              metalness: 0.05
+            });
+            var crownMat = new THREE.MeshStandardMaterial({
+              color: 0x172554,
+              roughness: 0.6
+            });
+            var berry = new THREE.Mesh(new THREE.SphereGeometry(0.23, 20, 16), berryMat);
+            berry.scale.set(1.06, 0.88, 1.06);
+            grp.add(berry);
+
+            var coneGeo = new THREE.ConeGeometry(0.042, 0.075, 5);
+            for (var c = 0; c < 5; c++) {
+              var ang = (c / 5) * Math.PI * 2;
+              var tip = new THREE.Mesh(coneGeo, crownMat);
+              tip.position.set(Math.cos(ang) * 0.065, 0.19, Math.sin(ang) * 0.065);
+              tip.rotation.z = -Math.cos(ang) * 0.45;
+              tip.rotation.x = Math.sin(ang) * 0.45;
+              grp.add(tip);
+            }
+          } else {
+            // Lime / Lemon Wheel
+            var isLime = variantIdx % 4 === 1;
+            var rindCol = isLime ? 0x16a34a : 0xeab308;
+            var pulpCol = isLime ? 0x86efac : 0xfef08a;
+
+            var wheelRind = new THREE.Mesh(
+              new THREE.CylinderGeometry(0.27, 0.27, 0.07, 24),
+              new THREE.MeshStandardMaterial({ color: rindCol, roughness: 0.42 })
+            );
+            grp.add(wheelRind);
+
+            var wheelPulp = new THREE.Mesh(
+              new THREE.CylinderGeometry(0.235, 0.235, 0.074, 24),
+              new THREE.MeshStandardMaterial({ color: pulpCol, roughness: 0.25 })
+            );
+            grp.add(wheelPulp);
+
+            var pithGeo = new THREE.BoxGeometry(0.45, 0.078, 0.014);
+            var pithMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.6 });
+            for (var p = 0; p < 3; p++) {
+              var spoke = new THREE.Mesh(pithGeo, pithMat);
+              spoke.rotation.y = (p * Math.PI) / 3;
+              grp.add(spoke);
+            }
+          }
+          return grp;
+        }
+
+        function createGreenAppleGroup(variantIdx) {
+          var grp = new THREE.Group();
+          var skinMat = new THREE.MeshPhysicalMaterial({
+            color: 0x4ade80,
+            roughness: 0.2,
+            metalness: 0.05,
+            clearcoat: 0.75,
+            clearcoatRoughness: 0.15
+          });
+          var stemMat = new THREE.MeshStandardMaterial({ color: 0x573b26, roughness: 0.82 });
+          var leafMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.45 });
+
+          if (variantIdx % 2 === 0) {
+            // Whole Granny Smith Apple via Lathe profile
+            var pts = [
+              new THREE.Vector2(0.0, -0.2),
+              new THREE.Vector2(0.08, -0.23),
+              new THREE.Vector2(0.2, -0.16),
+              new THREE.Vector2(0.25, 0.02),
+              new THREE.Vector2(0.22, 0.18),
+              new THREE.Vector2(0.09, 0.22),
+              new THREE.Vector2(0.0, 0.16)
+            ];
+            var appleMesh = new THREE.Mesh(new THREE.LatheGeometry(pts, 24), skinMat);
+            grp.add(appleMesh);
+
+            var stemCurve = new THREE.CatmullRomCurve3([
+              new THREE.Vector3(0, 0.16, 0),
+              new THREE.Vector3(0.02, 0.27, 0.01),
+              new THREE.Vector3(0.06, 0.34, 0.02)
+            ]);
+            var stemMesh = new THREE.Mesh(
+              new THREE.TubeGeometry(stemCurve, 10, 0.016, 8, false),
+              stemMat
+            );
+            grp.add(stemMesh);
+
+            var leafMesh = new THREE.Mesh(new THREE.SphereGeometry(0.11, 10, 8), leafMat);
+            leafMesh.scale.set(1.25, 0.14, 0.6);
+            leafMesh.position.set(0.09, 0.26, 0.02);
+            leafMesh.rotation.set(0.2, 0.3, 0.35);
+            grp.add(leafMesh);
+          } else {
+            // Crisp Apple Wedge
+            var fleshMat = new THREE.MeshStandardMaterial({ color: 0xfefce8, roughness: 0.42 });
+            var wedgeFlesh = new THREE.Mesh(
+              new THREE.CylinderGeometry(0.28, 0.28, 0.14, 16, 1, false, 0, Math.PI * 0.46),
+              fleshMat
+            );
+            grp.add(wedgeFlesh);
+
+            var wedgePeel = new THREE.Mesh(
+              new THREE.CylinderGeometry(0.292, 0.292, 0.142, 16, 1, true, 0, Math.PI * 0.46),
+              skinMat
+            );
+            grp.add(wedgePeel);
+          }
+          return grp;
+        }
+
+        function buildSingleFruit(flavourId, idx) {
+          if (flavourId === "cherry-cola") return createCherryGroup();
+          if (flavourId === "watermelon-mint") return createWatermelonGroup();
+          if (flavourId === "citrus-blue-razz") return createCitrusBlueRazzGroup(idx);
+          return createGreenAppleGroup(idx);
+        }
+
+        function disposeObject3D(obj) {
+          if (!obj) return;
+          obj.traverse(function (child) {
+            if (child.isMesh) {
+              if (child.geometry) child.geometry.dispose();
+              if (child.material) {
+                if (Array.isArray(child.material)) {
+                  for (var m = 0; m < child.material.length; m++) {
+                    child.material[m].dispose();
+                  }
+                } else {
+                  child.material.dispose();
+                }
+              }
+            }
+          });
+        }
+
+        function populateFruitSpiral(flavourId, isSwitch) {
+          if (!fruitRingGroup) return;
+          while (fruitRingGroup.children.length > 0) {
+            var oldChild = fruitRingGroup.children[0];
+            fruitRingGroup.remove(oldChild);
+            disposeObject3D(oldChild);
+          }
+          fruitItems = [];
+
+          var totalFruits = 18;
+          var nowSec = clock ? clock.getElapsedTime() : 0;
+          if (isSwitch) {
+            flavourSwitchTime = nowSec;
+            spinBurstVelocity = prefersReducedMotion ? 0 : 7.5;
+          }
+
+          for (var i = 0; i < totalFruits; i++) {
+            var fruitMesh = buildSingleFruit(flavourId, i);
+            var baseScale = 0.85 + (i % 3) * 0.15;
+            fruitRingGroup.add(fruitMesh);
+            fruitItems.push({
+              group: fruitMesh,
+              idx: i,
+              baseScale: baseScale,
+              tumbleSpeedX: 0.4 + (i % 4) * 0.22,
+              tumbleSpeedY: 0.55 + (i % 3) * 0.28,
+              phase: i * 0.65,
+              popDelay: isSwitch && !prefersReducedMotion ? i * 0.032 : 0
+            });
+          }
+        }
+
+        function initThreeScene() {
+          var canvasEl = document.getElementById("webgl-canvas");
+          if (!canvasEl || typeof THREE === "undefined") {
+            throw new Error("Three.js not available");
+          }
+
+          isSoftwareGl = detectSoftwareWebGL();
+          renderer = new THREE.WebGLRenderer({
+            canvas: canvasEl,
+            antialias: !isSoftwareGl,
+            powerPreference: "high-performance"
+          });
+          renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, 2));
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.outputEncoding = THREE.sRGBEncoding;
+          renderer.toneMapping = THREE.ACESFilmicToneMapping;
+          renderer.toneMappingExposure = 1.15;
+
+          scene = new THREE.Scene();
+          var initFlav = FLAVOURS[activeFlavourIdx];
+          targetBgColor = new THREE.Color(initFlav.sceneBgHex);
+          scene.background = targetBgColor.clone();
+          scene.fog = new THREE.FogExp2(initFlav.sceneBgHex, 0.042);
+
+          scene.environment = buildStudioEnvTexture(renderer);
+
+          camera = new THREE.PerspectiveCamera(
+            42,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            60
+          );
+          camera.position.set(0, 0.25, 9.0);
+
+          // Studio 3-point + Hemisphere lighting rig
+          var hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x1e1b4b, 0.65);
+          scene.add(hemiLight);
+
+          targetKeyColor = new THREE.Color(initFlav.lightHex);
+          keyLight = new THREE.DirectionalLight(targetKeyColor.clone(), 1.85);
+          keyLight.position.set(4.5, 5.5, 6.0);
+          scene.add(keyLight);
+
+          fillLight = new THREE.DirectionalLight(0xe0f2fe, 0.85);
+          fillLight.position.set(-5.5, 2.0, 4.0);
+          scene.add(fillLight);
+
+          targetRimColor = new THREE.Color(initFlav.rimHex);
+          rimLight = new THREE.DirectionalLight(targetRimColor.clone(), 1.75);
+          rimLight.position.set(0.5, 3.0, -6.0);
+          scene.add(rimLight);
+
+          preloadFlavourMedia(renderer);
+
+          // 3D Studio Splash Halo Backdrop behind the can (displays actual product photography)
+          var haloAlpha = buildSplashHaloAlphaMap();
+          splashHaloMat = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            alphaMap: haloAlpha,
+            transparent: true,
+            opacity: 0.72,
+            depthWrite: false
+          });
+          splashHaloMesh = new THREE.Mesh(new THREE.PlaneGeometry(12.2, 8.1), splashHaloMat);
+          splashHaloMesh.position.set(0, 0, -2.7);
+          scene.add(splashHaloMesh);
+
+          canGroup = buildProductCan(initFlav);
+          scene.add(canGroup);
+
+          fruitRingGroup = new THREE.Group();
+          scene.add(fruitRingGroup);
+
+          clock = new THREE.Clock();
+          populateFruitSpiral(initFlav.id, false);
+
+          canvasEl.addEventListener("webglcontextlost", function (ev) {
+            ev.preventDefault();
+            webglActive = false;
+            if (fallbackEl) fallbackEl.classList.add("is-visible");
+          });
+
+          canvasEl.addEventListener("webglcontextrestored", function () {
+            webglActive = true;
+            if (fallbackEl) fallbackEl.classList.remove("is-visible");
+          });
+
+          window.addEventListener("resize", function () {
+            if (!renderer || !camera) return;
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+            renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, 2));
+          });
+
+          webglActive = true;
+        }
+
+        // ============================================================
+        // 7. SCROLL PROGRESS & CAPTION CHOREOGRAPHY
+        // ============================================================
+        var targetScrollProg = 0;
+        var smoothScrollProg = 0;
+
+        function computeTargetScroll() {
+          if (!heroTrackEl) return 0;
+          var rect = heroTrackEl.getBoundingClientRect();
+          var scrollableDist = heroTrackEl.offsetHeight - window.innerHeight;
+          if (scrollableDist <= 0) return 0;
+          var rawProg = -rect.top / scrollableDist;
+          return Math.max(0, Math.min(1, rawProg));
+        }
+
+        window.addEventListener(
+          "scroll",
+          function () {
+            targetScrollProg = computeTargetScroll();
+            if (!webglActive) {
+              updateCaptionsAndScrollHint(targetScrollProg);
+            }
+          },
+          { passive: true }
+        );
+
+        function bandOpacity(prog, fadeInStart, peakStart, peakEnd, fadeOutEnd) {
+          if (prog <= fadeInStart || prog >= fadeOutEnd) return 0;
+          if (prog >= peakStart && prog <= peakEnd) return 1;
+          if (prog < peakStart) {
+            return (prog - fadeInStart) / (peakStart - fadeInStart);
+          }
+          return 1 - (prog - peakEnd) / (fadeOutEnd - peakEnd);
+        }
+
+        function applyCaptionTransform(el, op) {
+          if (!el) return;
+          el.style.opacity = op.toFixed(3);
+          var yShift = (1 - op) * 18;
+          el.style.transform = "translateY(" + yShift.toFixed(2) + "px)";
+        }
+
+        function updateCaptionsAndScrollHint(prog) {
+          var op1 = bandOpacity(prog, -0.05, 0.0, 0.2, 0.31);
+          var op2 = bandOpacity(prog, 0.32, 0.42, 0.56, 0.67);
+          var op3 = bandOpacity(prog, 0.68, 0.78, 0.9, 1.0);
+
+          applyCaptionTransform(cap1El, op1);
+          applyCaptionTransform(cap2El, op2);
+          applyCaptionTransform(cap3El, op3);
+
+          if (scrollHintEl) {
+            var hintOp = Math.max(0, 1 - prog * 9.0);
+            scrollHintEl.style.opacity = hintOp.toFixed(3);
+          }
+        }
+
+        // ============================================================
+        // 8. FLAVOUR SWITCHING
+        // ============================================================
+        function applyFlavourDOM(flav) {
+          var rootStyle = document.documentElement.style;
+          rootStyle.setProperty("--bg-page", flav.bgHex);
+          rootStyle.setProperty("--bg-surface", flav.surfaceHex);
+          rootStyle.setProperty("--bg-surface-hover", flav.surfaceHoverHex);
+          rootStyle.setProperty("--accent", flav.accentHex);
+
+          if (navFlavourEl) navFlavourEl.textContent = flav.label;
+          if (cap1KickerEl) cap1KickerEl.textContent = flav.specs;
+          if (cap1TitleEl) cap1TitleEl.textContent = flav.cap1Headline;
+          if (cap1SubEl) cap1SubEl.textContent = flav.cap1Sub;
+          if (cap2KickerEl) cap2KickerEl.textContent = "Zero Sugar · B-Vitamins";
+          if (cap2TitleEl) cap2TitleEl.textContent = flav.cap2Headline;
+          if (cap2SubEl) cap2SubEl.textContent = flav.cap2Sub;
+          if (cap3KickerEl) cap3KickerEl.textContent = "Serve Ice Cold · " + flav.volume;
+          if (cap3TitleEl) cap3TitleEl.textContent = flav.cap3Headline;
+          if (cap3SubEl) cap3SubEl.textContent = flav.cap3Sub;
+
+          if (fallbackImgEl) {
+            fallbackImgEl.src = flav.imageSrc;
+            fallbackImgEl.alt = "NEXUS BOLT " + flav.label + " can";
+          }
+          if (fallbackKickerEl) fallbackKickerEl.textContent = flav.specs;
+          if (fallbackTitleEl) fallbackTitleEl.textContent = "NEXUS BOLT — " + flav.label;
+
+          for (var i = 0; i < cardElements.length; i++) {
+            if (i === activeFlavourIdx) {
+              cardElements[i].classList.add("is-active");
+            } else {
+              cardElements[i].classList.remove("is-active");
+            }
+          }
+        }
+
+        function selectFlavour(idx, shouldScrollTop) {
+          if (idx < 0 || idx >= FLAVOURS.length) return;
+          activeFlavourIdx = idx;
+          var flav = FLAVOURS[idx];
+
+          applyFlavourDOM(flav);
+
+          if (webglActive && scene) {
+            drawCanLabelCanvas(flav);
+            if (splashHaloMat && photoTexCache[flav.id]) {
+              splashHaloMat.map = photoTexCache[flav.id];
+              splashHaloMat.needsUpdate = true;
+            }
+            haloPulseScale = prefersReducedMotion ? 1 : 0.78;
+            if (canTopMat) canTopMat.color.set(flav.canGradTop);
+            if (canBotMat) canBotMat.color.set(flav.canGradBot);
+            targetBgColor.setHex(flav.sceneBgHex);
+            targetKeyColor.setHex(flav.lightHex);
+            targetRimColor.setHex(flav.rimHex);
+            populateFruitSpiral(flav.id, true);
+          }
+
+          if (shouldScrollTop) {
+            window.scrollTo({
+              top: 0,
+              behavior: prefersReducedMotion ? "auto" : "smooth"
+            });
+          }
+        }
+
+        // ============================================================
+        // 9. RENDER LOOP (Software-WebGL safe + frame-rate independent)
+        // ============================================================
+        function scheduleAfterDraw(cb) {
+          if (!renderer) return;
+          var gl = renderer.getContext();
+          if (gl && typeof gl.fenceSync === "function") {
+            var sync = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+            gl.flush();
+            var poll = function () {
+              var syncState = sync && gl.getSyncParameter(sync, gl.SYNC_STATUS);
+              if (syncState === gl.UNSIGNALED) {
+                window.setTimeout(poll, 5);
+              } else {
+                if (sync) gl.deleteSync(sync);
+                window.setTimeout(cb, 80);
+              }
+            };
+            window.setTimeout(poll, 5);
+          } else {
+            window.setTimeout(cb, 80);
+          }
+        }
+
+        function animateLoop() {
+          if (!webglActive) return;
+
+          var dt = Math.min(0.05, clock.getDelta());
+          var elapsed = clock.getElapsedTime();
+
+          // Smooth scroll lerp
+          if (prefersReducedMotion) {
+            smoothScrollProg = targetScrollProg;
+          } else {
+            var scrollLerp = 1 - Math.exp(-8.5 * dt);
+            smoothScrollProg += (targetScrollProg - smoothScrollProg) * scrollLerp;
+          }
+
+          updateCaptionsAndScrollHint(smoothScrollProg);
+
+          // Smooth background, fog, and light colour fading
+          var colorLerp = 1 - Math.exp(-4.0 * dt);
+          if (scene.background) {
+            scene.background.lerp(targetBgColor, colorLerp);
+          }
+          if (scene.fog) {
+            scene.fog.color.lerp(targetBgColor, colorLerp);
+          }
+          if (keyLight) keyLight.color.lerp(targetKeyColor, colorLerp);
+          if (rimLight) rimLight.color.lerp(targetRimColor, colorLerp);
+
+          // Camera zoom: z from 9.0 down to 4.1
+          var targetCamZ = THREE.MathUtils.lerp(9.0, 4.1, smoothScrollProg);
+          var targetCamY = THREE.MathUtils.lerp(0.22, -0.04, smoothScrollProg);
+          camera.position.z = targetCamZ;
+          camera.position.y = targetCamY;
+          camera.lookAt(0, 0, 0);
+
+          // Can spin + heroic tilt
+          if (!prefersReducedMotion) {
+            idleRotation += dt * 0.36;
+          }
+          if (canGroup) {
+            canGroup.rotation.y = smoothScrollProg * Math.PI * 2.8 + idleRotation;
+            canGroup.rotation.z =
+              THREE.MathUtils.lerp(-0.14, 0.12, smoothScrollProg) +
+              (prefersReducedMotion ? 0 : Math.sin(elapsed * 1.1) * 0.03);
+            canGroup.rotation.x = THREE.MathUtils.lerp(0.08, -0.1, smoothScrollProg);
+            canGroup.position.y = prefersReducedMotion ? 0 : Math.sin(elapsed * 1.6) * 0.07;
+          }
+
+          // Burst of extra spin decay on flavour switch
+          if (spinBurstVelocity > 0.001) {
+            spinBurstVelocity *= Math.exp(-3.4 * dt);
+          } else {
+            spinBurstVelocity = 0;
+          }
+
+          // Animate 3D studio splash photography backdrop in sync with scroll & flavour burst
+          if (splashHaloMesh && splashHaloMat) {
+            haloPulseScale += (1 - haloPulseScale) * (1 - Math.exp(-5.0 * dt));
+            var baseHaloScale = THREE.MathUtils.lerp(0.95, 1.24, smoothScrollProg) * haloPulseScale;
+            splashHaloMesh.scale.set(baseHaloScale, baseHaloScale, 1);
+            splashHaloMesh.position.z = THREE.MathUtils.lerp(-2.9, -1.75, smoothScrollProg);
+            splashHaloMesh.rotation.z =
+              THREE.MathUtils.lerp(-0.04, 0.06, smoothScrollProg) +
+              (prefersReducedMotion ? 0 : Math.sin(elapsed * 0.45) * 0.025) +
+              spinBurstVelocity * 0.045;
+            splashHaloMat.opacity =
+              THREE.MathUtils.lerp(0.68, 0.88, smoothScrollProg) * Math.min(1, haloPulseScale);
+          }
+
+          // Orbiting 18 fruit spiral
+          if (fruitRingGroup) {
+            if (!prefersReducedMotion) {
+              fruitRingGroup.rotation.y += (0.22 + spinBurstVelocity) * dt;
+            }
+            var timeSinceSwitch = elapsed - flavourSwitchTime;
+            var totalCount = fruitItems.length;
+
+            for (var i = 0; i < totalCount; i++) {
+              var item = fruitItems[i];
+              var normIdx = totalCount > 1 ? i / (totalCount - 1) : 0;
+
+              // Spiral radius shrinks as user scrolls in
+              var baseRadius = THREE.MathUtils.lerp(3.45, 1.62, smoothScrollProg);
+              var radiusJitter = (i % 3) * 0.34;
+              var orbitR = baseRadius + radiusJitter;
+
+              var helixAngle =
+                i * 0.74 +
+                smoothScrollProg * Math.PI * 2.4 +
+                (prefersReducedMotion ? 0 : elapsed * 0.24);
+
+              var verticalSpan = THREE.MathUtils.lerp(2.45, 1.5, smoothScrollProg);
+              var bobY = prefersReducedMotion ? 0 : Math.sin(elapsed * 1.5 + item.phase) * 0.14;
+              var posY = THREE.MathUtils.lerp(-verticalSpan, verticalSpan, normIdx) + bobY;
+
+              item.group.position.set(
+                Math.cos(helixAngle) * orbitR,
+                posY,
+                Math.sin(helixAngle) * orbitR
+              );
+
+              if (!prefersReducedMotion) {
+                item.group.rotation.x += item.tumbleSpeedX * dt + spinBurstVelocity * 0.35 * dt;
+                item.group.rotation.y += item.tumbleSpeedY * dt;
+              }
+
+              // Staggered pop-in on flavour switch
+              var popScale = 1;
+              if (flavourSwitchTime > -1 && !prefersReducedMotion) {
+                var localT = timeSinceSwitch - item.popDelay;
+                if (localT <= 0) {
+                  popScale = 0.001;
+                } else if (localT < 0.42) {
+                  var p = localT / 0.42;
+                  // Smooth overshoot pop
+                  popScale = 1 - Math.pow(1 - p, 3) * Math.cos(p * Math.PI * 1.8);
+                }
+              }
+              item.group.scale.setScalar(item.baseScale * Math.max(0.001, popScale));
+            }
+          }
+
+          renderer.render(scene, camera);
+
+          if (isSoftwareGl) {
+            scheduleAfterDraw(animateLoop);
+          } else {
+            window.requestAnimationFrame(animateLoop);
+          }
+        }
+
+        // ============================================================
+        // 10. BOOTSTRAP
+        // ============================================================
+        try {
+          renderFlavourCards();
+          renderCartUI();
+          applyFlavourDOM(FLAVOURS[activeFlavourIdx]);
+          targetScrollProg = computeTargetScroll();
+          smoothScrollProg = targetScrollProg;
+          updateCaptionsAndScrollHint(smoothScrollProg);
+
+          initThreeScene();
+          if (isSoftwareGl) {
+            animateLoop();
+          } else {
+            window.requestAnimationFrame(animateLoop);
+          }
+        } catch (bootErr) {
+          webglActive = false;
+          if (fallbackEl) fallbackEl.classList.add("is-visible");
+          updateCaptionsAndScrollHint(0);
+        }
+      })();
+    </script>
+  </body>
+</html>
